@@ -10,22 +10,23 @@ Plug 'itchyny/lightline.vim'                        " Pretty status bar
 Plug '/usr/local/opt/fzf'                           " Fuzzy Finder
 Plug 'junegunn/fzf.vim'                             " VIM Fuzzy finder plugin
 Plug 'ludovicchabant/vim-gutentags'                 " Mostly working tag generator
-" Plug 'bkad/CamelCaseMotion'                         " Move around code like a boss
-Plug 'ap/vim-buftabline'                            " Better tabs, trust me.
+Plug 'ap/vim-buftabline'                            " Better tabs
 Plug 'rafi/awesome-vim-colorschemes'                " Colorschemes I always use
 Plug 'editorconfig/editorconfig-vim'		        " Editorconfig
-Plug 'tpope/vim-commentary'                         " Peanut gallery
+Plug 'tpope/vim-commentary'                         " Comments
 Plug 'tpope/vim-dadbod'                             " DB Client
 Plug 'kristijanhusak/vim-dadbod-ui'                 " more VIM DadBod
 Plug 'kristijanhusak/vim-dadbod-completion'         " db autocompleteion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}     " CoC - autocompletion
-
 call plug#end()
 
 colorscheme lucius
-LuciusDark
+LuciusDarkHighContrast
 
-set t_CO=256								        "Use 256 colors. This is useful for Terminal Vim.
+if !has('gui_running')
+    set t_CO=256								        "Use 256 colors. This is useful for Terminal Vim.
+endif
+
 set guifont=JetBrainsMono-Regular:h14               "Set the default font family and size.
 " set macligatures							        "We want pretty symbols, when available.
 set guioptions-=e							        "We don't want Gui tabs.
@@ -33,13 +34,13 @@ set linespace=15
 set backspace=indent,eol,start
 set noerrorbells visualbell t_vb=
 
-set guioptions-=l                                                       "Disable Gui scrollbars.
+set guioptions-=l                                   "Disable Gui scrollbars.
 set guioptions-=L
 set guioptions-=r
 set guioptions-=R
 
 set nocompatible                                    " Don't play with Vi
-set nowrap                                          " Stop wrapping my lines for me... Thanks!
+set nowrap                                          " Don't wrap lines by default
 set hidden                                          " Close 'em up
 set numberwidth=5                                   " Set width of number gutter
 set number relativenumber                           " Show line number with relative numbers
@@ -67,7 +68,8 @@ set softtabstop=4
 set expandtab
 set tags+=~/.vim/gutentags
 set mouse=a
-if exists('+colorcolumn')                           " Create a dark chasm where text goes to die
+set laststatus=2
+if exists('+colorcolumn')                           " Different background at 120 chrs (guide)
     let &colorcolumn="120,".join(range(120,999),",")
 endif
 set nofoldenable                                    " Disable folding
@@ -102,14 +104,8 @@ nmap <Left> <nop>
 nmap <Up> <nop>
 nmap <Down> <nop>
 nmap <Right> <nop>
-" Fuzzy search planet earth
-nmap <C-S-f> :Ag<CR>
 " Quick edit zsh config
 nmap <Leader>eb :tabe ~/.zshrc<CR>
-" w, b, and e move between camel case words now.
-" map <silent> w <Plug>CamelCaseMotion_w
-" map <silent> b <Plug>CamelCaseMotion_b
-" map <silent> e <Plug>CamelCaseMotion_e
 
 " Ctrl-w closes the current buffer
 nmap <C-w> :bd<CR>
@@ -118,11 +114,14 @@ nmap <C-w> :bd<CR>
 set splitbelow 								"Make splits default to below...
 set splitright								"And to the right. This feels more natural.
 
-"We'll set simpler mappings to switch between splits.
+" Simple mappings to switch between splits.
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <C-L> <C-W><C-L>
+" Bufline tabs
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
 
 nnoremap <Leader>/ :normal gcc<CR>
 nnoremap <Leader>; A;<Esc>
@@ -154,6 +153,7 @@ function! s:fzf_statusline()
   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 endfunction
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
 " Gutentags
 let g:gutentags_cache_dir = '~/.vim/gutentags'      " Where to store tag files
 let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js', '*.json', '*.xml',
@@ -162,4 +162,35 @@ let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js', '*.json', '*.xml',
                           \ '*vendor/*/fixture*', '*vendor/*/Fixture*',
                           \ '*var/cache*', '*var/log*']
 
+" DB (DadBod)
 let g:db_ui_save_location = "~/.vim/db_ui_queries"
+
+noremap <silent> <Leader>w :call ToggleWrap()<CR>
+function ToggleWrap()
+  if &wrap
+    echo "Wrap OFF"
+    setlocal nowrap
+    set virtualedit=all
+    silent! nunmap <buffer> k
+    silent! nunmap <buffer> j
+    silent! nunmap <buffer> <Home>
+    silent! nunmap <buffer> <End>
+    silent! iunmap <buffer> k
+    silent! iunmap <buffer> j
+    silent! iunmap <buffer> <Home>
+    silent! iunmap <buffer> <End>
+  else
+    echo "Wrap ON"
+    setlocal wrap linebreak nolist
+    set virtualedit=
+    setlocal display+=lastline
+    noremap  <buffer> <silent> k gk
+    noremap  <buffer> <silent> j gj
+    noremap  <buffer> <silent> <Home> g<Home>
+    noremap  <buffer> <silent> <End>  g<End>
+    inoremap <buffer> <silent> k   <C-o>gk
+    inoremap <buffer> <silent> j <C-o>gj
+    inoremap <buffer> <silent> <Home> <C-o>g<Home>
+    inoremap <buffer> <silent> <End>  <C-o>g<End>
+  endif
+endfunction

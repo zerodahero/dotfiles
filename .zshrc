@@ -109,8 +109,8 @@ autoload -U +X bashcompinit && bashcompinit
 unsetopt inc_append_history
 unsetopt share_history
 
-source <(kubectl completion zsh)
-source <(clockify-cli completion zsh)
+(which kubectl > /dev/null) && source <(kubectl completion zsh)
+(which clockify-cli > /dev/null) && source <(clockify-cli completion zsh)
 
 source $HOME/.restic/resticrc
 
@@ -147,6 +147,8 @@ alias todo=todo.sh
 alias ta="todo.sh add"
 
 setopt APPEND_HISTORY
+
+export TERM=xterm-256color
 
 # Ruby Gems
 if which ruby >/dev/null && which gem >/dev/null; then

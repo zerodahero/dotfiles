@@ -23,6 +23,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}     " CoC - autocompletion
 call plug#end()
 
 colorscheme lucius
+LuciusDark
+
 set t_CO=256								        "Use 256 colors. This is useful for Terminal Vim.
 set guifont=JetBrainsMono-Regular:h14               "Set the default font family and size.
 " set macligatures							        "We want pretty symbols, when available.

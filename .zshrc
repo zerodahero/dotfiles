@@ -112,6 +112,8 @@ unsetopt share_history
 source <(kubectl completion zsh)
 source <(clockify-cli completion zsh)
 
+source $HOME/.restic/resticrc
+
 eval $(thefuck --alias)
 
 export GOPATH=$HOME/projects/golang

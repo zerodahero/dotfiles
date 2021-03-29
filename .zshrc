@@ -112,7 +112,7 @@ unsetopt share_history
 (which kubectl > /dev/null) && source <(kubectl completion zsh)
 (which clockify-cli > /dev/null) && source <(clockify-cli completion zsh)
 
-source $HOME/.restic/resticrc
+(which restic > /dev/null) && source $HOME/.restic/resticrc
 
 eval $(thefuck --alias)
 
@@ -155,7 +155,12 @@ if which ruby >/dev/null && which gem >/dev/null; then
   PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
-# Fix for vim ctrl modifiers
-alias vim="stty stop '' -ixoff ; vim"
-# `Frozing' tty, so after any command terminal settings will be restored
-ttyctl -f
+# OS specific stuff
+case "$OSTYPE" in
+    darwin*)
+        source "${ZDOTDIR:-${HOME}}/.zshrc-darwin"
+    ;;
+    linux*)
+        # arch specific
+    ;;
+esac

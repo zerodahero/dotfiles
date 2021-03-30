@@ -141,6 +141,22 @@ function git-fresh () {
 	&& git pull
 }
 
+function sub.env () {
+    local envpath=${3:-".env"}
+    if [ ! -f ${envpath} ]
+    then
+        echo "No .env found at ${envpath}"
+        return 1
+    fi
+    if [ $# -lt 2 ]
+    then
+        echo "Expecting format: sub.env ENV_VAR value (optional: .env)"
+        return 1
+    fi
+    (cat ${envpath} | grep -q $1) || echo "\n$1=" >> ${envpath}
+    sed -i '' -e 's/\('$1'=\).*/\1'$2'/' "${envpath}"
+}
+
 export TODOTXT_DEFAULT_ACTION=ls
 alias t=todo.sh
 alias todo=todo.sh

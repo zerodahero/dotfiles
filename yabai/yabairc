@@ -1,0 +1,66 @@
+#!/usr/bin/env sh
+
+# global settings
+# focus window that your mouse hovers on (disabled due to right click bugs)
+yabai -m config focus_follows_mouse          off
+# move mouse to focused window
+yabai -m config mouse_follows_focus          on
+yabai -m config window_placement             second_child
+# floating windows always stay on top
+# yabai -m config window_topmost               on
+
+# enable borders
+yabai -m config window_border                on
+yabai -m config window_border_width          10
+yabai -m config active_window_border_color   0xff0a0a0a
+yabai -m config normal_window_border_color   0xff1a1a1a
+yabai -m config insert_window_border_color   0xff1a1a1a
+
+# no clue what this is
+yabai -m config insert_feedback_color        0xffd75f5f
+yabai -m config split_ratio                  0.50
+
+# don't automatically rebalance windows
+yabai -m config auto_balance                 off
+
+# swap windows if moved with mouse
+yabai -m config mouse_action1                move
+# resize windows if resized with mouse
+yabai -m config mouse_action2                resize
+yabai -m config mouse_drop_action            swap
+
+# general space settings
+yabai -m config layout                       bsp
+yabai -m config top_padding                  10
+yabai -m config bottom_padding               10
+yabai -m config left_padding                 10
+yabai -m config right_padding                10
+yabai -m config window_gap                   20
+
+# Limelight separately
+yabai -m config window_border off
+#Limelight addon (Kill it and start it each time Yabai starts)
+killall limelight &>/dev/null
+limelight &>/dev/null &
+
+# Rules
+yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Alfred Preferences$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Disk Utility$" sticky=on layer=above manage=off
+yabai -m rule --add app="^System Information$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Activity Monitor$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Path Finder$" manage=off
+yabai -m rule --add app="^Logi Options$" manage=off
+yabai -m rule --add app="^Digital Color Meter$" manage=off
+# yabai -m rule --add app="^zoom" manage=off
+
+# Teams is a massive pile of garbage
+ yabai -m signal --add \
+    event=window_focused \
+    app='^Microsoft Teams$' \
+    title='^Microsoft Teams Notification$' action="yabai -m window --focus $(yabai -m query --windows | jq 'map(select(.title | endswith("Microsoft Teams")))[-1].id')"
+
+echo "yabai configuration loaded.."
+
+#END

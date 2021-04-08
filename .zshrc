@@ -141,6 +141,14 @@ function git-fresh () {
 	&& git pull
 }
 
+function git-find-deleted () {
+    git log --diff-filter=D --summary |grep delete | grep -i $1
+}
+
+function git-undelete () {
+    git checkout $(git rev-list -n 1 HEAD -- "$1")^ -- "$1"
+}
+
 function sub.env () {
     local envpath=${3:-".env"}
     if [ ! -f ${envpath} ]

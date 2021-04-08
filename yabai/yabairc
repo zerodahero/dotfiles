@@ -54,6 +54,8 @@ yabai -m rule --add app="^Path Finder$" manage=off
 yabai -m rule --add app="^Logi Options$" manage=off
 yabai -m rule --add app="^Digital Color Meter$" manage=off
 yabai -m rule --add app="^zoom" manage=off
+yabai -m rule --add title="^Clockify" manage=off
+yabai -m rule --add app="^Calculator" manage=off
 
 # Teams is a massive pile of garbage
  yabai -m signal --add \

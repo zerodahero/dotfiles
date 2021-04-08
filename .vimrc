@@ -15,6 +15,7 @@ Plug 'rafi/awesome-vim-colorschemes'                " Colorschemes I always use
 Plug 'editorconfig/editorconfig-vim'		        " Editorconfig
 Plug 'tpope/vim-commentary'                         " Comments
 Plug 'tpope/vim-dadbod'                             " DB Client
+Plug 'tpope/vim-surround'                           " Surround
 Plug 'kristijanhusak/vim-dadbod-ui'                 " more VIM DadBod
 Plug 'kristijanhusak/vim-dadbod-completion'         " db autocompleteion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}     " CoC - autocompletion
@@ -175,10 +176,10 @@ function ToggleWrap()
     silent! nunmap <buffer> j
     silent! nunmap <buffer> <Home>
     silent! nunmap <buffer> <End>
-    silent! iunmap <buffer> k
-    silent! iunmap <buffer> j
-    silent! iunmap <buffer> <Home>
-    silent! iunmap <buffer> <End>
+    "silent! iunmap <buffer> k
+    "silent! iunmap <buffer> j
+    "silent! iunmap <buffer> <Home>
+    "silent! iunmap <buffer> <End>
   else
     echo "Wrap ON"
     setlocal wrap linebreak nolist
@@ -188,9 +189,9 @@ function ToggleWrap()
     noremap  <buffer> <silent> j gj
     noremap  <buffer> <silent> <Home> g<Home>
     noremap  <buffer> <silent> <End>  g<End>
-    inoremap <buffer> <silent> k   <C-o>gk
-    inoremap <buffer> <silent> j <C-o>gj
-    inoremap <buffer> <silent> <Home> <C-o>g<Home>
-    inoremap <buffer> <silent> <End>  <C-o>g<End>
+    "inoremap <buffer> <silent> k   <C-o>gk
+    "inoremap <buffer> <silent> j <C-o>gj
+    "inoremap <buffer> <silent> <Home> <C-o>g<Home>
+    "inoremap <buffer> <silent> <End>  <C-o>g<End>
   endif
 endfunction

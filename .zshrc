@@ -112,7 +112,7 @@ unsetopt share_history
 (which kubectl > /dev/null) && source <(kubectl completion zsh)
 (which clockify-cli > /dev/null) && source <(clockify-cli completion zsh)
 
-source $HOME/.restic/resticrc
+(which restic > /dev/null) && source $HOME/.restic/resticrc
 
 eval $(thefuck --alias)
 
@@ -141,6 +141,22 @@ function git-fresh () {
 	&& git pull
 }
 
+function sub.env () {
+    local envpath=${3:-".env"}
+    if [ ! -f ${envpath} ]
+    then
+        echo "No .env found at ${envpath}"
+        return 1
+    fi
+    if [ $# -lt 2 ]
+    then
+        echo "Expecting format: sub.env ENV_VAR value (optional: .env)"
+        return 1
+    fi
+    (cat ${envpath} | grep -q $1) || echo "\n$1=" >> ${envpath}
+    sed -i '' -e 's/\('$1'=\).*/\1'$2'/' "${envpath}"
+}
+
 export TODOTXT_DEFAULT_ACTION=ls
 alias t=todo.sh
 alias todo=todo.sh
@@ -155,7 +171,12 @@ if which ruby >/dev/null && which gem >/dev/null; then
   PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
-# Fix for vim ctrl modifiers
-alias vim="stty stop '' -ixoff ; vim"
-# `Frozing' tty, so after any command terminal settings will be restored
-ttyctl -f
+# OS specific stuff
+case "$OSTYPE" in
+    darwin*)
+        source "${ZDOTDIR:-${HOME}}/.zshrc-darwin"
+    ;;
+    linux*)
+        # arch specific
+    ;;
+esac

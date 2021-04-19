@@ -165,6 +165,18 @@ function sub.env () {
     sed -i '' -e 's/\('$1'=\).*/\1'$2'/' "${envpath}"
 }
 
+function clockify-cli-append () {
+    local desc=$(clockify-cli log in-progress -f "{{ .Description }}")
+    if [ -z "$desc" ]
+    then
+        echo "No time being currently tracked"
+        return;
+    fi
+    clockify-cli edit current --description="${desc}
+$1
+"
+}
+
 export TODOTXT_DEFAULT_ACTION=ls
 alias t=todo.sh
 alias todo=todo.sh

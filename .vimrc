@@ -108,8 +108,15 @@ nmap <Right> <nop>
 " Quick edit zsh config
 nmap <Leader>eb :tabe ~/.zshrc<CR>
 
+" Save
+inoremap <C-s> <C-o>:update<CR>
+nnoremap <C-s> :<C-u>update<CR>
+" " Mac?
+" inoremap <D-s> <C-o>:update<CR>
+" nnoremap <D-s> :<C-u>update<CR>
+
 " Ctrl-w closes the current buffer
-nmap <C-w> :bd<CR>
+" nmap <C-w> :bd<CR>
 
 "-------------Split Management--------------"
 set splitbelow 								"Make splits default to below...

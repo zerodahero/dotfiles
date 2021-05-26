@@ -242,6 +242,12 @@ prompt_aws() {
   esac
 }
 
+prompt_kubecontext() {
+  [[ "${KUBE_PS1_ENABLED}" == "off" ]] && return
+  [[ -z "${KUBE_PS1_CONTEXT}" ]] && [[ "${KUBE_PS1_CONTEXT_ENABLE}" == true ]] && return
+  prompt_segment white green `kube_ps1`
+}
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
@@ -250,6 +256,7 @@ build_prompt() {
   prompt_aws
   prompt_context
   prompt_dir
+  prompt_kubecontext
   prompt_git
   prompt_bzr
   prompt_hg

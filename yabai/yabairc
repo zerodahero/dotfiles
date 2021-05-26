@@ -27,7 +27,7 @@ yabai -m config auto_balance                 off
 yabai -m config mouse_action1                move
 # resize windows if resized with mouse
 yabai -m config mouse_action2                resize
-yabai -m config mouse_drop_action            swap
+yabai -m config mouse_drop_action            stack
 
 # general space settings
 yabai -m config layout                       bsp
@@ -55,7 +55,9 @@ yabai -m rule --add app="^Logi Options$" manage=off
 yabai -m rule --add app="^Digital Color Meter$" manage=off
 yabai -m rule --add app="^zoom" manage=off
 yabai -m rule --add title="^Clockify" manage=off
+yabai -m rule --add app="^Authy" manage=off
 yabai -m rule --add app="^Calculator" manage=off
+yabai -m rule --add app="^GIMP" manage=off
 
 # Teams is a massive pile of garbage
  yabai -m signal --add \

@@ -68,7 +68,7 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git asdf)
+plugins=(git kube-ps1 shrink-path)
 
 ZLE_REMOVE_SUFFIX_CHARS=""
 
@@ -117,7 +117,7 @@ unsetopt share_history
 eval $(thefuck --alias)
 
 export GOPATH=$HOME/projects/golang
-export PATH=$PATH:$(go env GOPATH)/bin:$HOME/.composer/vendor/bin:$HOME/bin
+export PATH=$PATH:$(go env GOPATH)/bin:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin
 
 # Phan
 phan() { docker run -v $PWD:/mnt/src --rm -u "$(id -u):$(id -g)" phanphp/phan:latest $@; return $?; }
@@ -125,13 +125,12 @@ phan() { docker run -v $PWD:/mnt/src --rm -u "$(id -u):$(id -g)" phanphp/phan:la
 # PHPStan
 alias phpstan='docker run -v $PWD:/app --rm phpstan/phpstan'
 
-alias dco="docker-compose"
+alias dco="docker compose"
 alias phpfix="php-cs-fixer fix"
 alias art="php artisan"
 
-alias docker-composer="docker-compose"
 function laradco () {
-	(cd $HOME/projects/laradock && docker-compose $@)
+	(cd $HOME/projects/laradock && docker compose $@)
 }
 alias larashell="laradco exec --user=laradock workspace bash"
 
@@ -200,3 +199,12 @@ case "$OSTYPE" in
         # arch specific
     ;;
 esac
+
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
+
+KUBE_PS1_SYMBOL_ENABLE=false
+KUBE_PS1_PREFIX=''
+KUBE_PS1_SUFFIX=''
+KUBE_PS1_SYMBOL_PADDING=false
+KUBE_PS1_NS_ENABLE=false
+KUBE_PS1_CTX_COLOR=black

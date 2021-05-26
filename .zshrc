@@ -202,9 +202,20 @@ esac
 
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 
+function kubeon-ns () {
+    export KUBE_PS1_NS_ENABLE=true
+}
+function kubeoff-ns () {
+    export KUBE_PS1_NS_ENABLE=false
+}
+
 KUBE_PS1_SYMBOL_ENABLE=false
 KUBE_PS1_PREFIX=''
 KUBE_PS1_SUFFIX=''
 KUBE_PS1_SYMBOL_PADDING=false
 KUBE_PS1_NS_ENABLE=false
 KUBE_PS1_CTX_COLOR=black
+KUBE_PS1_NS_COLOR=blue
+
+# K8s context off by default
+kubeoff

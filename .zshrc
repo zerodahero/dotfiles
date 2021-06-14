@@ -1,3 +1,5 @@
+zmodload zsh/zprof
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -9,6 +11,9 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="agnoster"
+
+# Lazy loads
+source "$HOME/.zsh/lazy-loads/kubectl.zsh"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -68,7 +73,9 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git kube-ps1)
+export NVM_LAZY_LOAD=true
+export NVM_COMPLETION=true
+plugins=(zsh-nvm git kube-ps1 evalcache)
 
 ZLE_REMOVE_SUFFIX_CHARS=""
 
@@ -103,18 +110,18 @@ DEFAULT_USER=$(whoami)
 
 # ssh-add -K ~/.ssh/id_rsa
 
-autoload -U +X compinit && compinit
-autoload -U +X bashcompinit && bashcompinit
+# autoload -U +X compinit && compinit
+# autoload -U +X bashcompinit && bashcompinit
 
 unsetopt inc_append_history
 unsetopt share_history
 
-(which kubectl > /dev/null) && source <(kubectl completion zsh)
-(which clockify-cli > /dev/null) && source <(clockify-cli completion zsh)
+# (which kubectl > /dev/null) && source <(kubectl completion zsh)
+(command -v clockify-cli > /dev/null) && source <(clockify-cli completion zsh)
 
-(which restic > /dev/null) && source $HOME/.restic/resticrc
+(command -v restic > /dev/null) && source $HOME/.restic/resticrc
 
-eval $(thefuck --alias)
+_evalcache thefuck --alias
 
 export GOPATH=$HOME/projects/golang
 export PATH=$PATH:$(go env GOPATH)/bin:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin
@@ -174,6 +181,10 @@ function clockify-cli-append () {
     clockify-cli edit current --description="${desc}
 $1
 "
+}
+
+function jcat () {
+    jq --color-output . $1 | less -R
 }
 
 export TODOTXT_DEFAULT_ACTION=ls

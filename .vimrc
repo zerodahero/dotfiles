@@ -19,6 +19,12 @@ Plug 'tpope/vim-surround'                           " Surround
 Plug 'kristijanhusak/vim-dadbod-ui'                 " more VIM DadBod
 Plug 'kristijanhusak/vim-dadbod-completion'         " db autocompleteion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}     " CoC - autocompletion
+Plug 'reedes/vim-pencil'                            " Writing help
+Plug 'godlygeek/tabular'                            " Line up text
+Plug 'plasticboy/vim-markdown'                      " Markdown help
+Plug 'junegunn/goyo.vim'                            " Distraction-free writing
+Plug 'junegunn/limelight.vim'                       " Highlights focused block
+"Plug 'christoomey/vim-tmux-navigator'               " Tmux nav
 call plug#end()
 
 colorscheme lucius
@@ -75,7 +81,7 @@ if exists('+colorcolumn')                           " Different background at 12
 endif
 set nofoldenable                                    " Disable folding
 autocmd FileType netrw setl bufhidden=wipe          " Close netrw buffers that aren't in use
-autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
+"autocmd CursorMoved * exe printf('match IncSearch /\V\<%s\>/', escape(expand('<cword>'), '/\'))
 let g:netrw_fastbrowse = 0
 let python_highlight_all=1
 syntax on

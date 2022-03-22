@@ -25,6 +25,8 @@ Plug 'plasticboy/vim-markdown'                      " Markdown help
 Plug 'junegunn/goyo.vim'                            " Distraction-free writing
 Plug 'junegunn/limelight.vim'                       " Highlights focused block
 Plug 'fladson/vim-kitty'                            " Kitty syntax
+Plug 'romainl/vim-cool'                             " Search highlight helper
+Plug 'machakann/vim-highlightedyank'                " Show what I yanked
 "Plug 'christoomey/vim-tmux-navigator'               " Tmux nav
 call plug#end()
 
@@ -41,6 +43,9 @@ set guioptions-=e							        "We don't want Gui tabs.
 set linespace=15
 set backspace=indent,eol,start
 set noerrorbells visualbell t_vb=
+set noesckeys                                       " makes switching modes faster, for whatever reason
+set ttimeoutlen=100
+let &t_ut=''                                        " Fix vim background in kitty
 
 set guioptions-=l                                   "Disable Gui scrollbars.
 set guioptions-=L
@@ -168,6 +173,9 @@ function! s:fzf_statusline()
   setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
 endfunction
 autocmd! User FzfStatusLine call <SID>fzf_statusline()
+
+" Highlight yank
+let g:highlightedyank_highlight_duration = 200
 
 " Gutentags
 let g:gutentags_cache_dir = '~/.vim/gutentags'      " Where to store tag files

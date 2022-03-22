@@ -26,3 +26,7 @@ case "$(uname -s)" in
     Linux)
     ;;
 esac
+
+### Kitty
+ln -si "$HOME/dotfiles/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
+ln -si "$HOME/dotfiles/kitty/current-theme.conf" "$HOME/.config/kitty/current-theme.conf"

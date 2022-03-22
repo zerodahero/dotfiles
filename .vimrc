@@ -24,6 +24,7 @@ Plug 'godlygeek/tabular'                            " Line up text
 Plug 'plasticboy/vim-markdown'                      " Markdown help
 Plug 'junegunn/goyo.vim'                            " Distraction-free writing
 Plug 'junegunn/limelight.vim'                       " Highlights focused block
+Plug 'fladson/vim-kitty'                            " Kitty syntax
 "Plug 'christoomey/vim-tmux-navigator'               " Tmux nav
 call plug#end()
 

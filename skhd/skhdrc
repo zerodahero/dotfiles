@@ -90,5 +90,5 @@ alt - u : yabai -m window --focus stack.next || yabai -m window --focus stack.fi
 alt - d : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
 ## open terminal
-alt - return : /Applications/iTerm.app/Contents/MacOS/iTerm2
+# alt - return : /Applications/iTerm.app/Contents/MacOS/iTerm2
 

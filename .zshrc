@@ -75,7 +75,7 @@ source "$HOME/.zsh/lazy-loads/kubectl.zsh"
 # Add wisely, as too many plugins slow down shell startup.
 export NVM_LAZY_LOAD=true
 export NVM_COMPLETION=true
-plugins=(zsh-nvm git kube-ps1 evalcache)
+plugins=(zsh-nvm git kube-ps1 evalcache git-trim zsh-z)
 
 ZLE_REMOVE_SUFFIX_CHARS=""
 
@@ -113,8 +113,7 @@ DEFAULT_USER=$(whoami)
 # autoload -U +X compinit && compinit
 # autoload -U +X bashcompinit && bashcompinit
 
-unsetopt inc_append_history
-unsetopt share_history
+setopt nosharehistory
 
 # (which kubectl > /dev/null) && source <(kubectl completion zsh)
 (command -v clockify-cli > /dev/null) && source <(clockify-cli completion zsh)
@@ -124,7 +123,8 @@ unsetopt share_history
 _evalcache thefuck --alias
 
 export GOPATH=$HOME/projects/golang
-export PATH=$PATH:$(go env GOPATH)/bin:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin
+export PATH=$PATH:$(go env GOPATH)/bin:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # Phan
 phan() { docker run -v $PWD:/mnt/src --rm -u "$(id -u):$(id -g)" phanphp/phan:latest $@; return $?; }
@@ -144,7 +144,7 @@ alias larashell="laradco exec --user=laradock workspace bash"
 function git-fresh () {
 	git checkout $1 \
 	&& git fetch origin \
-	&& git pull
+	&& git pull --prune
 }
 
 function git-find-deleted () {
@@ -172,15 +172,14 @@ function sub.env () {
 }
 
 function clockify-cli-append () {
-    local desc=$(clockify-cli log in-progress -f "{{ .Description }}")
+    local desc=$(clockify-cli show current -f "{{ .Description }}")
     if [ -z "$desc" ]
     then
         echo "No time being currently tracked"
         return;
     fi
     clockify-cli edit current --description="${desc}
-$1
-"
+$1"
 }
 
 function jcat () {
@@ -196,7 +195,8 @@ setopt APPEND_HISTORY
 
 export TERM=xterm-256color
 
-# Ruby Gems
+# Ruby and Ruby Gems
+export PATH="/usr/local/opt/ruby/bin:$PATH"
 if which ruby >/dev/null && which gem >/dev/null; then
   PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
@@ -230,3 +230,20 @@ KUBE_PS1_NS_COLOR=blue
 
 # K8s context off by default
 kubeoff
+
+# AWS profiles
+function awsctx () {
+    if [ -z $1 ]; then
+        sed -n -E 's/^\[(.+)\]$/\1/p' ~/.aws/credentials
+        return;
+    fi
+    export AWS_PROFILE=$1
+    aws configure list
+}
+
+alias .j='just --justfile ~/.user.justfile --working-directory .'
+
+alias go="grc go"
+
+alias sail="[ -f sail ] && bash sail || bash vendor/bin/sail"
+

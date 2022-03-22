@@ -11,9 +11,10 @@ yabai -m config window_placement             second_child
 
 # enable borders
 yabai -m config window_border                on
-yabai -m config window_border_width          10
-yabai -m config active_window_border_color   0xff0a0a0a
-yabai -m config normal_window_border_color   0xff1a1a1a
+yabai -m config window_border_width          4
+yabai -m config window_border_width          4
+yabai -m config active_window_border_color   0xff18ab69
+yabai -m config normal_window_border_color   0x00ffffff
 yabai -m config insert_window_border_color   0xff1a1a1a
 
 # no clue what this is
@@ -59,6 +60,7 @@ yabai -m rule --add app="^Authy" manage=off
 yabai -m rule --add app="^Calculator" manage=off
 yabai -m rule --add app="^GIMP" manage=off
 yabai -m rule --add app="^DBeaver" manage=off
+yabai -m rule --add app="^DataGrip" manage=off
 
 # Teams is a massive pile of garbage
  yabai -m signal --add \

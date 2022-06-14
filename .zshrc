@@ -122,8 +122,9 @@ setopt nosharehistory
 
 _evalcache thefuck --alias
 
-export GOPATH=$HOME/projects/golang
-export PATH=$PATH:$(go env GOPATH)/bin:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin
+# export GOPATH=$HOME/projects/golang
+export PATH=$PATH:$(go env GOPATH)/bin:$(go env GOROOT)/bin:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin
+# export PATH=$PATH:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # Phan
@@ -246,4 +247,10 @@ alias .j='just --justfile ~/.user.justfile --working-directory .'
 alias go="grc go"
 
 alias sail="[ -f sail ] && bash sail || bash vendor/bin/sail"
+
+# atuin (history search widget)
+export ATUIN_NOBIND="true"
+_evalcache atuin init zsh
+bindkey '^r' _atuin_search_widget
+
 

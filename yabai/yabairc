@@ -60,7 +60,10 @@ yabai -m rule --add app="^Authy" manage=off
 yabai -m rule --add app="^Calculator" manage=off
 yabai -m rule --add app="^GIMP" manage=off
 yabai -m rule --add app="^DBeaver" manage=off
+
+# Datagrip
 yabai -m rule --add app="^DataGrip" manage=off
+# yabai -m rule --add app="^DataGrip" title="( - )" manage=on
 
 # Teams is a massive pile of garbage
  yabai -m signal --add \

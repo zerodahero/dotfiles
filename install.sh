@@ -15,6 +15,7 @@ case "$(uname -s)" in
         ln -si "$HOME/dotfiles/.zshrc-darwin" "$HOME/.zshrc-darwin"
         mkdir -p "$HOME/.config/yabai" "$HOME/.config/skhd"
         ln -si "$HOME/dotfiles/yabai/yabairc" "$HOME/.config/yabai/yabairc"
+        ln -si "$HOME/dotfiles/yabai/intellij_yabai.sh" "$HOME/.config/yabai/intellij_yabai.sh"
         ln -si "$HOME/dotfiles/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
     ;;
     Linux)

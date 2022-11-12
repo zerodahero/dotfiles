@@ -102,11 +102,11 @@ augroup END
 
 "-------------Mappings--------------"
 "Make it easy to edit the Vimrc file.
-nmap <Leader>ev :tabedit $MYVIMRC<cr>
+nmap <Leader>ev :tabedit $MYVIMRC<CR>
 nmap <Leader>es :e ~/.vim/snippets/
 
 "Add simple highlight removal.
-nmap <Leader><space> :nohlsearch<cr>
+nmap <Leader><space> :nohlsearch<CR>
 
 " Show Fuzzy file search
 nmap <C-t> :Files<CR>

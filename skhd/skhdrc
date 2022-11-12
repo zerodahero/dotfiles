@@ -76,9 +76,9 @@ alt - r         : yabai -m space --rotate 90
 shift + alt - r : yabai -m space --rotate 270
 
 # mirror tree y-axis
-shift + alt - y : yabai -m space --mirror y-axis
+shift + alt - y : yabai -m space --mirror y-axis && yabai -m space --balance
 ## mirror tree x-axis
-shift + alt - x : yabai -m space --mirror x-axis
+shift + alt - x : yabai -m space --mirror x-axis && yabai -m space --balance
 
 # Stacks
 alt - s : ((yabai -m query --spaces --space | jq -re '.type == "bsp"') && yabai -m space --layout stack) || yabai -m space --layout bsp
@@ -89,6 +89,8 @@ shift + ctrl + alt - k : yabai -m window --stack north
 alt - u : yabai -m window --focus stack.next || yabai -m window --focus stack.first
 alt - d : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
-## open terminal
-# alt - return : /Applications/iTerm.app/Contents/MacOS/iTerm2
+## ScratchPad
+ctrl + cmd - 0x32 : id=$(yabai -m query --windows | jq -re '.[] | select(.title == "ScratchPad") | .id') && \
+    yabai -m window --focus $id \
+    || kitty -T ScratchPad vim -c "PencilSoft" ~/.scratchpad
 

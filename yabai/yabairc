@@ -6,25 +6,25 @@ yabai -m config focus_follows_mouse          off
 # move mouse to focused window
 yabai -m config mouse_follows_focus          on
 yabai -m config window_placement             second_child
-# floating windows always stay on top
-# yabai -m config window_topmost               on
 
 # enable borders
 yabai -m config window_border                on
 yabai -m config window_border_width          4
-yabai -m config window_border_width          4
-yabai -m config active_window_border_color   0xff18ab69
+# yabai -m config active_window_border_color   0xcc4dd36c # Green
+yabai -m config active_window_border_color   0xcc47b9fe # Blue
 yabai -m config normal_window_border_color   0x00ffffff
 yabai -m config insert_window_border_color   0xff1a1a1a
 
 # no clue what this is
 yabai -m config insert_feedback_color        0xffd75f5f
+
+# Default split is 50/50
 yabai -m config split_ratio                  0.50
 
 # rebalance windows
 yabai -m config auto_balance                 on
 
-# swap windows if moved with mouse
+# move windows if moved with mouse
 yabai -m config mouse_action1                move
 # resize windows if resized with mouse
 yabai -m config mouse_action2                resize
@@ -37,12 +37,6 @@ yabai -m config bottom_padding               10
 yabai -m config left_padding                 10
 yabai -m config right_padding                10
 yabai -m config window_gap                   20
-
-# Limelight separately
-yabai -m config window_border off
-#Limelight addon (Kill it and start it each time Yabai starts)
-killall limelight &>/dev/null
-limelight &>/dev/null &
 
 # Rules
 yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
@@ -60,10 +54,22 @@ yabai -m rule --add app="^Authy" manage=off
 yabai -m rule --add app="^Calculator" manage=off
 yabai -m rule --add app="^GIMP" manage=off
 yabai -m rule --add app="^DBeaver" manage=off
+yabai -m rule --add app="^FromScratch" manage=off
+yabai -m rule --add app="^Pritunl" manage=off
+yabai -m rule --add title="ScratchPad" manage=off
 
-# Datagrip
-yabai -m rule --add app="^DataGrip" manage=off
+
+# Datagrip / Rider / intelliJ
+# yabai -m rule --add app="^DataGrip" manage=off
 # yabai -m rule --add app="^DataGrip" title="( - )" manage=on
+# Regex to match jetbrains apps
+apps='^(DataGrip|JetBrains Rider)$'
+
+# Float all JetBrains apps
+yabai -m rule --add app="${apps}" manage=off
+
+# add a signal that floats a window created by these apps when it's the only window
+yabai -m signal --add event=window_created app="${apps}" action='$HOME/bin/intellij_yabai.sh'
 
 # Teams is a massive pile of garbage
  yabai -m signal --add \

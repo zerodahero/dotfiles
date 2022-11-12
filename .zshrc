@@ -75,7 +75,7 @@ source "$HOME/.zsh/lazy-loads/kubectl.zsh"
 # Add wisely, as too many plugins slow down shell startup.
 export NVM_LAZY_LOAD=true
 export NVM_COMPLETION=true
-plugins=(zsh-nvm git kube-ps1 evalcache git-trim zsh-z)
+plugins=(zsh-nvm git kube-ps1 evalcache git-trim zsh-z zsh-syntax-highlighting)
 
 ZLE_REMOVE_SUFFIX_CHARS=""
 
@@ -121,9 +121,10 @@ setopt nosharehistory
 (command -v restic > /dev/null) && source $HOME/.restic/resticrc
 
 _evalcache thefuck --alias
+_evalcache direnv hook zsh
 
 # export GOPATH=$HOME/projects/golang
-export PATH=$PATH:$(go env GOPATH)/bin:$(go env GOROOT)/bin:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin
+export PATH=$PATH:$(go env GOPATH)/bin:$(go env GOROOT)/bin:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin:$HOME/.dotnet/tools
 # export PATH=$PATH:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
@@ -253,4 +254,5 @@ export ATUIN_NOBIND="true"
 _evalcache atuin init zsh
 bindkey '^r' _atuin_search_widget
 
+eval "$(op completion zsh)"; compdef _op op
 

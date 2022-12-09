@@ -28,6 +28,8 @@ Plug 'fladson/vim-kitty'                            " Kitty syntax
 Plug 'romainl/vim-cool'                             " Search highlight helper
 Plug 'machakann/vim-highlightedyank'                " Show what I yanked
 Plug 'NoahTheDuke/vim-just'                         " Justfile support
+Plug 'fourjay/vim-hurl'                             " hurl support
+Plug 'terrastruct/d2-vim'                           " D2 support
 "Plug 'christoomey/vim-tmux-navigator'               " Tmux nav
 call plug#end()
 

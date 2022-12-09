@@ -214,6 +214,7 @@ case "$OSTYPE" in
 esac
 
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
+alias stack='C_INCLUDE_PATH="`xcrun --show-sdk-path`/usr/include/ffi" stack'
 
 function kubeon-ns () {
     export KUBE_PS1_NS_ENABLE=true
@@ -255,4 +256,4 @@ _evalcache atuin init zsh
 bindkey '^r' _atuin_search_widget
 
 eval "$(op completion zsh)"; compdef _op op
-
+export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"

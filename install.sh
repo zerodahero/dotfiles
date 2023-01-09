@@ -1,7 +1,9 @@
 #!/bin/bash
 
 ## Vim
-ln -si "$HOME/dotfiles/.vimrc" "$HOME/.vimrc"
+# ln -si "$HOME/dotfiles/.vimrc" "$HOME/.vimrc"
+mkdir -p "$HOME/.config"
+ln -si "$HOME/dotfiles/nvim" "$HOME/.config"
 
 ## ZSH
 ln -si "$HOME/dotfiles/.zshrc" "$HOME/.zshrc"

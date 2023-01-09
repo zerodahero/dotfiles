@@ -1,4 +1,3 @@
-zmodload zsh/zprof
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
@@ -75,7 +74,7 @@ source "$HOME/.zsh/lazy-loads/kubectl.zsh"
 # Add wisely, as too many plugins slow down shell startup.
 export NVM_LAZY_LOAD=true
 export NVM_COMPLETION=true
-plugins=(zsh-nvm git kube-ps1 evalcache git-trim zsh-z zsh-syntax-highlighting)
+plugins=(zsh-nvm git kube-ps1 evalcache git-trim brew zsh-syntax-highlighting)
 
 ZLE_REMOVE_SUFFIX_CHARS=""
 
@@ -90,7 +89,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
+   export EDITOR='nvim'
 # else
 #   export EDITOR='mvim'
 # fi
@@ -124,7 +123,7 @@ _evalcache thefuck --alias
 _evalcache direnv hook zsh
 
 # export GOPATH=$HOME/projects/golang
-export PATH=$PATH:$(go env GOPATH)/bin:$(go env GOROOT)/bin:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin:$HOME/.dotnet/tools
+export PATH=$PATH:$(go env GOPATH)/bin:$(go env GOROOT)/bin:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin:$HOME/.dotnet/tools:$HOME/.luarocks/bin
 # export PATH=$PATH:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
@@ -245,6 +244,7 @@ function awsctx () {
 }
 
 alias .j='just --justfile ~/.user.justfile --working-directory .'
+alias .c='just --justfile ~/.clock.justfile --working-directory .'
 
 alias go="grc go"
 
@@ -257,3 +257,5 @@ bindkey '^r' _atuin_search_widget
 
 eval "$(op completion zsh)"; compdef _op op
 export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"
+
+alias vim=nvim

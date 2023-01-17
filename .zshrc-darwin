@@ -1,7 +1,7 @@
 ## Darwin zshrc specifics
 
 # Fix for vim ctrl modifiers
-alias vim="stty stop '' -ixoff ; vim"
+alias vim="stty stop '' -ixoff ; nvim"
 # `Frozing' tty, so after any command terminal settings will be restored
 ttyctl -f
 
@@ -11,8 +11,15 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"  # This loads nvm
 [ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-function limelight-restart () {
-    #Limelight addon (Kill it and start it each time Yabai starts)
-    killall limelight &>/dev/null
-    limelight &>/dev/null &
-}
+# https://egeek.me/2020/04/18/enabling-locate-on-osx/
+if which glocate > /dev/null; then
+  alias locate="glocate -d $HOME/locatedb"
+
+  # Using cache_list requires `LOCATE_PATH` environment var to exist in session.
+  # trouble shoot: `echo $LOCATE_PATH` needs to return db path.
+  [[ -f "$HOME/locatedb" ]] && export LOCATE_PATH="$HOME/locatedb"
+fi
+
+alias loaddb="gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb"
+
+

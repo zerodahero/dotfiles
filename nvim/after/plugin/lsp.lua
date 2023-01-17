@@ -1,3 +1,5 @@
+require("neodev").setup()
+
 local lsp = require('lsp-zero')
 lsp.preset('recommended')
 
@@ -39,4 +41,13 @@ lsp.on_attach(function(client, bufnr)
   vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
 end)
 
+-- lsp.configure('intelephense', {
+--     settings = {
+--       intelephense = {
+--         licenceKey = '1234'
+--       }
+--     }
+--   })
+
 lsp.setup()
+

@@ -1,4 +1,3 @@
-
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -187,10 +186,10 @@ function jcat () {
     jq --color-output . $1 | less -R
 }
 
-export TODOTXT_DEFAULT_ACTION=ls
-alias t=todo.sh
-alias todo=todo.sh
-alias ta="todo.sh add"
+# export TODOTXT_DEFAULT_ACTION=ls
+# alias t=todo.sh
+# alias todo=todo.sh
+# alias ta="todo.sh add"
 
 setopt APPEND_HISTORY
 
@@ -259,3 +258,4 @@ eval "$(op completion zsh)"; compdef _op op
 export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"
 
 alias vim=nvim
+alias vimdiff='nvim -d'

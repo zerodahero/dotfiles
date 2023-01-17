@@ -8,4 +8,21 @@ vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 -- empty setup using defaults
-require("nvim-tree").setup()
+require("nvim-tree").setup({
+    actions = {
+      open_file = {
+        quit_on_open = true
+      }
+    }
+})
+
+-- Keys
+vim.keymap.set("n", "<leader>tc", ":NvimTreeCollapse<CR>")
+-- vim.keymap.set("n", "<leader>tm", ":NvimTreeFindFile<CR>")
+vim.keymap.set('n', '<C-Bslash>', function () 
+  if string.find(vim.fn.expand('%'), 'NvimTree_%d') then
+    vim.cmd.NvimTreeToggle()
+  else
+    vim.cmd.NvimTreeFindFile()
+  end
+end)

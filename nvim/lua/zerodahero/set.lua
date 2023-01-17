@@ -28,8 +28,6 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
 
-vim.g.mapleader = ","
-
 vim.opt.clipboard:append { "unnamed" }
 
 vim.cmd([[
@@ -37,3 +35,5 @@ vim.cmd([[
 ]])
 
 vim.opt.hidden = true
+
+vim.g.netrw_liststyle = 3

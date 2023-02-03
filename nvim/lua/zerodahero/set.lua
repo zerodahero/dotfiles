@@ -5,8 +5,11 @@ vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
+vim.opt.ignorecase = true
+vim.opt.cursorline = true
 
 vim.opt.smartindent = true
+vim.opt.autoindent = true
 
 vim.opt.wrap = false
 
@@ -37,3 +40,11 @@ vim.cmd([[
 vim.opt.hidden = true
 
 vim.g.netrw_liststyle = 3
+
+vim.opt.spell = true
+vim.opt.spelllang = "en_us"
+vim.opt.spellsuggest = "best,9"
+
+vim.g.load_doxygen_syntax=1
+vim.g.doxygen_enhanced_color=1
+

@@ -1,0 +1,9 @@
+{
+  "test": {
+    "prefix": "mf",
+    "body": [
+      "BANANA!!!"
+    ],
+    "description": "test of snips"
+  }
+}

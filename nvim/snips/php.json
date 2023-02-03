@@ -1,0 +1,174 @@
+{
+    "Constructor": {
+        "prefix": "constr",
+        "body": [
+            "public function __construct($1)",
+            "{",
+            "    parent::__construct();",
+            "    ${2:// do stuff}$3",
+            "}"
+        ],
+        "description": "Class constructor"
+    },
+    "Test Function": {
+        "prefix": "tfun",
+        "body": [
+            "/**",
+            " * @test",
+            " */",
+            "public function ${1:testDoesAThing}()",
+            "{",
+            "    ${2:$$this->markTestIncomplete();}$3",
+            "}"
+        ],
+        "description": "Creates a new test method"
+    },
+    "Invoke method": {
+        "prefix": "finv",
+        "body": [
+            "public function __invoke($1)",
+            "{",
+            "    ${2:// do stuff}$3",
+            "}"
+        ],
+        "description": "Creates a invoke method"
+    },
+    "Test Function with Group": {
+        "prefix": "tgfun",
+        "body": [
+            "/**",
+            " * @test",
+            " * @group ${1: test-group}",
+            " */",
+            "public function ${2:testDoesAThing}()",
+            "{",
+            "    ${3:$$this->markTestIncomplete();}$4",
+            "}"
+        ],
+        "description": "Creates a new test method with a group"
+    },
+    "Test setup method": {
+        "prefix": "tset",
+        "body": [
+            "protected function setUp(): void",
+            "{",
+            "    parent::setUp();",
+            "    ${1: // set things up}",
+            "}"
+        ],
+        "description": "PHPUnit setup method"
+    },
+    "Fancy Comment Block": {
+        "prefix": "comment-fancy",
+        "body": [
+            "/*",
+            "|--------------------------------------------------------------------------",
+            "| ${1:Fancy Comment Header}",
+            "|--------------------------------------------------------------------------",
+            "|",
+            "| ${2:Comments go here!}",
+            "|",
+            "*/"
+        ],
+        "description": "Fancy comment block"
+    },
+    "LogicException: Not Implemented": {
+        "prefix": "notimplem",
+        "body": [
+            "// TODO",
+            "throw new \\LogicException(__METHOD__ . 'Not implemented!');"
+        ],
+        "description": "Throws logic exception for not implemented"
+    },
+    "Test Incomplete TODO": {
+        "prefix": "ttodo",
+        "body": [
+            "// TODO",
+            "\\$this->markTestIncomplete('TODO');"
+        ],
+        "description": "Marks test as incomplete with TODO"
+    },
+    "Public Method": {
+        "prefix": "fun",
+        "body": [
+            "/**",
+            " * ${2:Does something}",
+            " */",
+            "public function $1()",
+            "{",
+            "    $0",
+            "}"
+        ],
+        "description": "Create new public method"
+    },
+    "Protected Method": {
+        "prefix": "pfun",
+        "body": [
+            "/**",
+            " * ${2:Does something protected}",
+            " */",
+            "protected function $1()",
+            "{",
+            "    $0",
+            "}"
+        ],
+        "description": "Create new protected method"
+    },
+    "Private Method": {
+        "prefix": "prfun",
+        "body": [
+            "/**",
+            " * ${2:Does something private}",
+            " */",
+            "private function $1()",
+            "{",
+            "    $0",
+            "}"
+        ],
+        "description": "Create new private method"
+    },
+    "DB Listen": {
+        "prefix": "dbdump",
+        "body": [
+            "\\Illuminate\\Support\\Facades\\DB::listen(function ($$query) { dump($$query->sql, $$query->bindings); });"
+        ],
+        "description": "Dump DB queries"
+    },
+    "New PHP Class": {
+        "prefix": "<?php",
+        "body": [
+            "<?php",
+            "",
+            "namespace ${RELATIVE_FILEPATH/(\\/)/\\\\/g};",
+            "",
+            "class ${TM_FILENAME_BASE}",
+            "{",
+            "    $0",
+            "}"
+        ],
+        "description": "Creates a New PHP Class File"
+    },
+    "New PHP Test Class": {
+        "prefix": "<?tphp",
+        "body": [
+            "<?php",
+            "",
+            "namespace ${RELATIVE_FILEPATH/(\\/)/\\\\/g};",
+            "",
+            "use Tests\\TestCase;",
+            "",
+            "class ${TM_FILENAME_BASE} extends TestCase",
+            "{",
+            "    $0",
+            "}"
+        ],
+        "description": "Creates a New PHP Test Class File"
+    },
+    "Namespace": {
+        "prefix": "nspc",
+        "body": [
+            "namespace ${RELATIVE_FILEPATH/(\\/)/\\\\/g};"
+        ],
+        "description": "Namespace guess"
+    }
+}

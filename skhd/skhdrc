@@ -92,5 +92,5 @@ alt - d : yabai -m window --focus stack.prev || yabai -m window --focus stack.la
 ## ScratchPad
 ctrl + cmd - 0x32 : id=$(yabai -m query --windows | jq -re '.[] | select(.title == "ScratchPad") | .id') && \
     yabai -m window --focus $id \
-    || kitty -T ScratchPad nvim -c "PencilSoft" ~/.scratchpad.md
+    || kitty -T ScratchPad nvim -c "PencilSoft" -c "lua vim.diagnostic.config({signs=false,underline=false})" ~/.scratchpad.md
 

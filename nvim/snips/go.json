@@ -1,0 +1,34 @@
+{
+  "Test Function With Cases": {
+    "prefix": "ttfun",
+    "body": [
+      "func ${1:TestSomeMethod}(t *testing.T) {",
+      "	cases := []struct {",
+      "		//",
+      "	}{",
+      "		//",
+      "	}",
+      "",
+      "	for _, test := range cases {",
+      "		t.Run(fmt.Sprintf(\"%s leads to  %s\", test.condition, test.expected), func(t *testing.T) {",
+      "			got := ${2:methodUnderTest}()",
+      "			if got != test.expected {",
+      "				t.Errorf(\"got %q, want %q\", got, test.expected)",
+      "			}",
+      "		})",
+      "	}",
+      "}"
+    ],
+    "description": "new test function with cases"
+  },
+  "Test Function (basic)": {
+    "prefix": "tfun",
+    "body": [
+      "func ${1:TestSomeMethod}(t *testing.T) {",
+      "    got := ${2:methodUnderTest}()",
+      "    assert.Equal(t, expected, got)",
+      "}"
+    ],
+    "description": "new test function"
+  }
+}

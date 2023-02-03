@@ -21,6 +21,8 @@ vim.keymap.set("n", "<leader>mf", vim.lsp.buf.format)
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+
 -- Save
 vim.keymap.set("i", "<C-s>", "<C-o>:update<CR>")
 vim.keymap.set("n", "<C-s>", ":<C-u>update<CR>")
@@ -47,3 +49,21 @@ vim.keymap.set('n', '<lt>', "<<", { noremap = true })
 
 -- winresizer
 vim.g.winresizer_start_key = "<leader>w"
+
+-- Pencil
+vim.keymap.set('n', '<leader>md', ':PencilToggle<CR>')
+
+-- No whitespace
+vim.keymap.set('n', '<leader>ds', ':TrailerTrim<CR>')
+
+-- buffers
+vim.keymap.set('n', 'L', ':bnext<cr>', { silent = true })
+vim.keymap.set('n', 'H', ':bprev<cr>', { silent = true })
+
+-- Delete current buffer and goes back to the previous one
+vim.keymap.set('n', '<Leader>qq',':Bdelete<cr>', { silent = true })
+vim.keymap.set('n', '<Leader>wq', function ()
+    vim.cmd('update')
+    vim.cmd('Bdelete')
+end, { silent = true })
+

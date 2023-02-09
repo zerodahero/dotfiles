@@ -66,4 +66,7 @@ vim.keymap.set('n', '<Leader>wq', function ()
     vim.cmd('update')
     vim.cmd('Bdelete')
 end, { silent = true })
-
+vim.keymap.set('n', '<Leader>qa',function()
+    vim.cmd(':bufdo :Bdelete')
+    vim.cmd(':NvimTreeFocus')
+end, { silent = true })

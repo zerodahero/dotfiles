@@ -31,7 +31,7 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
 
-vim.opt.clipboard:append { "unnamed" }
+vim.opt.clipboard:append{"unnamed"}
 
 vim.cmd([[
     au TextYankPost * silent! lua vim.highlight.on_yank {higroup="IncSearch", timeout=150}
@@ -45,6 +45,8 @@ vim.opt.spell = true
 vim.opt.spelllang = "en_us"
 vim.opt.spellsuggest = "best,9"
 
-vim.g.load_doxygen_syntax=1
-vim.g.doxygen_enhanced_color=1
+vim.g.load_doxygen_syntax = 1
+vim.g.doxygen_enhanced_color = 1
+
+vim.g.doge_mapping = '<leader>db'
 

@@ -1,8 +1,16 @@
 #!/bin/bash
 
-## Vim
+## Nvim
 mkdir -p "$HOME/.config"
 ln -si "$HOME/dotfiles/nvim" "$HOME/.config"
+
+## Global Formatters
+ln -si "$HOME/dotfiles/formatters/lua-format" "$HOME/.lua-format"
+ln -si "$HOME/dotfiles/formatters/markdownlint.yml" "$HOME/.markdownlint.yml"
+mkdir -p "$HOME/.config/yamllint"
+ln -si "$HOME/dotfiles/formatters/yamllint" "$HOME/.config/yamllint/config"
+mkdir -p "$HOME/.config/yamlfmt"
+ln -si "$HOME/dotfiles/formatters/yamlfmt" "$HOME/.config/yamlfmt/.yamlfmt"
 
 ## ZSH
 ln -si "$HOME/dotfiles/.zshrc" "$HOME/.zshrc"

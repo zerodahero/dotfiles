@@ -32,7 +32,7 @@ return require('packer').startup(function(use)
     -- })
 
     use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdateSync'})
-    use('theprimeagen/harpoon')
+    -- use('theprimeagen/harpoon')
     use('mbbill/undotree')
     use('tpope/vim-surround')
     use('tpope/vim-fugitive')
@@ -46,38 +46,36 @@ return require('packer').startup(function(use)
             -- LSP Support
             {'neovim/nvim-lspconfig'},
             {'williamboman/mason.nvim'},
-            {'williamboman/mason-lspconfig.nvim'},
-
-            -- Autocompletion
+            {'williamboman/mason-lspconfig.nvim'}, -- Autocompletion
             {'hrsh7th/nvim-cmp'},
             {'hrsh7th/cmp-buffer'},
             {'hrsh7th/cmp-path'},
             {'saadparwaiz1/cmp_luasnip'},
             {'hrsh7th/cmp-nvim-lsp'},
             {'hrsh7th/cmp-nvim-lsp-signature-help'},
-            {"windwp/nvim-autopairs"},
-
-            -- Snippets
-            { "L3MON4D3/LuaSnip", run = "make install_jsregexp" },
+            {
+                "windwp/nvim-autopairs",
+                config = function()
+                    require('nvim-autopairs').setup {}
+                end
+            }, -- Snippets
+            {"L3MON4D3/LuaSnip", run = "make install_jsregexp"},
             -- {'rafamadriz/friendly-snippets'},
 
             -- null-ls
             {"jose-elias-alvarez/null-ls.nvim"},
-            {"jay-babu/mason-null-ls.nvim"},
-
-            -- nvim lua config
-            {"folke/neodev.nvim"},
-
-            -- lsp status updates
+            {"jay-babu/mason-null-ls.nvim"}, -- nvim lua config
+            {"folke/neodev.nvim"}, -- lsp status updates
             {'j-hui/fidget.nvim'}
         }
     }
     use('Hoffs/omnisharp-extended-lsp.nvim')
     use {
         "benfowler/telescope-luasnip.nvim",
-        module = "telescope._extensions.luasnip",
+        module = "telescope._extensions.luasnip"
     }
     use('mfussenegger/nvim-dap')
+    use('ray-x/lsp_signature.nvim')
 
     use {
         'rmagatti/alternate-toggler',
@@ -141,27 +139,25 @@ return require('packer').startup(function(use)
 
     use('HiPhish/nvim-ts-rainbow2')
     use {
-      'nvim-neotest/neotest',
-      requires = {
-        'nvim-lua/plenary.nvim',
-        'nvim-treesitter/nvim-treesitter',
-        'antoinemadec/FixCursorHold.nvim',
-        'olimorris/neotest-phpunit',
-        'ChristianChiarulli/neovim-codicons'
-      }
+        'nvim-neotest/neotest',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'nvim-treesitter/nvim-treesitter',
+            'antoinemadec/FixCursorHold.nvim',
+            'olimorris/neotest-phpunit',
+            'ChristianChiarulli/neovim-codicons'
+        }
     }
     use {
-      "folke/twilight.nvim",
-      config = function()
-        require("twilight").setup {
-          -- your configuration comes here
-          -- or leave it empty to use the default settings
-          -- refer to the configuration section below
-        }
-      end
+        "folke/twilight.nvim",
+        config = function() require("twilight").setup {} end
     }
+    use {
+        "folke/zen-mode.nvim",
+        config = function() require("zen-mode").setup {} end
+    }
+    use {'kkoomen/vim-doge', run = ':call doge#install()'}
 
     -- Let's give this a shot?
     -- use('Exafunction/codeium.vim')
-
 end)

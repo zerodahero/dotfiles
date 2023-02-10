@@ -7,6 +7,10 @@
         "path": "./csharp.json"
       },
       {
+        "language": "just",
+        "path": "./just.json"
+      },
+      {
         "language": "lua",
         "path": "./lua.json"
       },

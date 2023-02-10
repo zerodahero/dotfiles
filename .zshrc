@@ -243,7 +243,7 @@ function awsctx () {
 }
 
 alias .j='just --justfile ~/.user.justfile --working-directory .'
-alias .c='just --justfile ~/.clock.justfile --working-directory .'
+alias .n='just --justfile ~/.dotnet.justfile --working-directory .'
 
 alias go="grc go"
 

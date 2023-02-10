@@ -1,0 +1,20 @@
+{
+  "default": {
+    "prefix": "def",
+    "body": [
+      "# List all the recipes",
+      "_default:",
+      "\t@just --list"
+    ],
+    "description": "Creates new default list recipe"
+  },
+  "recipe": {
+    "prefix": "rec",
+    "body": [
+      "# ${1:This recipe does something}",
+      "${2:name}:",
+      "\t${3:commands}"
+    ],
+    "description": "Create new recipe"
+  }
+}

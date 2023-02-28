@@ -8,10 +8,16 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-telescope/telescope.nvim',
-        tag = '0.1.0',
-        requires = {{'nvim-lua/plenary.nvim'}}
+        tag = '0.1.1',
+        requires = {
+            { 'nvim-lua/plenary.nvim' },
+            { 'nvim-telescope/telescope-ui-select.nvim' },
+        }
     }
-    use('cljoly/telescope-repo.nvim')
+
+    use { 'nvim-telescope/telescope-dap.nvim' }
+    use { 'gbrlsnchs/telescope-lsp-handlers.nvim' }
+    use { "keyvchan/telescope-find-pickers.nvim" }
 
     use({
         "EdenEast/nightfox.nvim",
@@ -31,7 +37,7 @@ return require('packer').startup(function(use)
     --     config = function () vim.cmd('colorscheme onedarker') end
     -- })
 
-    use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdateSync'})
+    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdateSync' })
     -- use('theprimeagen/harpoon')
     use('mbbill/undotree')
     use('tpope/vim-surround')
@@ -44,49 +50,59 @@ return require('packer').startup(function(use)
         'VonHeikemen/lsp-zero.nvim',
         requires = {
             -- LSP Support
-            {'neovim/nvim-lspconfig'},
-            {'williamboman/mason.nvim'},
-            {'williamboman/mason-lspconfig.nvim'}, -- Autocompletion
-            {'hrsh7th/nvim-cmp'},
-            {'hrsh7th/cmp-buffer'},
-            {'hrsh7th/cmp-path'},
-            {'saadparwaiz1/cmp_luasnip'},
-            {'hrsh7th/cmp-nvim-lsp'},
-            {'hrsh7th/cmp-nvim-lsp-signature-help'},
+            { 'neovim/nvim-lspconfig' },
+            { 'williamboman/mason.nvim' },
+            { 'williamboman/mason-lspconfig.nvim' },
+
+            -- Autocompletion
+            { 'hrsh7th/nvim-cmp' },
+            { 'hrsh7th/cmp-buffer' },
+            { 'hrsh7th/cmp-path' },
+            { 'saadparwaiz1/cmp_luasnip' },
+            { 'hrsh7th/cmp-nvim-lsp' },
+            { 'hrsh7th/cmp-nvim-lsp-signature-help' },
             {
                 "windwp/nvim-autopairs",
                 config = function()
-                    require('nvim-autopairs').setup {}
+                    require('nvim-autopairs').setup {
+                        enable_moveright = false
+                    }
                 end
-            }, -- Snippets
-            {"L3MON4D3/LuaSnip", run = "make install_jsregexp"},
+            },
+
+            -- Snippets
+            { "L3MON4D3/LuaSnip",               run = "make install_jsregexp" },
             -- {'rafamadriz/friendly-snippets'},
 
             -- null-ls
-            {"jose-elias-alvarez/null-ls.nvim"},
-            {"jay-babu/mason-null-ls.nvim"}, -- nvim lua config
-            {"folke/neodev.nvim"}, -- lsp status updates
-            {'j-hui/fidget.nvim'}
+            { "jose-elias-alvarez/null-ls.nvim" },
+            { "jay-babu/mason-null-ls.nvim" },
+
+            -- nvim lua config
+            { "folke/neodev.nvim" },
+
+            -- lsp status updates
+            { 'j-hui/fidget.nvim' }
         }
     }
-    use('Hoffs/omnisharp-extended-lsp.nvim')
+    use { 'Hoffs/omnisharp-extended-lsp.nvim' }
     use {
         "benfowler/telescope-luasnip.nvim",
         module = "telescope._extensions.luasnip"
     }
-    use('mfussenegger/nvim-dap')
-    use('ray-x/lsp_signature.nvim')
+    use { 'adoyle-h/lsp-toggle.nvim' }
+    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
+    use { 'ray-x/lsp_signature.nvim' }
 
     use {
         'rmagatti/alternate-toggler',
         config = function()
-            vim.keymap.set("n", "<leader>b",
-                           "<cmd>lua require('alternate-toggler').toggleAlternate()<CR>")
+            vim.keymap.set("n", "<leader>b", function() require('alternate-toggler').toggleAlternate() end)
         end,
-        event = {"BufReadPost"} -- lazy load after reading a buffer
+        event = { "BufReadPost" } -- lazy load after reading a buffer
     }
 
-    use('preservim/vim-pencil')
+    use { 'preservim/vim-pencil' }
 
     use {
         'nvim-tree/nvim-tree.lua',
@@ -96,7 +112,7 @@ return require('packer').startup(function(use)
     }
     use {
         'nvim-lualine/lualine.nvim',
-        requires = {'kyazdani42/nvim-web-devicons', opt = true}
+        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
     }
     use {
         'akinsho/bufferline.nvim',
@@ -105,9 +121,9 @@ return require('packer').startup(function(use)
     }
 
     -- use('nanozuki/tabby.nvim')
-    use('simeji/winresizer')
-    use('mg979/vim-visual-multi')
-    use('sheerun/vim-polyglot')
+    use { 'simeji/winresizer' }
+    use { 'mg979/vim-visual-multi' }
+    use { 'sheerun/vim-polyglot' }
 
     use {
         'glacambre/firenvim',
@@ -125,16 +141,19 @@ return require('packer').startup(function(use)
         config = function()
             require("auto-save").setup {
                 enabled = false,
-                trigger_events = {"TextChanged"},
+                trigger_events = { "TextChanged" },
                 debounce_delay = 1000
             }
         end
     })
 
+    -- Little floating window with file name
     use('b0o/incline.nvim')
 
+    -- Removes trailing space
     use('csexton/trailertrash.vim')
-    -- use('johann2357/nvim-smartbufs')
+
+    -- Buffer closing without closing windows
     use('moll/vim-bbye')
 
     use('HiPhish/nvim-ts-rainbow2')
@@ -143,8 +162,9 @@ return require('packer').startup(function(use)
         requires = {
             'nvim-lua/plenary.nvim',
             'nvim-treesitter/nvim-treesitter',
-            'antoinemadec/FixCursorHold.nvim',
+            -- 'antoinemadec/FixCursorHold.nvim', -- supposedly no needed anymore?
             'olimorris/neotest-phpunit',
+            'Issafalcon/neotest-dotnet',
             'ChristianChiarulli/neovim-codicons'
         }
     }
@@ -156,8 +176,7 @@ return require('packer').startup(function(use)
         "folke/zen-mode.nvim",
         config = function() require("zen-mode").setup {} end
     }
-    use {'kkoomen/vim-doge', run = ':call doge#install()'}
 
-    -- Let's give this a shot?
-    -- use('Exafunction/codeium.vim')
+    -- DOcument GEnterator (docblocks, etc)
+    use { 'kkoomen/vim-doge', run = ':call doge#install()' }
 end)

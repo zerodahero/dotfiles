@@ -1,0 +1,124 @@
+{
+  "Version": {
+    "prefix": "ver",
+    "body": [
+      "version: '${1:3}'"
+    ],
+    "description": ""
+  },
+  "Volumes": {
+    "prefix": "volumes",
+    "body": [
+      "volumes:",
+      "\t\t- ${1:value}"
+    ],
+    "description": ""
+  },
+  "Services": {
+    "prefix": "ser",
+    "body": [
+      "services:",
+      "\t\t${1:name}"
+    ],
+    "description": ""
+  },
+  "Build": {
+    "prefix": "bu",
+    "body": [
+      "build:",
+      "\t\t${1:value}"
+    ],
+    "description": ""
+  },
+  "Context": {
+    "prefix": "conte",
+    "body": [
+      "context: ${1:dir}"
+    ],
+    "description": ""
+  },
+  "Command": {
+    "prefix": "com",
+    "body": [
+      "command: ${1:command}"
+    ],
+    "description": ""
+  },
+  "Depends on": {
+    "prefix": "dep",
+    "body": [
+      "depends_on:",
+      "\t\t${1:value}"
+    ],
+    "description": ""
+  },
+  "Environment": {
+    "prefix": "env",
+    "body": [
+      "environment:",
+      "\t\t${1:name}: ${2:value}"
+    ],
+    "description": ""
+  },
+  "Dockerfile": {
+    "prefix": "doc",
+    "body": [
+      "dockerfile: ${1:file}"
+    ],
+    "description": ""
+  },
+  "Args": {
+    "prefix": "ar",
+    "body": [
+      "args:",
+      "\t\t${1:name}: ${2:value}"
+    ],
+    "description": ""
+  },
+  "Entrypoint": {
+    "prefix": "ent",
+    "body": [
+      "entrypoint: ${1:command}"
+    ],
+    "description": ""
+  },
+  "Env File": {
+    "prefix": "env_",
+    "body": [
+      "env_file:",
+      "\t\t- ${1:file}"
+    ],
+    "description": ""
+  },
+  "Expose": {
+    "prefix": "exp",
+    "body": [
+      "expose:",
+      "\t\t- ${1:port}"
+    ],
+    "description": ""
+  },
+  "Image": {
+    "prefix": "im",
+    "body": [
+      "image: ${1:image}"
+    ],
+    "description": ""
+  },
+  "Labels": {
+    "prefix": "la",
+    "body": [
+      "labels:",
+      "\t\t${1:dns}: ${2:label}"
+    ],
+    "description": ""
+  },
+  "Ports": {
+    "prefix": "po",
+    "body": [
+      "ports:",
+      "\t\t- ${1:value}"
+    ],
+    "description": ""
+  }
+}

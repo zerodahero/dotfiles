@@ -3,7 +3,7 @@
   "contributes": {
     "snippets": [
       {
-        "language": "csharp",
+        "language": ["csharp", "cs"],
         "path": "./csharp.json"
       },
       {
@@ -21,6 +21,14 @@
       {
         "language": "php",
         "path": "./php.json"
+      },
+      {
+        "language": "yaml",
+        "path": "./docker-compose.json"
+      },
+      {
+        "language": "dockerfile",
+        "path": "./docker-file.json"
       }
     ]
   }

@@ -8,8 +8,11 @@ vim.opt.termguicolors = true
 
 -- empty setup using defaults
 require("nvim-tree").setup({
-    actions = {open_file = {quit_on_open = true}},
-    git = {ignore = false}
+    actions = { open_file = { quit_on_open = true } },
+    git = {
+        -- enable = false,
+        ignore = false
+    }
 })
 
 -- Keys
@@ -28,7 +31,7 @@ end)
 
 local api = require("nvim-tree.api")
 api.events.subscribe(api.events.Event.FileCreated,
-                     function(file) vim.cmd("edit " .. file.fname) end)
+    function(file) vim.cmd("edit " .. file.fname) end)
 
 local function open_nvim_tree(data)
     -- buffer is a directory
@@ -42,7 +45,7 @@ local function open_nvim_tree(data)
     -- open the tree
     require("nvim-tree.api").tree.open()
 end
-vim.api.nvim_create_autocmd({"VimEnter"}, {callback = open_nvim_tree})
+vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
 
 vim.api.nvim_create_autocmd("BufEnter", {
     nested = true,

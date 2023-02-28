@@ -1,5 +1,7 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
+eval "$(brew shellenv)"
+fpath=($HOMEBREW_PREFIX/share/zsh/site-functions $fpath)
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -259,3 +261,5 @@ export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"
 
 alias vim=nvim
 alias vimdiff='nvim -d'
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

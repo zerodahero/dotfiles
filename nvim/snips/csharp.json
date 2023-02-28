@@ -13,13 +13,9 @@
     "prefix": "tmet",
     "body": [
       "[Fact]",
-      "public void ${1:TestName}()",
+      "public void ${1:SomeThing_WhenState_DoesStuff}()",
       "{",
-      "//Given",
-      "",
-      "//When",
-      "",
-      "//Then",
+      "\t${2://}",
       "}$0"
     ],
     "description": "create xunit test method"

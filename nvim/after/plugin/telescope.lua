@@ -3,7 +3,11 @@ local builtin = require('telescope.builtin')
 
 telescope.setup {
     pickers = {
-        find_files = {no_ignore = false, path_display = {'truncate'}},
+        find_files = {
+            hidden = true,
+            no_ignore = false,
+            path_display = {'truncate'},
+        },
         oldfiles = {sort_mru = true, ignore_current_buffer = true},
     },
     extensions = {

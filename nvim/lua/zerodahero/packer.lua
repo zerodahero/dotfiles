@@ -10,19 +10,19 @@ return require('packer').startup(function(use)
         'nvim-telescope/telescope.nvim',
         tag = '0.1.1',
         requires = {
-            { 'nvim-lua/plenary.nvim' },
-            { 'nvim-telescope/telescope-ui-select.nvim' },
-        }
+            {'nvim-lua/plenary.nvim'},
+            {'nvim-telescope/telescope-ui-select.nvim'},
+        },
     }
 
-    use { 'nvim-telescope/telescope-dap.nvim' }
-    use { 'gbrlsnchs/telescope-lsp-handlers.nvim' }
-    use { "keyvchan/telescope-find-pickers.nvim" }
+    use {'nvim-telescope/telescope-dap.nvim'}
+    use {'gbrlsnchs/telescope-lsp-handlers.nvim'}
+    use {'keyvchan/telescope-find-pickers.nvim'}
 
     use({
-        "EdenEast/nightfox.nvim",
-        as = "nightfox",
-        config = function() vim.cmd('colorscheme carbonfox') end
+        'EdenEast/nightfox.nvim',
+        as = 'nightfox',
+        config = function() vim.cmd('colorscheme carbonfox') end,
     })
     -- use({
     --     'folke/tokyonight.nvim',
@@ -37,11 +37,12 @@ return require('packer').startup(function(use)
     --     config = function () vim.cmd('colorscheme onedarker') end
     -- })
 
-    use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdateSync' })
+    use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdateSync'})
     -- use('theprimeagen/harpoon')
     use('mbbill/undotree')
     use('tpope/vim-surround')
     use('tpope/vim-fugitive')
+    use('APZelos/blamer.nvim')
     use('tpope/tpope-vim-abolish')
     -- use('tpope/vim-sleuth')
     use('tpope/vim-commentary')
@@ -50,101 +51,101 @@ return require('packer').startup(function(use)
         'VonHeikemen/lsp-zero.nvim',
         requires = {
             -- LSP Support
-            { 'neovim/nvim-lspconfig' },
-            { 'williamboman/mason.nvim' },
-            { 'williamboman/mason-lspconfig.nvim' },
+            {'neovim/nvim-lspconfig'},
+            {'williamboman/mason.nvim'},
+            {'williamboman/mason-lspconfig.nvim'},
 
             -- Autocompletion
-            { 'hrsh7th/nvim-cmp' },
-            { 'hrsh7th/cmp-buffer' },
-            { 'hrsh7th/cmp-path' },
-            { 'saadparwaiz1/cmp_luasnip' },
-            { 'hrsh7th/cmp-nvim-lsp' },
-            { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+            {'hrsh7th/nvim-cmp'},
+            {'hrsh7th/cmp-buffer'},
+            {'hrsh7th/cmp-path'},
+            {'saadparwaiz1/cmp_luasnip'},
+            {'hrsh7th/cmp-nvim-lsp'},
+            {'hrsh7th/cmp-nvim-lsp-signature-help'},
             {
-                "windwp/nvim-autopairs",
+                'windwp/nvim-autopairs',
                 config = function()
-                    require('nvim-autopairs').setup {
-                        enable_moveright = false
-                    }
-                end
+                    require('nvim-autopairs').setup {enable_moveright = true}
+                end,
             },
 
             -- Snippets
-            { "L3MON4D3/LuaSnip",               run = "make install_jsregexp" },
+            {'L3MON4D3/LuaSnip', run = 'make install_jsregexp'},
             -- {'rafamadriz/friendly-snippets'},
 
             -- null-ls
-            { "jose-elias-alvarez/null-ls.nvim" },
-            { "jay-babu/mason-null-ls.nvim" },
+            {'jose-elias-alvarez/null-ls.nvim'},
+            {'jay-babu/mason-null-ls.nvim'},
 
             -- nvim lua config
-            { "folke/neodev.nvim" },
+            {'folke/neodev.nvim'},
 
             -- lsp status updates
-            { 'j-hui/fidget.nvim' }
-        }
+            {'j-hui/fidget.nvim'},
+        },
     }
-    use { 'Hoffs/omnisharp-extended-lsp.nvim' }
+    use {'Hoffs/omnisharp-extended-lsp.nvim'}
     use {
-        "benfowler/telescope-luasnip.nvim",
-        module = "telescope._extensions.luasnip"
+        'benfowler/telescope-luasnip.nvim',
+        module = 'telescope._extensions.luasnip',
     }
-    use { 'adoyle-h/lsp-toggle.nvim' }
-    use { "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } }
-    use { 'ray-x/lsp_signature.nvim' }
+    use {'adoyle-h/lsp-toggle.nvim'}
+    use {'rcarriga/nvim-dap-ui', requires = {'mfussenegger/nvim-dap'}}
+    use {'ray-x/lsp_signature.nvim'}
 
     use {
         'rmagatti/alternate-toggler',
         config = function()
-            vim.keymap.set("n", "<leader>b", function() require('alternate-toggler').toggleAlternate() end)
+            vim.keymap.set('n', '<leader>b', function()
+                require('alternate-toggler').toggleAlternate()
+            end)
         end,
-        event = { "BufReadPost" } -- lazy load after reading a buffer
+        event = {'BufReadPost'}, -- lazy load after reading a buffer
     }
 
-    use { 'preservim/vim-pencil' }
+    use {'preservim/vim-pencil'}
 
     use {
         'nvim-tree/nvim-tree.lua',
         requires = {
-            'nvim-tree/nvim-web-devicons' -- optional, for file icons
-        }
+            'nvim-tree/nvim-web-devicons', -- optional, for file icons
+        },
     }
     use {
         'nvim-lualine/lualine.nvim',
-        requires = { 'kyazdani42/nvim-web-devicons', opt = true }
+        requires = {'kyazdani42/nvim-web-devicons', opt = true},
     }
     use {
         'akinsho/bufferline.nvim',
-        tag = "v3.*",
-        requires = 'nvim-tree/nvim-web-devicons'
+        tag = 'v3.*',
+        requires = 'nvim-tree/nvim-web-devicons',
     }
 
     -- use('nanozuki/tabby.nvim')
-    use { 'simeji/winresizer' }
-    use { 'mg979/vim-visual-multi' }
-    use { 'sheerun/vim-polyglot' }
+    use {'simeji/winresizer'}
+    use {'mg979/vim-visual-multi'}
+    use {'sheerun/vim-polyglot'}
 
     use {
         'glacambre/firenvim',
-        run = function() vim.fn['firenvim#install'](0) end
+        run = function() vim.fn['firenvim#install'](0) end,
     }
 
     use {
-        "folke/trouble.nvim",
-        requires = "kyazdani42/nvim-web-devicons",
-        config = function() require("trouble").setup {} end
+        'folke/trouble.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function() require('trouble').setup {} end,
     }
 
     use({
-        "Pocco81/auto-save.nvim",
+        'Pocco81/auto-save.nvim',
         config = function()
-            require("auto-save").setup {
+            require('auto-save').setup {
                 enabled = false,
-                trigger_events = { "TextChanged" },
-                debounce_delay = 1000
+                trigger_events = {'TextChanged'},
+                debounce_delay = 1000,
             }
-        end
+        end,
     })
 
     -- Little floating window with file name
@@ -165,18 +166,18 @@ return require('packer').startup(function(use)
             -- 'antoinemadec/FixCursorHold.nvim', -- supposedly no needed anymore?
             'olimorris/neotest-phpunit',
             'Issafalcon/neotest-dotnet',
-            'ChristianChiarulli/neovim-codicons'
-        }
+            'ChristianChiarulli/neovim-codicons',
+        },
     }
     use {
-        "folke/twilight.nvim",
-        config = function() require("twilight").setup {} end
+        'folke/twilight.nvim',
+        config = function() require('twilight').setup {} end,
     }
     use {
-        "folke/zen-mode.nvim",
-        config = function() require("zen-mode").setup {} end
+        'folke/zen-mode.nvim',
+        config = function() require('zen-mode').setup {} end,
     }
 
     -- DOcument GEnterator (docblocks, etc)
-    use { 'kkoomen/vim-doge', run = ':call doge#install()' }
+    use {'kkoomen/vim-doge', run = ':call doge#install()'}
 end)

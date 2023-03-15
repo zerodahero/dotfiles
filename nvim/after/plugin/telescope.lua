@@ -9,6 +9,11 @@ telescope.setup {
             path_display = {'truncate'},
         },
         oldfiles = {sort_mru = true, ignore_current_buffer = true},
+        live_grep = {
+            additional_args = {
+                "-i"
+            }
+        }
     },
     extensions = {
         -- repo = { list = { search_dirs = { "~/projects" } } }
@@ -44,7 +49,7 @@ vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fj', builtin.jumplist, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 vim.keymap.set('n', '<leader>fc', builtin.commands, {})
-vim.keymap.set('n', '<leader>fs', '<cmd>Telescope luasnip<cr>', {})
+vim.keymap.set('n', '<leader>fs', '<cmd>Telescope luasnip<cr>', {silent = true})
 vim.keymap.set('n', '<leader>fo', builtin.oldfiles, {})
 -- Attempts to find the matching test or file
 vim.keymap.set('n', '<leader>ft', function()
@@ -59,3 +64,4 @@ end, {})
 vim.keymap.set('n', '<leader>ss', builtin.spell_suggest, {})
 vim.keymap
     .set('n', '<leader>fp', telescope.extensions.find_pickers.find_pickers)
+vim.keymap.set('n', '<leader>fn', '<cmd>TodoTelescope<cr>', {silent = true})

@@ -29,7 +29,7 @@ vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
 
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "100"
 
 vim.opt.clipboard:append{"unnamed"}
 
@@ -49,4 +49,3 @@ vim.g.load_doxygen_syntax = 1
 vim.g.doxygen_enhanced_color = 1
 
 vim.g.doge_mapping = '<leader>db'
-

@@ -26,6 +26,7 @@ vim.keymap.set('n', '<C-Bslash>', function()
         vim.cmd.NvimTreeToggle()
     else
         vim.cmd.NvimTreeFindFile()
+        vim.cmd.NvimTreeFocus()
     end
 end)
 

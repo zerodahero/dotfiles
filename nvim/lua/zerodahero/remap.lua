@@ -55,7 +55,8 @@ vim.g.winresizer_start_key = "<leader>w"
 vim.keymap.set('n', '<leader>md', ':PencilToggle<CR>')
 
 -- No whitespace
-vim.keymap.set('n', '<leader>ds', ':TrailerTrim<CR>')
+-- vim.keymap.set('n', '<leader>ds', ':TrailerTrim<CR>')
+vim.keymap.set('n', '<leader>ds', function () require('mini.trailspace').trim() end)
 
 -- buffers
 vim.keymap.set('n', 'L', ':bnext<cr>', { silent = true })

@@ -3,6 +3,10 @@
   "contributes": {
     "snippets": [
       {
+        "language": ["d2"],
+        "path": "./d2.json"
+      },
+      {
         "language": ["csharp", "cs"],
         "path": "./csharp.json"
       },

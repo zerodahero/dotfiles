@@ -1,0 +1,12 @@
+{
+  "default": {
+    "prefix": "sql",
+    "body": [
+      "${1:table}: {",
+      "\tshape: sql_table",
+      "\tid: uuid",
+      "}"
+    ],
+    "description": "Creates a new SQL table (shape)"
+  }
+}

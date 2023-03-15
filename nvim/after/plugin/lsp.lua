@@ -11,8 +11,8 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
     ['<C-y>'] = cmp.mapping.confirm({select = true}),
     ['<C-Space>'] = cmp.mapping.complete(),
 })
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+-- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+-- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
 -- disable completion with tab
 -- this helps with copilot setup
@@ -59,6 +59,11 @@ lsp.configure('omnisharp', {
 lsp.nvim_workspace();
 
 lsp.setup()
+
+vim.diagnostic.config({
+    virtual_text = false,
+    underline = {severity = vim.diagnostic.severity.ERROR},
+})
 
 local null_ls = require('null-ls')
 local null_opts = lsp.build_options('null-ls', {})

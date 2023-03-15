@@ -45,7 +45,7 @@ return require('packer').startup(function(use)
     use('APZelos/blamer.nvim')
     use('tpope/tpope-vim-abolish')
     -- use('tpope/vim-sleuth')
-    use('tpope/vim-commentary')
+    -- use('tpope/vim-commentary')
 
     use {
         'VonHeikemen/lsp-zero.nvim',
@@ -62,12 +62,12 @@ return require('packer').startup(function(use)
             {'saadparwaiz1/cmp_luasnip'},
             {'hrsh7th/cmp-nvim-lsp'},
             {'hrsh7th/cmp-nvim-lsp-signature-help'},
-            {
-                'windwp/nvim-autopairs',
-                config = function()
-                    require('nvim-autopairs').setup {enable_moveright = true}
-                end,
-            },
+            -- {
+            --     'windwp/nvim-autopairs',
+            --     config = function()
+            --         require('nvim-autopairs').setup {enable_moveright = true}
+            --     end,
+            -- },
 
             -- Snippets
             {'L3MON4D3/LuaSnip', run = 'make install_jsregexp'},
@@ -126,6 +126,8 @@ return require('packer').startup(function(use)
     use {'mg979/vim-visual-multi'}
     use {'sheerun/vim-polyglot'}
 
+    use {'echasnovski/mini.nvim'}
+
     use {
         'glacambre/firenvim',
         run = function() vim.fn['firenvim#install'](0) end,
@@ -152,7 +154,7 @@ return require('packer').startup(function(use)
     use('b0o/incline.nvim')
 
     -- Removes trailing space
-    use('csexton/trailertrash.vim')
+    -- use('csexton/trailertrash.vim')
 
     -- Buffer closing without closing windows
     use('moll/vim-bbye')
@@ -180,4 +182,18 @@ return require('packer').startup(function(use)
 
     -- DOcument GEnterator (docblocks, etc)
     use {'kkoomen/vim-doge', run = ':call doge#install()'}
+
+    use {
+        'folke/todo-comments.nvim',
+        requires = 'nvim-lua/plenary.nvim',
+        config = function()
+            require('todo-comments').setup {
+                -- your configuration comes here
+                -- or leave it empty to use the default settings
+                -- refer to the configuration section below
+            }
+        end,
+    }
+
+    use('terrastruct/d2-vim')
 end)

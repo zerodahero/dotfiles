@@ -53,6 +53,8 @@ vim.g.winresizer_start_key = "<leader>w"
 
 -- Pencil
 vim.keymap.set('n', '<leader>md', ':PencilToggle<CR>')
+-- ZenMode
+vim.keymap.set('n', '<leader>mz', ':ZenMode<CR>')
 
 -- No whitespace
 -- vim.keymap.set('n', '<leader>ds', ':TrailerTrim<CR>')

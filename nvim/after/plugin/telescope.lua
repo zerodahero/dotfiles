@@ -65,3 +65,4 @@ vim.keymap.set('n', '<leader>ss', builtin.spell_suggest, {})
 vim.keymap
     .set('n', '<leader>fp', telescope.extensions.find_pickers.find_pickers)
 vim.keymap.set('n', '<leader>fn', '<cmd>TodoTelescope<cr>', {silent = true})
+vim.keymap.set('n', '<leader>fd', telescope.extensions.dict.synonyms)

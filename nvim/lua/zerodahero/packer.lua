@@ -52,7 +52,7 @@ return require('packer').startup(function(use)
         requires = {
             -- LSP Support
             {'neovim/nvim-lspconfig'},
-            {'williamboman/mason.nvim'},
+            {'williamboman/mason.nvim', run = ":MasonUpdate"},
             {'williamboman/mason-lspconfig.nvim'},
 
             -- Autocompletion
@@ -103,7 +103,12 @@ return require('packer').startup(function(use)
         event = {'BufReadPost'}, -- lazy load after reading a buffer
     }
 
+    -- Configured in prose.lua
     use {'preservim/vim-pencil'}
+    use {'preservim/vim-wordy'}
+    use {'rudism/telescope-dict.nvim'}
+    use {'dbmrq/vim-ditto'}
+    -- use {'preservim/vim-lexical'}
 
     use {
         'nvim-tree/nvim-tree.lua',
@@ -121,7 +126,6 @@ return require('packer').startup(function(use)
         requires = 'nvim-tree/nvim-web-devicons',
     }
 
-    -- use('nanozuki/tabby.nvim')
     use {'simeji/winresizer'}
     use {'mg979/vim-visual-multi'}
     use {'sheerun/vim-polyglot'}
@@ -152,9 +156,6 @@ return require('packer').startup(function(use)
 
     -- Little floating window with file name
     use('b0o/incline.nvim')
-
-    -- Removes trailing space
-    -- use('csexton/trailertrash.vim')
 
     -- Buffer closing without closing windows
     use('moll/vim-bbye')

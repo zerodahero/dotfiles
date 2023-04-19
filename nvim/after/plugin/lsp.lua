@@ -81,10 +81,8 @@ require('mason-null-ls').setup({
     ensure_installed = nil,
     automatic_installation = true,
     automatic_setup = true,
+    handlers = {},
 })
-
--- Required when `automatic_setup` is true
-require('mason-null-ls').setup_handlers({})
 
 require('fidget').setup()
 

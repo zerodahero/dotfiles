@@ -32,6 +32,22 @@ lsp.on_attach(function(client, bufnr)
         vim.cmd.LspStop('eslint')
         return
     end
+    if client.name == 'omnisharp' then
+        -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483#issuecomment-1492605642
+        local tokenModifiers = client.server_capabilities.semanticTokensProvider
+                                   .legend.tokenModifiers
+        for i, v in ipairs(tokenModifiers) do
+            tmp = string.gsub(v, ' ', '_')
+            tokenModifiers[i] = string.gsub(tmp, '-_', '')
+        end
+        local tokenTypes = client.server_capabilities.semanticTokensProvider
+                               .legend.tokenTypes
+        for i, v in ipairs(tokenTypes) do
+            tmp = string.gsub(v, ' ', '_')
+            tokenTypes[i] = string.gsub(tmp, '-_', '')
+        end
+        on_attach(client, bufnr)
+    end
 
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)

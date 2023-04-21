@@ -38,6 +38,7 @@ return require('packer').startup(function(use)
     -- })
 
     use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdateSync'})
+    use('JoosepAlviste/nvim-ts-context-commentstring')
     -- use('theprimeagen/harpoon')
     use('mbbill/undotree')
     use('tpope/vim-surround')

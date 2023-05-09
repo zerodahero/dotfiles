@@ -74,3 +74,5 @@ vim.keymap.set('n', '<Leader>qa',function()
     vim.cmd(':bufdo :Bdelete')
     vim.cmd(':NvimTreeFocus')
 end, { silent = true })
+
+vim.g.doge_mapping = '<leader>db'

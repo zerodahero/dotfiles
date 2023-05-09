@@ -22,7 +22,7 @@ return require('packer').startup(function(use)
     use({
         'EdenEast/nightfox.nvim',
         as = 'nightfox',
-        config = function() vim.cmd('colorscheme carbonfox') end,
+        -- config = function() vim.cmd('colorscheme carbonfox') end,
     })
     -- use({
     --     'folke/tokyonight.nvim',
@@ -43,17 +43,21 @@ return require('packer').startup(function(use)
     use('mbbill/undotree')
     use('tpope/vim-surround')
     use('tpope/vim-fugitive')
+    use {'akinsho/git-conflict.nvim', tag = "*", config = function()
+      require('git-conflict').setup()
+    end}
     use('APZelos/blamer.nvim')
     use('tpope/tpope-vim-abolish')
     -- use('tpope/vim-sleuth')
     -- use('tpope/vim-commentary')
+    use('editorconfig/editorconfig-vim')
 
     use {
         'VonHeikemen/lsp-zero.nvim',
         requires = {
             -- LSP Support
             {'neovim/nvim-lspconfig'},
-            {'williamboman/mason.nvim', run = ":MasonUpdate"},
+            {'williamboman/mason.nvim', run = ':MasonUpdate'},
             {'williamboman/mason-lspconfig.nvim'},
 
             -- Autocompletion
@@ -83,6 +87,9 @@ return require('packer').startup(function(use)
 
             -- lsp status updates
             {'j-hui/fidget.nvim'},
+
+            -- lsp overloads
+            {'Issafalcon/lsp-overloads.nvim'},
         },
     }
     use {'Hoffs/omnisharp-extended-lsp.nvim'}
@@ -198,4 +205,7 @@ return require('packer').startup(function(use)
     }
 
     use('terrastruct/d2-vim')
+
+    -- codium
+    use('Exafunction/codeium.vim')
 end)

@@ -263,3 +263,5 @@ alias vim=nvim
 alias vimdiff='nvim -d'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/homebrew/bin/bit bit

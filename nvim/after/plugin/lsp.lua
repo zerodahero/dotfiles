@@ -32,21 +32,83 @@ lsp.on_attach(function(client, bufnr)
         vim.cmd.LspStop('eslint')
         return
     end
+    -- Workaround for semantic token issue with omnisharp-roslyn
+    -- See https://github.com/OmniSharp/omnisharp-roslyn/issues/2483
     if client.name == 'omnisharp' then
-        -- https://github.com/OmniSharp/omnisharp-roslyn/issues/2483#issuecomment-1492605642
-        local tokenModifiers = client.server_capabilities.semanticTokensProvider
-                                   .legend.tokenModifiers
-        for i, v in ipairs(tokenModifiers) do
-            tmp = string.gsub(v, ' ', '_')
-            tokenModifiers[i] = string.gsub(tmp, '-_', '')
-        end
-        local tokenTypes = client.server_capabilities.semanticTokensProvider
-                               .legend.tokenTypes
-        for i, v in ipairs(tokenTypes) do
-            tmp = string.gsub(v, ' ', '_')
-            tokenTypes[i] = string.gsub(tmp, '-_', '')
-        end
-        on_attach(client, bufnr)
+        client.server_capabilities.semanticTokensProvider = {
+            full = vim.empty_dict(),
+            legend = {
+                tokenModifiers = {'static_symbol'},
+                tokenTypes = {
+                    'comment',
+                    'excluded_code',
+                    'identifier',
+                    'keyword',
+                    'keyword_control',
+                    'number',
+                    'operator',
+                    'operator_overloaded',
+                    'preprocessor_keyword',
+                    'string',
+                    'whitespace',
+                    'text',
+                    'static_symbol',
+                    'preprocessor_text',
+                    'punctuation',
+                    'string_verbatim',
+                    'string_escape_character',
+                    'class_name',
+                    'delegate_name',
+                    'enum_name',
+                    'interface_name',
+                    'module_name',
+                    'struct_name',
+                    'type_parameter_name',
+                    'field_name',
+                    'enum_member_name',
+                    'constant_name',
+                    'local_name',
+                    'parameter_name',
+                    'method_name',
+                    'extension_method_name',
+                    'property_name',
+                    'event_name',
+                    'namespace_name',
+                    'label_name',
+                    'xml_doc_comment_attribute_name',
+                    'xml_doc_comment_attribute_quotes',
+                    'xml_doc_comment_attribute_value',
+                    'xml_doc_comment_cdata_section',
+                    'xml_doc_comment_comment',
+                    'xml_doc_comment_delimiter',
+                    'xml_doc_comment_entity_reference',
+                    'xml_doc_comment_name',
+                    'xml_doc_comment_processing_instruction',
+                    'xml_doc_comment_text',
+                    'xml_literal_attribute_name',
+                    'xml_literal_attribute_quotes',
+                    'xml_literal_attribute_value',
+                    'xml_literal_cdata_section',
+                    'xml_literal_comment',
+                    'xml_literal_delimiter',
+                    'xml_literal_embedded_expression',
+                    'xml_literal_entity_reference',
+                    'xml_literal_name',
+                    'xml_literal_processing_instruction',
+                    'xml_literal_text',
+                    'regex_comment',
+                    'regex_character_class',
+                    'regex_anchor',
+                    'regex_quantifier',
+                    'regex_grouping',
+                    'regex_alternation',
+                    'regex_text',
+                    'regex_self_escaped_character',
+                    'regex_other_escape',
+                },
+            },
+            range = true,
+        }
     end
 
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
@@ -59,11 +121,15 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set('n', '<leader>vrr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', '<leader>vrn', vim.lsp.buf.rename, opts)
     vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<leader>h', ':LspOverloadsSignature<CR>',
+                   {noremap = true, silent = true})
 
-    require'lsp_signature'.on_attach({
-        bind = true,
-        handler_opts = {border = 'rounded'},
-    }, bufnr)
+    --- Guard against servers without the signatureHelper capability
+    if client.server_capabilities.signatureHelpProvider then
+        require('lsp-overloads').setup(client, {
+            ui = {floating_window_above_cur_line = true},
+        })
+    end
 end)
 
 lsp.configure('omnisharp', {
@@ -75,6 +141,12 @@ lsp.configure('omnisharp', {
 lsp.nvim_workspace();
 
 lsp.setup()
+
+-- require('lsp_signature').setup({
+-- bind = true,
+-- handler_opts = {border = 'rounded'},
+-- select_signature_key = '<C-k>',
+-- })
 
 vim.diagnostic.config({
     virtual_text = false,

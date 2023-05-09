@@ -13,6 +13,17 @@
     "prefix": "tmet",
     "body": [
       "[Fact]",
+      "public async Task ${1:SomeThing_WhenState_DoesStuff}()",
+      "{",
+      "\t${2://}",
+      "}$0"
+    ],
+    "description": "create xunit test method"
+  },
+  "xUnit Test (Sync)": {
+    "prefix": "tmets",
+    "body": [
+      "[Fact]",
       "public void ${1:SomeThing_WhenState_DoesStuff}()",
       "{",
       "\t${2://}",

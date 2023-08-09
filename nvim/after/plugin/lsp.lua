@@ -11,6 +11,7 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
     ['<C-y>'] = cmp.mapping.confirm({select = true}),
     ['<C-Space>'] = cmp.mapping.complete(),
 })
+
 -- local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
@@ -121,22 +122,23 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set('n', '<leader>vrr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', '<leader>vrn', vim.lsp.buf.rename, opts)
     vim.keymap.set('i', '<C-h>', vim.lsp.buf.signature_help, opts)
-    vim.keymap.set('n', '<leader>h', ':LspOverloadsSignature<CR>',
-                   {noremap = true, silent = true})
+    vim.keymap.set('n', '<leader>h', ':LspOverloadsSignature<CR>', {noremap = true, silent = true})
+
+    vim.keymap.set('n', '<leader><leader>cs', ':LspRestart omnisharp<CR>', {noremap = true})
 
     --- Guard against servers without the signatureHelper capability
     if client.server_capabilities.signatureHelpProvider then
-        require('lsp-overloads').setup(client, {
-            ui = {floating_window_above_cur_line = true},
-        })
+        require('lsp-overloads').setup(client, {ui = {floating_window_above_cur_line = true}})
+    end
+
+    -- Navic
+    if client.server_capabilities.documentSymbolProvider then
+        require('nvim-navic').attach(client, bufnr)
     end
 end)
 
-lsp.configure('omnisharp', {
-    handlers = {
-        ['textDocument/definition'] = require('omnisharp_extended').handler,
-    },
-})
+lsp.configure('omnisharp',
+              {handlers = {['textDocument/definition'] = require('omnisharp_extended').handler}})
 
 lsp.nvim_workspace();
 
@@ -148,10 +150,8 @@ lsp.setup()
 -- select_signature_key = '<C-k>',
 -- })
 
-vim.diagnostic.config({
-    virtual_text = false,
-    underline = {severity = vim.diagnostic.severity.ERROR},
-})
+vim.diagnostic
+    .config({virtual_text = false, underline = {severity = vim.diagnostic.severity.ERROR}})
 
 local null_ls = require('null-ls')
 local null_opts = lsp.build_options('null-ls', {})
@@ -175,3 +175,9 @@ require('mason-null-ls').setup({
 require('fidget').setup()
 
 require('lsp-toggle').setup();
+
+require('symbols-outline').setup()
+
+vim.keymap.set('n', '<leader>vyo', ':SymbolsOutline<CR>', {})
+
+require('mason-nvim-dap').setup();

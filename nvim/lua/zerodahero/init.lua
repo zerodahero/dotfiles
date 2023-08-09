@@ -1,2 +1,2 @@
-require("zerodahero.remap")
-require("zerodahero.set")
+require('zerodahero.remap')
+require('zerodahero.set')

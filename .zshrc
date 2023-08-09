@@ -265,3 +265,7 @@ alias vimdiff='nvim -d'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/bit bit
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/zack.teska/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)

@@ -1,9 +1,12 @@
 local nightfox = require('nightfox')
 
 nightfox.setup({
-    options = {dim_inactive = false},
+    options = {
+        transparent = false,
+        dim_inactive = false,
+        inverse = {visual = true, match_paren = false, search = false},
+    },
 })
 nightfox.compile()
 
 vim.cmd('colorscheme carbonfox')
-

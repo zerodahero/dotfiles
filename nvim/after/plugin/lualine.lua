@@ -1,15 +1,16 @@
 require('lualine').setup({
-    options = {
-        theme = 'ayu_mirage'
-    },
+    options = {theme = 'ayu_mirage'},
     sections = {
         lualine_a = {'mode', 'PencilMode'},
         lualine_b = {'branch', 'diff', 'diagnostics'},
-        lualine_c = {'filename'},
+        lualine_c = {
+            -- 'filename',
+            'navic',
+        },
         lualine_x = {'encoding', 'fileformat', 'filetype'},
         lualine_y = {'progress'},
-        lualine_z = {'location'}
-    }
+        lualine_z = {'location'},
+    },
     -- tabline = {
     --     lualine_a = {'buffers'},
     --     lualine_b = {},

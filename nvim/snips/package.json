@@ -19,6 +19,10 @@
         "path": "./lua.json"
       },
       {
+        "language": "markdown",
+        "path": "./markdown.json"
+      },
+      {
         "language": "go",
         "path": "./go.json"
       },

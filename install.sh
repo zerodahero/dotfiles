@@ -5,6 +5,7 @@ mkdir -p "$HOME/.config"
 ln -si "$HOME/dotfiles/nvim" "$HOME/.config"
 
 ## Global Formatters
+ln -si "$HOME/dotfiles/formatters/editorconfig" "$HOME/.editorconfig"
 ln -si "$HOME/dotfiles/formatters/lua-format" "$HOME/.lua-format"
 ln -si "$HOME/dotfiles/formatters/markdownlintrc" "$HOME/.markdownlintrc"
 mkdir -p "$HOME/.config/yamllint"

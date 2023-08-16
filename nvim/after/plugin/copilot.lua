@@ -1,8 +1,8 @@
 vim.g.copilot_no_tab_map = true;
 vim.g.copilot_enabled = 1;
 
-vim.keymap.set('i', '<C-g>', 'copilot#Accept(\'\')',
-               {expr = true, noremap = true, silent = true, replace_keycodes = false})
+vim.keymap.set('i', '<C-i>', 'copilot#Accept(\'\')',
+               {expr = true, noremap = true, silent = true, replace_keycodes = false, script = true})
 vim.keymap.set('n', '<leader>ai', function()
     if vim.g.copilot_enabled == 1 then
         vim.cmd('Copilot disable')
@@ -11,4 +11,4 @@ vim.keymap.set('n', '<leader>ai', function()
         vim.cmd('Copilot enable')
         print('Enabled Copilot')
     end
-end)
+  end)

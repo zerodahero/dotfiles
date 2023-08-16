@@ -76,3 +76,4 @@ vim.keymap.set('n', '<Leader>qa',function()
 end, { silent = true })
 
 vim.g.doge_mapping = '<leader>doc'
+

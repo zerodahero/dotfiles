@@ -10,7 +10,7 @@
     "description": "constructor"
   },
   "xUnit Test": {
-    "prefix": "tmet",
+    "prefix": "fact",
     "body": [
       "[Fact]",
       "public async Task ${1:SomeThing_WhenState_DoesStuff}()",
@@ -21,7 +21,7 @@
     "description": "create xunit test method"
   },
   "xUnit Test (Sync)": {
-    "prefix": "tmets",
+    "prefix": "facts",
     "body": [
       "[Fact]",
       "public void ${1:SomeThing_WhenState_DoesStuff}()",
@@ -51,9 +51,120 @@
     ],
     "description": "Creates an async Method structure"
   },
+  "namespace": {
+    "prefix": "ns",
+    "body": ["namespace ${1:$TM_FILENAME_BASE}"],
+    "description": "Declare namespace"
+  },
   "class": {
     "prefix": "cls",
     "body": ["${1:public} class ${2:$TM_FILENAME_BASE}", "{", "\t$0", "}"],
     "description": "Create new class"
+  },
+  "class with namespace": {
+    "prefix": "clsns",
+    "body": [
+      "namespace ${1:${RELATIVE_FILEPATH/(\\/)/./g}};",
+      "",
+      "${2:public} class ${3:$TM_FILENAME_BASE}",
+      "{",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create new class with namespace"
+  },
+  "Console.WriteLine": {
+    "prefix": "cw",
+    "body": ["Console.WriteLine($0);"],
+    "description": "Console.WriteLine"
+  },
+  "Implementing Equals() according to guidelines": {
+    "prefix": "equals",
+    "body": [
+      "// override object.Equals",
+      "public override bool Equals(object obj)",
+      "{",
+      "    //",
+      "    // See the full list of guidelines at",
+      "    //   http://go.microsoft.com/fwlink/?LinkID=85237",
+      "    // and also the guidance for operator== at",
+      "    //   http://go.microsoft.com/fwlink/?LinkId=85238",
+      "    //",
+      "    ",
+      "    if (obj == null || GetType() != obj.GetType())",
+      "    {",
+      "        return false;",
+      "    }",
+      "    ",
+      "    // TODO: write your implementation of Equals() here",
+      "    ${1:throw new System.NotImplementedException();}",
+      "    return base.Equals (obj);",
+      "}",
+      "",
+      "// override object.GetHashCode",
+      "public override int GetHashCode()",
+      "{",
+      "    // TODO: write your implementation of GetHashCode() here",
+      "    ${2:throw new System.NotImplementedException();}",
+      "    return base.GetHashCode();",
+      "}"
+    ],
+    "description": "Implementing Equals() according to guidelines"
+  },
+  "Exception": {
+    "prefix": "exception",
+    "body": [
+      "[System.Serializable]",
+      "public class ${1:My}Exception : ${2:System.Exception}",
+      "{",
+      "    public ${1:My}Exception() { }",
+      "    public ${1:My}Exception(string message) : base(message) { }",
+      "    public ${1:My}Exception(string message, System.Exception inner) : base(message, inner) { }",
+      "    protected ${1:My}Exception(",
+      "        System.Runtime.Serialization.SerializationInfo info,",
+      "        System.Runtime.Serialization.StreamingContext context) : base(info, context) { }",
+      "}"
+    ],
+    "description": "Exception"
+  },
+  "Foreach statement": {
+    "prefix": "foreach",
+    "body": [
+      "foreach (${1:var} ${2:item} in ${3:collection})",
+      "{",
+      "    $0",
+      "}"
+    ],
+    "description": "Foreach statement"
+  },
+  "Switch statement": {
+    "prefix": "switch",
+    "body": ["switch (${1:switch_on})", "{", "    $0", "    default:", "}"],
+    "description": "Switch statement"
+  },
+  "Try finally": {
+    "prefix": "tryf",
+    "body": ["try", "{", "    $1", "}", "finally", "{", "    $0", "}"],
+    "description": "Try finally"
+  },
+  "Try catch": {
+    "prefix": "try",
+    "body": [
+      "try",
+      "{",
+      "    $1",
+      "}",
+      "catch (${2:System.Exception})",
+      "{",
+      "    $0",
+      "    throw;",
+      "}"
+    ],
+    "description": "Try catch"
+  },
+  "Using statement": {
+    "prefix": "using",
+    "body": ["using (${1:resource})", "{", "    $0", "}"],
+    "description": "Using statement"
   }
 }

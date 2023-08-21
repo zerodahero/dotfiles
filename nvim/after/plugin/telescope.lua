@@ -8,7 +8,7 @@ telescope.setup {
             no_ignore = false,
             path_display = { 'truncate' },
         },
-        oldfiles = { sort_mru = true, ignore_current_buffer = true },
+        oldfiles = { sort_mru = true, ignore_current_buffer = true, only_cwd = true },
         live_grep = {
             additional_args = {
                 "-i"

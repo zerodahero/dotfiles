@@ -88,6 +88,7 @@ return require('packer').startup(function(use)
         end,
         event = {'BufReadPost'}, -- lazy load after reading a buffer
     }
+    use {'windwp/nvim-autopairs', config = function() require('nvim-autopairs').setup {} end}
 
     -- Configured in prose.lua
     use {'preservim/vim-pencil'}
@@ -157,14 +158,9 @@ return require('packer').startup(function(use)
     use {
         'folke/todo-comments.nvim',
         requires = 'nvim-lua/plenary.nvim',
-        config = function()
-            require('todo-comments').setup {
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
-            }
-        end,
+        config = function() require('todo-comments').setup {} end,
     }
+    use {'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
 
     use('simrat39/symbols-outline.nvim')
     use('terrastruct/d2-vim')

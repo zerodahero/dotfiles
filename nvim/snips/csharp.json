@@ -32,7 +32,7 @@
     "description": "create xunit test method"
   },
   "Creates a Method structure": {
-    "prefix": "met",
+    "prefix": "fun",
     "body": [
       "${1:public} ${2:void} ${3:MyMethod}(${4:string} ${5:parameter})",
       "{",
@@ -42,7 +42,7 @@
     "description": "Creates a Method structure"
   },
   "Creates an Async Method structure": {
-    "prefix": "amet",
+    "prefix": "afun",
     "body": [
       "${1:public} async ${2:Task}<${3:object}> ${4:MyMethodAsync}(${5:string} ${6:parameter})",
       "{",

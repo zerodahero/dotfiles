@@ -22,4 +22,4 @@ fi
 
 alias loaddb="gupdatedb --localpaths=$HOME --prunepaths=/Volumes --output=$HOME/locatedb"
 
-
+alias .w='just --justfile ~/.window.justfile --working-directory .'

@@ -27,6 +27,7 @@ case "$(uname -s)" in
         ln -si "$HOME/dotfiles/yabai/yabairc" "$HOME/.config/yabai/yabairc"
         ln -si "$HOME/dotfiles/yabai/intellij_yabai.sh" "$HOME/.config/yabai/intellij_yabai.sh"
         ln -si "$HOME/dotfiles/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
+        ln -si "$HOME/dotfiles/window.justfile" "$HOME/.window.justfile"
     ;;
     Linux)
     ;;

@@ -78,6 +78,11 @@
     "body": ["Console.WriteLine($0);"],
     "description": "Console.WriteLine"
   },
+  "Faker Property": {
+    "prefix": "propfaker",
+    "body": ["private readonly Faker _faker = new();"],
+    "description": "Faker Property"
+  },
   "Implementing Equals() according to guidelines": {
     "prefix": "equals",
     "body": [

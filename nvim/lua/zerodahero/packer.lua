@@ -139,6 +139,7 @@ return require('packer').startup(function(use)
 
     -- Buffer closing without closing windows
     use('moll/vim-bbye')
+    use('arithran/vim-delete-hidden-buffers')
 
     use('HiPhish/nvim-ts-rainbow2')
     use {
@@ -180,4 +181,5 @@ return require('packer').startup(function(use)
 
     -- Kitty
     use {'knubie/vim-kitty-navigator', run = 'cp ./*.py ~/.config/kitty/'}
+
 end)

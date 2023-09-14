@@ -2,6 +2,8 @@
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
+require('packer').init({max_jobs = 50})
+
 return require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
@@ -107,6 +109,7 @@ return require('packer').startup(function(use)
     use {'akinsho/bufferline.nvim', tag = 'v3.*', requires = 'nvim-tree/nvim-web-devicons'}
 
     use {'simeji/winresizer'}
+    use {'kwkarlwang/bufresize.nvim', config = function() require('bufresize').setup() end}
     -- use {'mg979/vim-visual-multi'}
     use {'sheerun/vim-polyglot'}
 
@@ -174,4 +177,7 @@ return require('packer').startup(function(use)
     -- AI
     -- use('Exafunction/codeium.vim')
     use('github/copilot.vim')
+
+    -- Kitty
+    use {'knubie/vim-kitty-navigator', run = 'cp ./*.py ~/.config/kitty/'}
 end)

@@ -49,7 +49,7 @@ vim.keymap.set('v', '<lt>', "<gv", { noremap = true })
 vim.keymap.set('n', '<lt>', "<<", { noremap = true })
 
 -- winresizer
-vim.g.winresizer_start_key = "<leader>w"
+vim.g.winresizer_start_key = "<C-w>r"
 
 -- Pencil
 vim.keymap.set('n', '<leader>md', ':PencilToggle<CR>')

@@ -180,6 +180,6 @@ return require('packer').startup(function(use)
     use('github/copilot.vim')
 
     -- Kitty
-    use {'knubie/vim-kitty-navigator', run = 'cp ./*.py ~/.config/kitty/'}
+    -- use {'knubie/vim-kitty-navigator', run = 'cp ./*.py ~/.config/kitty/'}
 
 end)

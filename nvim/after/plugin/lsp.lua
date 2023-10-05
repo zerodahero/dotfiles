@@ -110,6 +110,10 @@ lsp.on_attach(function(client, bufnr)
             },
             range = true,
         }
+        --- Guard against servers without the signatureHelper capability
+        if client.server_capabilities.signatureHelpProvider then
+            require('lsp-overloads').setup(client, {ui = {floating_window_above_cur_line = true}})
+        end
     end
 
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
@@ -126,15 +130,10 @@ lsp.on_attach(function(client, bufnr)
 
     vim.keymap.set('n', '<leader><leader>cs', ':LspRestart omnisharp<CR>', {noremap = true})
 
-    --- Guard against servers without the signatureHelper capability
-    if client.server_capabilities.signatureHelpProvider then
-        require('lsp-overloads').setup(client, {ui = {floating_window_above_cur_line = true}})
-    end
-
-    -- Navic
-    if client.server_capabilities.documentSymbolProvider then
-        require('nvim-navic').attach(client, bufnr)
-    end
+    -- -- Navic
+    -- if client.server_capabilities.documentSymbolProvider then
+    --     require('nvim-navic').attach(client, bufnr)
+    -- end
 end)
 
 lsp.configure('omnisharp',
@@ -181,3 +180,12 @@ require('symbols-outline').setup()
 vim.keymap.set('n', '<leader>vyo', ':SymbolsOutline<CR>', {})
 
 require('mason-nvim-dap').setup();
+
+-- require('lspsaga').setup({symbol_in_winbar = {enable = false}});
+
+require('nvim-navic').setup({
+    lsp = {
+        auto_attach = true
+    },
+    highlight = true
+})

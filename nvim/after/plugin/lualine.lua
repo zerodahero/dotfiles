@@ -11,6 +11,9 @@ require('lualine').setup({
         lualine_y = {'progress'},
         lualine_z = {'location'},
     },
+    extensions = {
+        'nvim-tree', 'trouble'
+    }
     -- tabline = {
     --     lualine_a = {'buffers'},
     --     lualine_b = {},

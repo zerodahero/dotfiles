@@ -10,7 +10,7 @@ return require('packer').startup(function(use)
 
     use {
         'nvim-telescope/telescope.nvim',
-        tag = '0.1.1',
+        branch = '0.1.x',
         requires = {{'nvim-lua/plenary.nvim'}, {'nvim-telescope/telescope-ui-select.nvim'}},
     }
 
@@ -21,6 +21,7 @@ return require('packer').startup(function(use)
     use({'EdenEast/nightfox.nvim', as = 'nightfox'})
 
     use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdateSync'})
+    use('nvim-treesitter/playground')
     use('JoosepAlviste/nvim-ts-context-commentstring')
     -- use('theprimeagen/harpoon')
     use('mbbill/undotree')
@@ -69,6 +70,8 @@ return require('packer').startup(function(use)
 
             -- lsp overloads
             {'Issafalcon/lsp-overloads.nvim'},
+
+            -- {'nvimdev/lspsaga.nvim', after = 'nvim-lspconfig'}
         },
     }
     use {'Hoffs/omnisharp-extended-lsp.nvim'}
@@ -181,5 +184,4 @@ return require('packer').startup(function(use)
 
     -- Kitty
     -- use {'knubie/vim-kitty-navigator', run = 'cp ./*.py ~/.config/kitty/'}
-
 end)

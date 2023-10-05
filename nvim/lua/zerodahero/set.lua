@@ -52,3 +52,5 @@ vim.g.doxygen_enhanced_color = 1
 vim.g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*'}
 
 vim.g.surround_no_insert_mappings = 1
+
+vim.opt.fileignorecase = false

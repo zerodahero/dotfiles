@@ -90,7 +90,7 @@ alt - u : yabai -m window --focus stack.next || yabai -m window --focus stack.fi
 alt - d : yabai -m window --focus stack.prev || yabai -m window --focus stack.last
 
 ## ScratchPad
-ctrl + cmd - 0x32 : id=$(yabai -m query --windows | jq -re '.[] | select(.title == "ScratchPad") | .id') && \
+ctrl + cmd - 0x32 : id=$(yabai -m query --windows | jaq -re '.[] | select(.title == "ScratchPad") | .id') && \
     yabai -m window --focus $id \
-    || kitty -T ScratchPad nvim -c "PencilSoft" -c "lua vim.diagnostic.config({signs=false,underline=false})" ~/.scratchpad.md
+    || kitty -T ScratchPad nvim -c "PencilSoft" -c "lua vim.diagnostic.config({signs=false,underline=false})" -c "CodeiumDisable" ~/.scratchpad.md
 

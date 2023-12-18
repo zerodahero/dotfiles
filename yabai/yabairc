@@ -8,13 +8,13 @@ yabai -m config mouse_follows_focus          on
 yabai -m config window_placement             second_child
 
 # enable borders
-yabai -m config window_border                on
-yabai -m config window_border_blur           off
-yabai -m config window_border_width          6
-# yabai -m config active_window_border_color   0xcc4dd36c # Green
-yabai -m config active_window_border_color   0xcc47b9fe # Blue
-yabai -m config normal_window_border_color   0x00ffffff
-yabai -m config insert_window_border_color   0xff1a1a1a
+# yabai -m config window_border                on
+# yabai -m config window_border_blur           off
+# yabai -m config window_border_width          6
+# # yabai -m config active_window_border_color   0xcc4dd36c # Green
+# yabai -m config active_window_border_color   0xcc47b9fe # Blue
+# yabai -m config normal_window_border_color   0x00ffffff
+# yabai -m config insert_window_border_color   0xff1a1a1a
 
 # no clue what this is
 yabai -m config insert_feedback_color        0xffd75f5f
@@ -58,7 +58,7 @@ yabai -m rule --add app="^DBeaver" manage=off
 yabai -m rule --add app="^FromScratch" manage=off
 yabai -m rule --add app="^Pritunl" manage=off
 yabai -m rule --add title="ScratchPad" manage=off
-
+yabai -m rule --add label="Firfox PIP" app="^Firefox$" title="^(Picture-in-Picture)$" manage=off
 
 # Datagrip / Rider / intelliJ
 # yabai -m rule --add app="^DataGrip" manage=off
@@ -79,5 +79,11 @@ yabai -m signal --add \
     title='^Microsoft Teams Notification$' action="yabai -m window --focus $(yabai -m query --windows | jq 'map(select(.title | endswith("Microsoft Teams")))[-1].id')"
 
 echo "yabai configuration loaded.."
+
+# Janky Borders
+borders \
+    active_color=0xcc47b9fe \
+    inactive_color=0xff1a1a1a \
+    width=12 &
 
 #END

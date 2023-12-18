@@ -16,7 +16,8 @@ vim.keymap.set({'n', 'v'}, '<leader>d', [["_d]])
 vim.keymap.set('i', '<C-c>', '<Esc>')
 
 vim.keymap.set('n', 'Q', '<nop>')
-vim.keymap.set('n', '<leader>mf', vim.lsp.buf.format)
+-- vim.keymap.set('n', '<leader>mf', vim.lsp.buf.format)
+-- vim.keymap.set('n', '<leader>mf', ':Format<CR>', {silent = true})
 
 vim.keymap.set('n', '<leader>s', [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
@@ -77,14 +78,12 @@ vim.keymap.set('n', '<leader>qa', function()
     -- require('mini.starter').open()
 end, {silent = true})
 
-vim.keymap.set('n', '<leader>q1', function ()
+vim.keymap.set('n', '<leader>q1', function()
     local bufnr = vim.api.nvim_get_current_buf()
     vim.cmd(':DeleteHiddenBuffers')
 
     for _, n in ipairs(vim.api.nvim_list_bufs()) do
-        if n ~= bufnr then
-            vim.cmd(':Bdelete' .. n)
-        end
+        if n ~= bufnr then vim.cmd(':Bdelete' .. n) end
     end
 end, {silent = true})
 

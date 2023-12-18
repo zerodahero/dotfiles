@@ -1,33 +1,18 @@
 require('neodev').setup({library = {plugins = {'nvim-dap-ui'}, types = true}})
 
-local lsp = require('lsp-zero')
-lsp.preset('recommended')
+local lsp_zero = require('lsp-zero')
 
-local cmp = require('cmp')
-local cmp_select = {behavior = cmp.SelectBehavior.Select}
-local cmp_mappings = lsp.defaults.cmp_mappings({
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-y>'] = cmp.mapping.confirm({select = true}),
-    ['<C-Space>'] = cmp.mapping.complete(),
+lsp_zero.set_sign_icons({
+  error = '✘',
+  warn = '▲',
+  hint = '⚑',
+  info = '»'
 })
 
-local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-
--- disable completion with tab
--- this helps with copilot setup
-cmp_mappings['<Tab>'] = nil
-cmp_mappings['<S-Tab>'] = nil
-cmp_mappings['<CR>'] = nil
-
-local cmp_sources = lsp.defaults.cmp_sources()
-table.insert(cmp_sources, {name = 'nvim_lsp_signature_help'})
-
-lsp.setup_nvim_cmp({mapping = cmp_mappings, sources = cmp_sources})
-
-lsp.on_attach(function(client, bufnr)
+lsp_zero.on_attach(function(client, bufnr)
     local opts = {buffer = bufnr, remap = false}
+
+    lsp_zero.default_keymaps({buffer = bufnr})
 
     if client.name == 'eslint' then
         vim.cmd.LspStop('eslint')
@@ -136,12 +121,38 @@ lsp.on_attach(function(client, bufnr)
     -- end
 end)
 
-lsp.configure('omnisharp',
-              {handlers = {['textDocument/definition'] = require('omnisharp_extended').handler}})
+lsp_zero.configure('omnisharp', {
+    handlers = {['textDocument/definition'] = require('omnisharp_extended').handler},
+})
 
-lsp.nvim_workspace();
+local cmp = require('cmp')
+local cmp_select = {behavior = cmp.SelectBehavior.Select}
 
-lsp.setup()
+local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+
+local cmp_format = lsp_zero.cmp_format()
+
+cmp.setup({
+    mapping = cmp.mapping.preset.insert({
+        -- disable completion with tab
+        -- this helps with copilot setup
+        ['<Tab>'] = nil,
+        ['<S-Tab>'] = nil,
+        ['<CR>'] = nil,
+        ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
+        ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
+        ['<C-y>'] = cmp.mapping.confirm({select = true}),
+        ['<C-Space>'] = cmp.mapping.complete(),
+    }),
+    formatting = cmp_format,
+    sources = {
+        {name = 'path'},
+        {name = 'nvim_lsp'},
+        {name = 'nvim_lua'},
+        {name = 'nvim_lsp_signature_help'},
+    },
+})
 
 -- require('lsp_signature').setup({
 -- bind = true,
@@ -149,43 +160,64 @@ lsp.setup()
 -- select_signature_key = '<C-k>',
 -- })
 
-vim.diagnostic
-    .config({virtual_text = false, underline = {severity = vim.diagnostic.severity.ERROR}})
+-- vim.diagnostic
+--     .config({virtual_text = false, underline = {severity = vim.diagnostic.severity.ERROR}})
 
-local null_ls = require('null-ls')
-local null_opts = lsp.build_options('null-ls', {})
+-- Configure diagnostics.
+vim.diagnostic.config({
+    severity_sort = true,
+    signs = true,
+    -- virtual_text = {severity = {min = vim.diagnostic.severity.ERROR}, spacing = 8},
+    virtual_text = false,
+    underline = {severity = vim.diagnostic.severity.WARN},
+})
 
-null_ls.setup({
-    on_attach = function(client, bufnr) null_opts.on_attach(client, bufnr) end,
-    sources = {
-        -- You can add tools not supported by mason.nvim
+require('mason').setup()
+require('mason-lspconfig').setup({
+    ensure_installed = {'tsserver', 'rust_analyzer'},
+    handlers = {
+        lsp_zero.default_setup,
+        lua_ls = function()
+            local lua_opts = lsp_zero.nvim_lua_ls()
+            require('lspconfig').lua_ls.setup(lua_opts)
+        end,
     },
 })
 
--- See mason-null-ls.nvim's documentation for more details:
--- https://github.com/jay-babu/mason-null-ls.nvim#setup
-require('mason-null-ls').setup({
-    ensure_installed = nil,
-    automatic_installation = true,
-    automatic_setup = true,
-    handlers = {},
-})
+-- local null_ls = require('null-ls')
+-- local null_opts = lsp_zero.build_options('null-ls', {})
+--
+-- null_ls.setup({
+--     -- debug = true,
+--     on_attach = function(client, bufnr) null_opts.on_attach(client, bufnr) end,
+--     sources = {
+--         null_ls.builtins.formatting.stylua,
+--         null_ls.builtins.diagnostics.eslint,
+--         null_ls.builtins.completion.spell,
+--     },
+-- })
+--
+-- -- See mason-null-ls.nvim's documentation for more details:
+-- -- https://github.com/jay-babu/mason-null-ls.nvim#setup
+-- require('mason-null-ls').setup({
+--     ensure_installed = nil,
+--     automatic_installation = false,
+--     automatic_setup = true,
+--     handlers = {},
+-- })
 
 require('fidget').setup()
 
-require('lsp-toggle').setup();
+require('lsp-toggle').setup()
 
-require('symbols-outline').setup()
+-- require('symbols-outline').setup()
+require('outline').setup()
 
-vim.keymap.set('n', '<leader>vyo', ':SymbolsOutline<CR>', {})
+vim.keymap.set('n', '<leader>vyo', ':Outline<CR>', {})
 
 require('mason-nvim-dap').setup();
 
 -- require('lspsaga').setup({symbol_in_winbar = {enable = false}});
 
-require('nvim-navic').setup({
-    lsp = {
-        auto_attach = true
-    },
-    highlight = true
-})
+require('nvim-navic').setup({lsp = {auto_attach = true}, highlight = true})
+

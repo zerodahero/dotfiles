@@ -1,6 +1,6 @@
-require'nvim-treesitter.configs'.setup {
+require 'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all"
-    ensure_installed = {'help', 'c_sharp', 'lua'},
+    ensure_installed = { 'vimdoc', 'c_sharp', 'lua' },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,
@@ -26,7 +26,7 @@ require'nvim-treesitter.configs'.setup {
         max_file_lines = nil, -- Do not enable for files with more than n lines, int
         -- colors = {}, -- table of hex strings
         -- termcolors = {} -- table of colour name strings
-    },
-
-    context_commentstring = {enable = true},
+    }
 }
+
+require('nvim-treesitter.configs').setup {}

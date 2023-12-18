@@ -40,10 +40,12 @@ return require('packer').startup(function(use)
 
     use {
         'VonHeikemen/lsp-zero.nvim',
+        branch = 'v3.x',
         requires = {
             -- LSP Support
             {'neovim/nvim-lspconfig'},
             {'williamboman/mason.nvim', run = ':MasonUpdate'},
+            -- { 'williamboman/mason.nvim' },
             {'williamboman/mason-lspconfig.nvim'},
 
             -- Autocompletion
@@ -59,14 +61,20 @@ return require('packer').startup(function(use)
             -- {'rafamadriz/friendly-snippets'},
 
             -- null-ls
-            {'jose-elias-alvarez/null-ls.nvim'},
-            {'jay-babu/mason-null-ls.nvim'},
+            -- { 'nvimtools/none-ls.nvim' },
+            -- { 'jay-babu/mason-null-ls.nvim' },
+
+            -- formatter
+            {'mhartington/formatter.nvim'},
+
+            -- linter
+            {'mfussenegger/nvim-lint'},
 
             -- nvim lua config
             {'folke/neodev.nvim'},
 
             -- lsp status updates
-            {'j-hui/fidget.nvim', tag = 'legacy'},
+            {'j-hui/fidget.nvim'},
 
             -- lsp overloads
             {'Issafalcon/lsp-overloads.nvim'},
@@ -108,7 +116,7 @@ return require('packer').startup(function(use)
             'nvim-tree/nvim-web-devicons', -- optional, for file icons
         },
     }
-    use {'nvim-lualine/lualine.nvim', requires = {'kyazdani42/nvim-web-devicons', opt = true}}
+    use {'nvim-lualine/lualine.nvim', requires = {'nvim-tree/nvim-web-devicons', opt = true}}
     use {'akinsho/bufferline.nvim', tag = 'v3.*', requires = 'nvim-tree/nvim-web-devicons'}
 
     use {'simeji/winresizer'}
@@ -122,7 +130,7 @@ return require('packer').startup(function(use)
 
     use {
         'folke/trouble.nvim',
-        requires = 'kyazdani42/nvim-web-devicons',
+        requires = 'nvim-tree/nvim-web-devicons',
         config = function() require('trouble').setup {} end,
     }
 
@@ -169,7 +177,7 @@ return require('packer').startup(function(use)
     }
     use {'numToStr/Comment.nvim', config = function() require('Comment').setup() end}
 
-    use('simrat39/symbols-outline.nvim')
+    use('hedyhli/outline.nvim')
     use('terrastruct/d2-vim')
 
     use {
@@ -179,8 +187,8 @@ return require('packer').startup(function(use)
     }
 
     -- AI
-    -- use('Exafunction/codeium.vim')
-    use('github/copilot.vim')
+    use('Exafunction/codeium.vim')
+    -- use('github/copilot.vim')
 
     -- Kitty
     -- use {'knubie/vim-kitty-navigator', run = 'cp ./*.py ~/.config/kitty/'}

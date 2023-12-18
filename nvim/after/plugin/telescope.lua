@@ -54,11 +54,18 @@ vim.keymap.set('n', '<leader>fs', '<cmd>Telescope luasnip<cr>', { silent = true 
 vim.keymap.set('n', '<leader>fo', builtin.oldfiles, {})
 -- Attempts to find the matching test or file
 vim.keymap.set('n', '<leader>ft', function()
+    local filetype = vim.bo.filetype
+
+    local testSuffix = "Test"
+    if (filetype == 'typescript' or filetype == 'javascript') then
+        testSuffix = ".test"
+    end
+
     local filename = vim.fn.expand('%:t:r')
-    if filename:sub(- #'Test') == 'Test' then
+    if filename:sub(- #testSuffix) == testSuffix then
         builtin.find_files({ default_text = filename:sub(0, -5) })
     else
-        builtin.find_files({ default_text = filename .. 'Test' })
+        builtin.find_files({ default_text = filename .. testSuffix })
     end
 end, {})
 

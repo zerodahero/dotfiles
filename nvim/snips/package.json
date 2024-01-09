@@ -37,6 +37,10 @@
       {
         "language": "dockerfile",
         "path": "./docker-file.json"
+      },
+      {
+        "language": "typescript",
+        "path": "./typescript.json"
       }
     ]
   }

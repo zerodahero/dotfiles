@@ -1,0 +1,56 @@
+{
+    "Jest Test": {
+        "prefix": "it",
+        "body": [
+            "it('${1:does_something}', () => {",
+            "\texpect(1).toEqual(1)",
+            "})"
+        ],
+        "description": "create jest test case"
+    },
+    "it.todo": {
+        "prefix": "itt",
+        "body": "it.todo('${1:description}')"
+    },
+    "Constructor": {
+        "prefix": "ctor",
+        "body": [
+            "/**",
+            " *",
+            " */",
+            "constructor() {",
+            "\tsuper();",
+            "\t$0",
+            "}"
+        ],
+        "description": "Constructor"
+    },
+    "Class Definition": {
+        "prefix": "class",
+        "body": [
+            "class ${1:name} {",
+            "\tconstructor(${2:parameters}) {",
+            "\t\t$0",
+            "\t}",
+            "}"
+        ],
+        "description": "Class Definition"
+    },
+    "Interface Definition": {
+        "prefix": "iface",
+        "body": [
+            "interface ${1:name} {",
+            "\t$0",
+            "}"
+        ],
+        "description": "Interface Definition"
+    },
+    "Function": {
+        "prefix": "func",
+        "body": [
+            "export const ${1:name} = (${2:parameters}): ${3:return_type} => {",
+            "\t$0",
+            "}"
+        ]
+    }
+}

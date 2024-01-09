@@ -57,7 +57,7 @@ return require('packer').startup(function(use)
             {'hrsh7th/cmp-nvim-lsp-signature-help'},
 
             -- Snippets
-            {'L3MON4D3/LuaSnip', run = 'make install_jsregexp'},
+            {'L3MON4D3/LuaSnip', tag = 'v2.*', run = 'make install_jsregexp'},
             -- {'rafamadriz/friendly-snippets'},
 
             -- null-ls
@@ -86,8 +86,23 @@ return require('packer').startup(function(use)
     use {'benfowler/telescope-luasnip.nvim', module = 'telescope._extensions.luasnip'}
     use {'adoyle-h/lsp-toggle.nvim'}
 
-    use {'rcarriga/nvim-dap-ui', requires = {'mfussenegger/nvim-dap'}}
-    use {'jay-babu/mason-nvim-dap.nvim'}
+    -- Debugging
+    use {
+        'mfussenegger/nvim-dap',
+        requires = {
+            -- UI
+            {'rcarriga/nvim-dap-ui'},
+            {'theHamsta/nvim-dap-virtual-text'},
+
+            -- Adapters
+            {'mxsdev/nvim-dap-vscode-js'},
+            {
+                'microsoft/vscode-js-debug',
+                opt = true,
+                run = 'npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out',
+            },
+        },
+    }
 
     use {'ray-x/lsp_signature.nvim'}
 
@@ -162,6 +177,7 @@ return require('packer').startup(function(use)
             'olimorris/neotest-phpunit',
             'Issafalcon/neotest-dotnet',
             'ChristianChiarulli/neovim-codicons',
+            'nvim-neotest/neotest-jest',
         },
     }
     use {'folke/twilight.nvim', config = function() require('twilight').setup {} end}

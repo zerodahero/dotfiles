@@ -2,12 +2,7 @@ require('neodev').setup({library = {plugins = {'nvim-dap-ui'}, types = true}})
 
 local lsp_zero = require('lsp-zero')
 
-lsp_zero.set_sign_icons({
-  error = '✘',
-  warn = '▲',
-  hint = '⚑',
-  info = '»'
-})
+lsp_zero.set_sign_icons({error = '✘', warn = '▲', hint = '⚑', info = '»'})
 
 lsp_zero.on_attach(function(client, bufnr)
     local opts = {buffer = bufnr, remap = false}
@@ -149,6 +144,8 @@ cmp.setup({
     sources = {
         {name = 'path'},
         {name = 'nvim_lsp'},
+        {name = 'luasnip'},
+        {name = 'buffer'},
         {name = 'nvim_lua'},
         {name = 'nvim_lsp_signature_help'},
     },
@@ -180,6 +177,9 @@ require('mason-lspconfig').setup({
         lua_ls = function()
             local lua_opts = lsp_zero.nvim_lua_ls()
             require('lspconfig').lua_ls.setup(lua_opts)
+        end,
+        tsserver = function()
+            require('lspconfig').tsserver.setup({javascript = {validate = false}})
         end,
     },
 })
@@ -215,9 +215,6 @@ require('outline').setup()
 
 vim.keymap.set('n', '<leader>vyo', ':Outline<CR>', {})
 
-require('mason-nvim-dap').setup();
-
 -- require('lspsaga').setup({symbol_in_winbar = {enable = false}});
 
 require('nvim-navic').setup({lsp = {auto_attach = true}, highlight = true})
-

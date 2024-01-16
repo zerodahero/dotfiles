@@ -1,3 +1,5 @@
+# zmodload zsh/zprof
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 eval "$(brew shellenv)"
@@ -106,7 +108,8 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-DEFAULT_USER=$(whoami)
+# DEFAULT_USER=$(whoami)
+DEFAULT_USER=$USER
 
 # ssh-add -K ~/.ssh/id_rsa
 
@@ -116,9 +119,9 @@ DEFAULT_USER=$(whoami)
 setopt nosharehistory
 
 # (which kubectl > /dev/null) && source <(kubectl completion zsh)
-(command -v clockify-cli > /dev/null) && source <(clockify-cli completion zsh)
+(type clockify-cli &> /dev/null) && source <(clockify-cli completion zsh)
 
-(command -v restic > /dev/null) && source $HOME/.restic/resticrc
+(type restic &> /dev/null) && source $HOME/.restic/resticrc
 
 _evalcache thefuck --alias
 _evalcache direnv hook zsh
@@ -129,19 +132,19 @@ export PATH=$PATH:$(go env GOPATH)/bin:$(go env GOROOT)/bin:$HOME/.composer/vend
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
 # Phan
-phan() { docker run -v $PWD:/mnt/src --rm -u "$(id -u):$(id -g)" phanphp/phan:latest $@; return $?; }
+# phan() { docker run -v $PWD:/mnt/src --rm -u "$(id -u):$(id -g)" phanphp/phan:latest $@; return $?; }
 
 # PHPStan
-alias phpstan='docker run -v $PWD:/app --rm phpstan/phpstan'
+# alias phpstan='docker run -v $PWD:/app --rm phpstan/phpstan'
 
 alias dco="docker compose"
-alias phpfix="php-cs-fixer fix"
-alias art="php artisan"
+# alias phpfix="php-cs-fixer fix"
+# alias art="php artisan"
 
-function laradco () {
-	(cd $HOME/projects/laradock && docker compose $@)
-}
-alias larashell="laradco exec --user=laradock workspace bash"
+# function laradco () {
+# 	(cd $HOME/projects/laradock && docker compose $@)
+# }
+# alias larashell="laradco exec --user=laradock workspace bash"
 
 function git-fresh () {
 	git checkout $1 \
@@ -199,10 +202,10 @@ setopt APPEND_HISTORY
 export TERM=xterm-256color
 
 # Ruby and Ruby Gems
-export PATH="/usr/local/opt/ruby/bin:$PATH"
-if which ruby >/dev/null && which gem >/dev/null; then
-  PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
-fi
+# export PATH="/usr/local/opt/ruby/bin:$PATH"
+# if which ruby >/dev/null && which gem >/dev/null; then
+#   PATH="$(ruby -r rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+# fi
 
 # OS specific stuff
 case "$OSTYPE" in
@@ -214,7 +217,7 @@ case "$OSTYPE" in
     ;;
 esac
 
-[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
+[ -e "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 alias stack='C_INCLUDE_PATH="`xcrun --show-sdk-path`/usr/include/ffi" stack'
 
 function kubeon-ns () {
@@ -251,20 +254,21 @@ alias .c='just --justfile ~/.clockify.justfile --working-directory .'
 
 alias go="grc go"
 
-alias sail="[ -f sail ] && bash sail || bash vendor/bin/sail"
+# alias sail="[ -f sail ] && bash sail || bash vendor/bin/sail"
 
 # atuin (history search widget)
 export ATUIN_NOBIND="true"
 _evalcache atuin init zsh
 bindkey '^r' _atuin_search_widget
 
-eval "$(op completion zsh)"; compdef _op op
+# eval "$(op completion zsh)"; compdef _op op
+_evalcache op completion zsh; compdef _op op
 export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"
 
 alias vim=nvim
 alias vimdiff='nvim -d'
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -e ~/.fzf.zsh ] && source ~/.fzf.zsh
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/bit bit
 
@@ -290,4 +294,8 @@ vsso() {
    fi
    aws-sso-util login --profile $profile && awsume $profile
    export AWS_PROFILE=$profile
+}
+
+zshstartuptime() {
+   for i in $(seq 0 10); do time /bin/zsh -i -c exit; done
 }

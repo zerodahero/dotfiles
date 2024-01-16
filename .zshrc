@@ -284,5 +284,10 @@ esac
 alias pj='npx projen'
 
 vsso() {
-   aws-sso-util login --profile $1 && awsume $1
+   local profile=$1
+   if [ $# -eq 0 ]; then
+      profile=$(aws configure list-profiles | fzf)
+   fi
+   aws-sso-util login --profile $profile && awsume $profile
+   export AWS_PROFILE=$profile
 }

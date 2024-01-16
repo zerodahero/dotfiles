@@ -107,6 +107,7 @@ return require('packer').startup(function(use)
     use {'ray-x/lsp_signature.nvim'}
 
     use {'SmiteshP/nvim-navic'}
+    use {'lukas-reineke/indent-blankline.nvim'}
 
     use {
         'rmagatti/alternate-toggler',
@@ -166,8 +167,12 @@ return require('packer').startup(function(use)
     -- Buffer closing without closing windows
     use('moll/vim-bbye')
     use('arithran/vim-delete-hidden-buffers')
+    use('axkirillov/hbac.nvim')
 
-    use('HiPhish/nvim-ts-rainbow2')
+    -- Scratch
+    use('LintaoAmons/scratch.nvim')
+
+    use('HiPhish/rainbow-delimiters.nvim')
     use {
         'nvim-neotest/neotest',
         requires = {

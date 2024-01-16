@@ -3,7 +3,7 @@ vim.g.mapleader = ','
 vim.keymap.set('v', 'J', ':m \'>+1<CR>gv=gv')
 vim.keymap.set('v', 'K', ':m \'<-2<CR>gv=gv')
 
-vim.keymap.set('n', 'J', 'mzJ`z')
+vim.keymap.set('n', 'J', 'mzJ`z:delmark z<CR>', {silent = true})
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 vim.keymap.set('n', 'n', 'nzzzv')
@@ -88,3 +88,10 @@ vim.keymap.set('n', '<leader>q1', function()
 end, {silent = true})
 
 vim.g.doge_mapping = '<leader>doc'
+
+vim.keymap.set('n', '<leader><leader>`', function()
+    vim.api.nvim_create_buf(false, true)
+    vim.opt_local.buftype = 'nofile'
+    vim.opt_local.bufhidden = 'hide'
+    vim.opt_local.swapfile = false
+end, {silent = true})

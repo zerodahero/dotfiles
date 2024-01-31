@@ -11,7 +11,7 @@ vim.keymap.set('n', 'N', 'Nzzzv')
 
 vim.keymap.set('x', '<leader>p', [["_dP]])
 
-vim.keymap.set({'n', 'v'}, '<leader>d', [["_d]])
+vim.keymap.set({ 'n', 'v' }, '<leader>d', [["_d]])
 
 vim.keymap.set('i', '<C-c>', '<Esc>')
 
@@ -21,7 +21,7 @@ vim.keymap.set('n', 'Q', '<nop>')
 
 vim.keymap.set('n', '<leader>s', [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 vim.keymap.set('n', '<leader>S', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', {silent = true})
+vim.keymap.set('n', '<leader>x', '<cmd>!chmod +x %<CR>', { silent = true })
 
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 
@@ -42,13 +42,13 @@ vim.keymap.set('n', '<C-W>z', function() require('mini.misc').zoom() end)
 vim.keymap.set('n', '<leader>ns', ':ASToggle<CR>')
 
 -- semi-colon me!
-vim.keymap.set('n', '<leader>;', [[:s/[^;]\zs$/;/<CR>:nohl<CR>$]], {silent = true})
+vim.keymap.set('n', '<leader>;', [[:s/[^;]\zs$/;/<CR>:nohl<CR>$]], { silent = true })
 
 -- indents
-vim.keymap.set('v', '>', '>gv', {noremap = true})
-vim.keymap.set('n', '>', '>>', {noremap = true})
-vim.keymap.set('v', '<lt>', '<gv', {noremap = true})
-vim.keymap.set('n', '<lt>', '<<', {noremap = true})
+vim.keymap.set('v', '>', '>gv', { noremap = true })
+vim.keymap.set('n', '>', '>>', { noremap = true })
+vim.keymap.set('v', '<lt>', '<gv', { noremap = true })
+vim.keymap.set('n', '<lt>', '<<', { noremap = true })
 
 -- winresizer
 vim.g.winresizer_start_key = '<C-w>r'
@@ -63,20 +63,20 @@ vim.keymap.set('n', '<leader>mz', ':ZenMode<CR>')
 vim.keymap.set('n', '<leader>ds', function() require('mini.trailspace').trim() end)
 
 -- buffers
-vim.keymap.set('n', 'L', ':bnext<cr>', {silent = true})
-vim.keymap.set('n', 'H', ':bprev<cr>', {silent = true})
+vim.keymap.set('n', 'L', ':bnext<cr>', { silent = true })
+vim.keymap.set('n', 'H', ':bprev<cr>', { silent = true })
 
 -- Delete current buffer and goes back to the previous one
-vim.keymap.set('n', '<leader>qq', ':Bdelete<cr>', {silent = true})
+vim.keymap.set('n', '<leader>qq', ':Bdelete<cr>', { silent = true })
 vim.keymap.set('n', '<leader>wq', function()
     vim.cmd('update')
     vim.cmd('Bdelete')
-end, {silent = true})
+end, { silent = true })
 vim.keymap.set('n', '<leader>qa', function()
     vim.cmd(':DeleteHiddenBuffers')
     vim.cmd(':bufdo :Bdelete')
     -- require('mini.starter').open()
-end, {silent = true})
+end, { silent = true })
 
 vim.keymap.set('n', '<leader>q1', function()
     local bufnr = vim.api.nvim_get_current_buf()
@@ -85,7 +85,7 @@ vim.keymap.set('n', '<leader>q1', function()
     for _, n in ipairs(vim.api.nvim_list_bufs()) do
         if n ~= bufnr then vim.cmd(':Bdelete' .. n) end
     end
-end, {silent = true})
+end, { silent = true })
 
 vim.g.doge_mapping = '<leader>doc'
 
@@ -96,3 +96,7 @@ vim.keymap.set('n', '<leader><leader>`', function()
     vim.opt_local.bufhidden = 'hide'
     vim.opt_local.swapfile = false
 end, {silent = true})
+
+-- base64 helpers
+vim.keymap.set('v', '<leader>64', 'c<c-r>=system(\'base64\', @")<cr><esc>', { noremap = true })
+vim.keymap.set('v', '<leader><leader>64', 'c<c-r>=system(\'base64 --decode\', @")<cr><esc>', { noremap = true })

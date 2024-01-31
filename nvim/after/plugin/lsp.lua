@@ -129,6 +129,7 @@ cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 local cmp_format = lsp_zero.cmp_format()
 
 cmp.setup({
+    completion = {completeopt = 'menu,menuone,noinsert'},
     mapping = cmp.mapping.preset.insert({
         -- disable completion with tab
         -- this helps with copilot setup

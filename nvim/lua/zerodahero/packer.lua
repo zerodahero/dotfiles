@@ -20,7 +20,7 @@ return require('packer').startup(function(use)
 
     use({'EdenEast/nightfox.nvim', as = 'nightfox'})
 
-    use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdateSync'})
+    use('nvim-treesitter/nvim-treesitter', {run = ':TSUpdate'})
     use('nvim-treesitter/playground')
     use('JoosepAlviste/nvim-ts-context-commentstring')
     -- use('theprimeagen/harpoon')

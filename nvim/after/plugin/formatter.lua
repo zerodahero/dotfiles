@@ -7,7 +7,7 @@ require('formatter').setup {
 
         javascript = {
             require('formatter.filetypes.typescript').eslint_d,
-            require('formatter.filetypes.typescript').prettier,
+            -- require('formatter.filetypes.typescript').prettier,
         },
 
         json = {require('formatter.filetypes.json').fixjson},
@@ -16,7 +16,7 @@ require('formatter').setup {
 
         typescript = {
             require('formatter.filetypes.typescript').eslint_d,
-            require('formatter.filetypes.typescript').prettier,
+            -- require('formatter.filetypes.typescript').prettier,
         },
 
         ['*'] = {require('formatter.filetypes.any').remove_trailing_whitespace},

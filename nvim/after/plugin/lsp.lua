@@ -218,4 +218,4 @@ vim.keymap.set('n', '<leader>vyo', ':Outline<CR>', {})
 
 -- require('lspsaga').setup({symbol_in_winbar = {enable = false}});
 
-require('nvim-navic').setup({lsp = {auto_attach = true}, highlight = true})
+require('nvim-navic').setup({lsp = {auto_attach = true, preference = {'volar'}}, highlight = true})

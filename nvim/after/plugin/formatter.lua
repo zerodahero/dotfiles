@@ -19,6 +19,8 @@ require('formatter').setup {
             -- require('formatter.filetypes.typescript').prettier,
         },
 
+        php = {require('formatter.filetypes.php').php_cs_fixer},
+
         ['*'] = {require('formatter.filetypes.any').remove_trailing_whitespace},
     },
 }

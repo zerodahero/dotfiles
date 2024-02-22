@@ -104,6 +104,11 @@ return {
         event = {'BufReadPost'}, -- lazy load after reading a buffer
     },
     {'windwp/nvim-autopairs', config = function() require('nvim-autopairs').setup {} end},
+    -- {
+    --     'Wansmer/treesj',
+    --     keys = {{'J', '<cmd>TSJToggle<cr>', desc = 'Join Toggle'}},
+    --     opts = {use_default_keymaps = false, max_join_length = 150},
+    -- },
 
     -- Configured in prose.lua
     'preservim/vim-pencil',

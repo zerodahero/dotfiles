@@ -10,4 +10,3 @@ vim.api.nvim_create_autocmd({'BufWritePost'}, {
     end,
 })
 
-vim.keymap.set('n', '<leader>mf', ':update<CR>:FormatWrite<CR>', {silent = true})

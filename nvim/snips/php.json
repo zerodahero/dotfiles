@@ -91,10 +91,7 @@
     "Public Method": {
         "prefix": "fun",
         "body": [
-            "/**",
-            " * ${2:Does something}",
-            " */",
-            "public function $1()",
+            "public function $1(): $2",
             "{",
             "    $0",
             "}"
@@ -104,10 +101,7 @@
     "Protected Method": {
         "prefix": "pfun",
         "body": [
-            "/**",
-            " * ${2:Does something protected}",
-            " */",
-            "protected function $1()",
+            "protected function $1(): $2",
             "{",
             "    $0",
             "}"
@@ -117,10 +111,7 @@
     "Private Method": {
         "prefix": "prfun",
         "body": [
-            "/**",
-            " * ${2:Does something private}",
-            " */",
-            "private function $1()",
+            "private function $1(): $2",
             "{",
             "    $0",
             "}"

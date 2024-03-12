@@ -48,6 +48,7 @@ vim.opt.spellsuggest = 'best,9'
 vim.g.load_doxygen_syntax = 1
 vim.g.doxygen_enhanced_color = 1
 
+vim.g.editorconfig = true
 vim.g.EditorConfig_exclude_patterns = {'fugitive://.*', 'scp://.*'}
 
 vim.g.surround_no_insert_mappings = 1

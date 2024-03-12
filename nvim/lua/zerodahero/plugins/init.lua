@@ -22,7 +22,6 @@ return {
 
     'APZelos/blamer.nvim',
     'tpope/tpope-vim-abolish',
-    'editorconfig/editorconfig-vim',
 
     {
         'VonHeikemen/lsp-zero.nvim',
@@ -51,7 +50,7 @@ return {
             -- { 'jay-babu/mason-null-ls.nvim' },
 
             -- formatter
-            {'mhartington/formatter.nvim'},
+            -- {'mhartington/formatter.nvim'},
 
             -- linter
             {'mfussenegger/nvim-lint'},
@@ -141,16 +140,16 @@ return {
         config = function() require('trouble').setup {} end,
     },
 
-    {
-        'Pocco81/auto-save.nvim',
-        config = function()
-            require('auto-save').setup {
-                enabled = false,
-                trigger_events = {'TextChanged'},
-                debounce_delay = 1000,
-            }
-        end,
-    },
+    -- {
+    --     'pocco81/auto-save.nvim',
+    --     config = function()
+    --         require('auto-save').setup {
+    --             enabled = false,
+    --             trigger_events = {'TextChanged'},
+    --             debounce_delay = 1000,
+    --         }
+    --     end,
+    -- },
 
     -- Little floating window with file name
     'b0o/incline.nvim',
@@ -199,6 +198,6 @@ return {
     },
 
     -- AI
-    'Exafunction/codeium.vim',
-    -- 'github/copilot.vim'
+    -- 'Exafunction/codeium.vim',
+    'github/copilot.vim'
 }

@@ -25,6 +25,7 @@ return {
             json = { "fixjson" },
             php = { "php_cs_fixer" },
             rust = { "rustfmt" },
+            markdown = { "mdformat" },
             ['*'] = { 'trim_newlines', 'trim_whitespace' },
         },
         formatters = {

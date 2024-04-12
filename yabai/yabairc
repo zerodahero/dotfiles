@@ -40,12 +40,12 @@ yabai -m config right_padding                5
 yabai -m config window_gap                   10
 
 # Rules
-yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Alfred Preferences$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Disk Utility$" sticky=on layer=above manage=off
-yabai -m rule --add app="^System Information$" sticky=on layer=above manage=off
-yabai -m rule --add app="^Activity Monitor$" sticky=on layer=above manage=off
+yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="^Alfred Preferences$" manage=off
+yabai -m rule --add app="^Disk Utility$" manage=off
+yabai -m rule --add app="^System Information$" manage=off
+yabai -m rule --add app="^Activity Monitor$" manage=off
 yabai -m rule --add app="^Path Finder$" manage=off
 yabai -m rule --add app="^Logi Options$" manage=off
 yabai -m rule --add app="^Digital Color Meter$" manage=off
@@ -77,6 +77,8 @@ yabai -m signal --add \
     event=window_focused \
     app='^Microsoft Teams$' \
     title='^Microsoft Teams Notification$' action="yabai -m window --focus $(yabai -m query --windows | jq 'map(select(.title | endswith("Microsoft Teams")))[-1].id')"
+
+yabai -m rule --apply
 
 echo "yabai configuration loaded.."
 

@@ -14,11 +14,11 @@ return {
         },
     },
     -- Everything in opts will be passed to setup()
-    opts = function()
-        return {
+    opts =
+        {
         -- Define your formatters
         formatters_by_ft = {
-            lua = { "luaformat" },
+            lua = { "stylua" },
             javascript = { "eslint_d" },
             typescript = { "eslint_d" },
             vue = { "eslint_d" },
@@ -28,16 +28,16 @@ return {
             markdown = { "mdformat" },
             ['*'] = { 'trim_newlines', 'trim_whitespace' },
         },
-        formatters = {
-            php_cs_fixer = {
-                args = { "fix", "--quiet", "$FILENAME" },
-                cwd = require("conform.util").root_file({ "composer.json" }),
-            },
-        },
-        log_level = vim.log.levels.TRACE,
+        -- formatters = {
+        --     php_cs_fixer = {
+        --         args = { "fix", "--quiet", "$FILENAME" },
+        --         cwd = require("conform.util").root_file({ "composer.json" }),
+        --     },
+        -- },
+        -- log_level = vim.log.levels.TRACE,
         -- Set up format-on-save
         -- format_on_save = { timeout_ms = 500, lsp_fallback = true },
-    } end,
+    } ,
     init = function()
         -- If you want the formatexpr, here is the place to set it
         vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"

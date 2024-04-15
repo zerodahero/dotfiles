@@ -166,6 +166,7 @@ return {
     {
         'nvim-neotest/neotest',
         dependencies = {
+            'nvim-neotest/nvim-nio',
             'nvim-lua/plenary.nvim',
             'nvim-treesitter/nvim-treesitter',
             -- 'antoinemadec/FixCursorHold.nvim', -- supposedly not needed anymore?
@@ -175,8 +176,8 @@ return {
             'nvim-neotest/neotest-jest',
         },
     },
-    {'folke/twilight.nvim', config = function() require('twilight').setup {} end},
-    {'folke/zen-mode.nvim', config = function() require('zen-mode').setup {} end},
+    {'folke/twilight.nvim', opts = {} },
+    {'folke/zen-mode.nvim', opts = {} },
 
     -- DOcument GEnterator (docblocks, etc)
     {'kkoomen/vim-doge', build = ':call doge#install()'},
@@ -199,5 +200,5 @@ return {
 
     -- AI
     -- 'Exafunction/codeium.vim',
-    'github/copilot.vim'
+    -- 'github/copilot.vim',
 }

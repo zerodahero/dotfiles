@@ -5,7 +5,7 @@ telescope.setup {
     pickers = {
         find_files = {
             hidden = true,
-            no_ignore = false,
+            no_ignore = true,
             path_display = { 'truncate' },
         },
         oldfiles = { sort_mru = true, ignore_current_buffer = true, only_cwd = true },

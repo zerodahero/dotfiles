@@ -13,9 +13,7 @@
     "Test Function": {
         "prefix": "tfun",
         "body": [
-            "/**",
-            " * @test",
-            " */",
+            "#[Test]",
             "public function ${1:testDoesAThing}()",
             "{",
             "    ${2:$$this->markTestIncomplete();}$3",
@@ -36,10 +34,8 @@
     "Test Function with Group": {
         "prefix": "tgfun",
         "body": [
-            "/**",
-            " * @test",
-            " * @group ${1: test-group}",
-            " */",
+            "#[Test]",
+            "#[Group(${1: test-group})]",
             "public function ${2:testDoesAThing}()",
             "{",
             "    ${3:$$this->markTestIncomplete();}$4",

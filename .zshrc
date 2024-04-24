@@ -129,23 +129,19 @@ _evalcache direnv hook zsh
 
 # export GOPATH=$HOME/projects/golang
 export PATH=$PATH:$(go env GOPATH)/bin:$(go env GOROOT)/bin:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin:$HOME/.dotnet/tools:$HOME/.luarocks/bin
-# export PATH=$PATH:$HOME/.composer/vendor/bin:$HOME/bin:$HOME/.local/bin:$HOME/.nimble/bin
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
-
-# Phan
-# phan() { docker run -v $PWD:/mnt/src --rm -u "$(id -u):$(id -g)" phanphp/phan:latest $@; return $?; }
-
-# PHPStan
-# alias phpstan='docker run -v $PWD:/app --rm phpstan/phpstan'
 
 alias dco="docker compose"
 # alias phpfix="php-cs-fixer fix"
-# alias art="php artisan"
-
-# function laradco () {
-# 	(cd $HOME/projects/laradock && docker compose $@)
-# }
-# alias larashell="laradco exec --user=laradock workspace bash"
+alias art="php artisan"
+function v () {
+    [[ $# -lt 1 ]] && return 1
+    if [[ -d vendor/bin ]]; then
+        ./vendor/bin/$@
+    else
+        echo "Not at composer project root"
+    fi
+}
 
 function git-fresh () {
 	git checkout $1 \

@@ -128,7 +128,7 @@ return {
     'simeji/winresizer',
     {'kwkarlwang/bufresize.nvim', config = function() require('bufresize').setup() end},
 
-    'sheerun/vim-polyglot',
+    -- 'sheerun/vim-polyglot',
 
     'echasnovski/mini.nvim',
 
@@ -160,7 +160,7 @@ return {
     'axkirillov/hbac.nvim',
 
     -- Scratch
-    'LintaoAmons/scratch.nvim',
+    -- 'LintaoAmons/scratch.nvim',
 
     'HiPhish/rainbow-delimiters.nvim',
     {

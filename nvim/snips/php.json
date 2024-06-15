@@ -142,6 +142,7 @@
             "",
             "namespace ${RELATIVE_FILEPATH/(\\/)/\\\\/g};",
             "",
+            "use PHPUnit\\Framework\\Attributes\\Test;",
             "use Tests\\TestCase;",
             "",
             "class ${TM_FILENAME_BASE} extends TestCase",

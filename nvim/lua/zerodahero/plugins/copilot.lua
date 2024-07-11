@@ -2,10 +2,11 @@ return {
     "github/copilot.vim",
     cmd = "Copilot",
     event = "InsertEnter",
+    cond = vim.env.COPILOT_ENABLED == 1,
     config = function()
         vim.keymap.set(
             "i",
-            "<C-i>",
+            "<C-S-Y>",
             "copilot#Accept('')",
             { expr = true, noremap = true, silent = true, replace_keycodes = false, script = true }
         )

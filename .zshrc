@@ -214,6 +214,9 @@ case "$OSTYPE" in
     ;;
 esac
 
+## Source the home-path .env file
+[ -f $HOME/.env ] && {set -a; source $HOME/.env; set +a}
+
 [ -e "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 alias stack='C_INCLUDE_PATH="`xcrun --show-sdk-path`/usr/include/ffi" stack'
 

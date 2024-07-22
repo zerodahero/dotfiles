@@ -114,6 +114,16 @@
         ],
         "description": "Create new private method"
     },
+    "Static Method": {
+        "prefix": "sfun",
+        "body": [
+            "public static function $1(): $2",
+            "{",
+            "    $0",
+            "}"
+        ],
+        "description": "Create new static method"
+    },
     "DB Listen": {
         "prefix": "dbdump",
         "body": [

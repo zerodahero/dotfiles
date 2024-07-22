@@ -134,12 +134,6 @@ return {
 
     {'glacambre/firenvim', build = function() vim.fn['firenvim#install'](0) end},
 
-    {
-        'folke/trouble.nvim',
-        dependencies = 'nvim-tree/nvim-web-devicons',
-        config = function() require('trouble').setup {} end,
-    },
-
     -- {
     --     'pocco81/auto-save.nvim',
     --     config = function()
@@ -182,11 +176,6 @@ return {
     -- DOcument GEnterator (docblocks, etc)
     {'kkoomen/vim-doge', build = ':call doge#install()'},
 
-    {
-        'folke/todo-comments.nvim',
-        dependencies = 'nvim-lua/plenary.nvim',
-        config = function() require('todo-comments').setup {} end,
-    },
     {'numToStr/Comment.nvim', config = function() require('Comment').setup() end},
 
     'hedyhli/outline.nvim',

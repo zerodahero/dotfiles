@@ -63,14 +63,14 @@ alt - 2 : yabai -m display --focus 2
 # ctrl - 5 : yabai -m space --focus 5
 
 # Change Displays
-alt - p : (yabai -m display --focus prev || yabai -m display --focus last); yabai -m window --focus 1
-alt - n : (yabai -m display --focus next || yabai -m display --focus first); yabai -m window --focus 1
+# alt - p : (yabai -m display --focus prev || yabai -m display --focus last); yabai -m window --focus 1
+# alt - n : (yabai -m display --focus next || yabai -m display --focus first); yabai -m window --focus 1
 # Move windows between displays
 shift + alt - p : yabai -m window --display prev
 shift + alt - n : yabai -m window --display next
 
 # toggle window split type
-alt - e : yabai -m window --toggle split
+# alt - e : yabai -m window --toggle split
 # Rotate windows clockwise and anticlockwise
 alt - r         : yabai -m space --rotate 90
 shift + alt - r : yabai -m space --rotate 270

@@ -21,6 +21,8 @@ return {
             javascript = { "eslint_d" },
             typescript = { "eslint_d" },
             vue = { "eslint_d" },
+            dart = { "dart_format" },
+            go = { "gofmt" },
             json = { "fixjson" },
             php = { "php_cs_fixer" },
             rust = { "rustfmt" },

@@ -2,7 +2,7 @@ return {
     "github/copilot.vim",
     cmd = "Copilot",
     event = "InsertEnter",
-    cond = vim.env.COPILOT_ENABLED == 1,
+    cond = vim.env.COPILOT_ENABLED == '1',
     config = function()
         vim.keymap.set(
             "i",

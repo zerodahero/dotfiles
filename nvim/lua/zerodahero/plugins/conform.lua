@@ -18,9 +18,9 @@ return {
         -- Define your formatters
         formatters_by_ft = {
             lua = { "stylua" },
-            javascript = { "eslint_d" },
-            typescript = { "eslint_d" },
-            vue = { "eslint_d" },
+            javascript = { "biome", "eslint_d" },
+            typescript = { "biome", "eslint_d" },
+            vue = { "biome", "eslint_d" },
             dart = { "dart_format" },
             go = { "gofmt" },
             json = { "fixjson" },

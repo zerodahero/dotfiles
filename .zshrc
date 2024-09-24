@@ -77,7 +77,7 @@ source "$HOME/.zsh/lazy-loads/kubectl.zsh"
 # Add wisely, as too many plugins slow down shell startup.
 export NVM_LAZY_LOAD=true
 export NVM_COMPLETION=true
-plugins=(zsh-nvm git kube-ps1 evalcache git-trim brew zsh-syntax-highlighting)
+plugins=(git kube-ps1 evalcache git-trim brew zsh-syntax-highlighting)
 
 ZLE_REMOVE_SUFFIX_CHARS=""
 
@@ -303,3 +303,8 @@ vsso() {
 zshstartuptime() {
    for i in $(seq 0 10); do time /bin/zsh -i -c exit; done
 }
+
+# FNM
+_evalcache fnm env --use-on-cd --shell zsh
+
+

@@ -81,19 +81,16 @@ return {
 
                 lsp_zero.default_keymaps({ buffer = bufnr })
 
-                vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-                vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
                 vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
                 vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
-                vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
-                vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
-                vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
+                -- vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
                 vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
-                vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
+                -- vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
                 vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
                 vim.keymap.set("n", "<leader>h", ":LspOverloadsSignature<CR>", { noremap = true, silent = true })
 
                 vim.keymap.set("n", "<leader><leader>cs", ":LspRestart omnisharp<CR>", { noremap = true })
+                vim.keymap.set("n", "<leader><leader>lsp", ":LspRestart<CR>", { noremap = true })
             end
 
             lsp_zero.extend_lspconfig({
@@ -113,15 +110,19 @@ return {
                     -- this first function is the "default handler"
                     -- it applies to every language server without a "custom handler"
                     function(server_name)
-                        require("lspconfig")[server_name].setup({})
+                        if server_name == "tsserver" then
+                            server_name = "ts_ls"
+                        else
+                            require("lspconfig")[server_name].setup({})
+                        end
                     end,
 
                     lua_ls = function()
                         local lua_opts = lsp_zero.nvim_lua_ls()
                         lspconfig.lua_ls.setup(lua_opts)
                     end,
-                    tsserver = function()
-                        lspconfig.tsserver.setup({ javascript = { validate = false } })
+                    ts_ls = function()
+                        lspconfig.ts_ls.setup({ javascript = { validate = false } })
                     end,
                     volar = function()
                         lspconfig.volar.setup({
@@ -136,5 +137,18 @@ return {
                 },
             })
         end,
+    },
+    {
+        "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+        opts = {},
+        keys = {
+            {
+                "<leader>l",
+                function()
+                    require("lsp_lines").toggle()
+                end,
+                desc = "Toggle lsp_lines",
+            },
+        },
     },
 }

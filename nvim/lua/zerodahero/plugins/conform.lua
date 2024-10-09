@@ -21,6 +21,7 @@ return {
             javascript = { "biome", "eslint_d" },
             typescript = { "biome", "eslint_d" },
             vue = { "biome", "eslint_d" },
+            cs = { "csharpier" },
             dart = { "dart_format" },
             go = { "gofmt" },
             json = { "fixjson" },

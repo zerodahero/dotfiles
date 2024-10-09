@@ -91,6 +91,11 @@ return {
 
                 vim.keymap.set("n", "<leader><leader>cs", ":LspRestart omnisharp<CR>", { noremap = true })
                 vim.keymap.set("n", "<leader><leader>lsp", ":LspRestart<CR>", { noremap = true })
+
+                --- Guard against servers without the signatureHelper capability
+                if client.server_capabilities.signatureHelpProvider then
+                    require("lsp-overloads").setup(client, {})
+                end
             end
 
             lsp_zero.extend_lspconfig({

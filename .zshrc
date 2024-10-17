@@ -256,8 +256,6 @@ alias .j='just --justfile ~/.user.justfile --working-directory .'
 alias .n='just --justfile ~/.dotnet.justfile --working-directory .'
 alias .c='just --justfile ~/.clockify.justfile --working-directory .'
 
-alias go="grc go"
-
 # alias sail="[ -f sail ] && bash sail || bash vendor/bin/sail"
 
 # atuin (history search widget)
@@ -303,8 +301,10 @@ vsso() {
 zshstartuptime() {
    for i in $(seq 0 10); do time /bin/zsh -i -c exit; done
 }
-
 # FNM
 _evalcache fnm env --use-on-cd --shell zsh
 
-
+## [Completion]
+## Completion scripts setup. Remove the following line to uninstall
+[[ -f /Users/zero/.dart-cli-completion/zsh-config.zsh ]] && . /Users/zero/.dart-cli-completion/zsh-config.zsh || true
+## [/Completion]

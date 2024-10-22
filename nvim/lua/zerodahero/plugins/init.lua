@@ -1,18 +1,7 @@
 return {
-    {
-        "nvim-telescope/telescope.nvim",
-        branch = "0.1.x",
-        dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-telescope/telescope-ui-select.nvim" } },
-    },
-
-    "nvim-telescope/telescope-dap.nvim",
-    "gbrlsnchs/telescope-lsp-handlers.nvim",
-    "keyvchan/telescope-find-pickers.nvim",
-
     { "EdenEast/nightfox.nvim", name = "nightfox" },
 
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-    "nvim-treesitter/playground",
     "JoosepAlviste/nvim-ts-context-commentstring",
 
     "mbbill/undotree",
@@ -23,46 +12,6 @@ return {
     "APZelos/blamer.nvim",
     "tpope/tpope-vim-abolish",
 
-    -- moved to lsp.lua
-    -- {
-    --     'VonHeikemen/lsp-zero.nvim',
-    --     branch = 'v4.x',
-    --     dependencies = {
-    --         -- LSP Support
-    --         {'neovim/nvim-lspconfig'},
-    --         {'williamboman/mason.nvim', build = ':MasonUpdate'},
-    --         -- { 'williamboman/mason.nvim' },
-    --         {'williamboman/mason-lspconfig.nvim'},
-    --
-    --         -- Autocompletion
-    --         {'hrsh7th/nvim-cmp'},
-    --         {'hrsh7th/cmp-buffer'},
-    --         {'hrsh7th/cmp-path'},
-    --         {'saadparwaiz1/cmp_luasnip'},
-    --         {'hrsh7th/cmp-nvim-lsp'},
-    --         {'hrsh7th/cmp-nvim-lsp-signature-help'},
-    --
-    --         -- Snippets
-    --         {'L3MON4D3/LuaSnip', version = 'v2.*', build = 'make install_jsregexp'},
-    --         -- {'rafamadriz/friendly-snippets'},
-    --
-    --         -- linter
-    --         {'mfussenegger/nvim-lint'},
-    --
-    --         -- nvim lua config
-    --         {'folke/neodev.nvim'},
-    --
-    --         -- lsp status updates
-    --         {'j-hui/fidget.nvim'},
-    --
-    --         -- lsp overloads
-    --         {'Issafalcon/lsp-overloads.nvim'},
-    --
-    --         -- {'nvimdev/lspsaga.nvim', after = 'nvim-lspconfig'}
-    --     },
-    -- },
-    -- 'Hoffs/omnisharp-extended-lsp.nvim',
-
     -- linter
     { "mfussenegger/nvim-lint" },
 
@@ -72,7 +21,7 @@ return {
     -- lsp status updates
     { "j-hui/fidget.nvim", opts = {} },
 
-    { "benfowler/telescope-luasnip.nvim", module = "telescope._extensions.luasnip" },
+    -- { "benfowler/telescope-luasnip.nvim", module = "telescope._extensions.luasnip" },
     -- "adoyle-h/lsp-toggle.nvim",
 
     -- Debugging
@@ -113,11 +62,6 @@ return {
             require("nvim-autopairs").setup({})
         end,
     },
-    -- {
-    --     'Wansmer/treesj',
-    --     keys = {{'J', '<cmd>TSJToggle<cr>', desc = 'Join Toggle'}},
-    --     opts = {use_default_keymaps = false, max_join_length = 150},
-    -- },
 
     -- Configured in prose.lua
     "preservim/vim-pencil",
@@ -143,8 +87,6 @@ return {
         end,
     },
 
-    -- 'sheerun/vim-polyglot',
-
     "echasnovski/mini.nvim",
 
     {
@@ -154,17 +96,6 @@ return {
         end,
     },
 
-    -- {
-    --     'pocco81/auto-save.nvim',
-    --     config = function()
-    --         require('auto-save').setup {
-    --             enabled = false,
-    --             trigger_events = {'TextChanged'},
-    --             debounce_delay = 1000,
-    --         }
-    --     end,
-    -- },
-
     -- Little floating window with file name
     "b0o/incline.nvim",
 
@@ -172,9 +103,6 @@ return {
     "moll/vim-bbye",
     "arithran/vim-delete-hidden-buffers",
     "axkirillov/hbac.nvim",
-
-    -- Scratch
-    -- 'LintaoAmons/scratch.nvim',
 
     "HiPhish/rainbow-delimiters.nvim",
     {
@@ -198,9 +126,7 @@ return {
 
     {
         "numToStr/Comment.nvim",
-        config = function()
-            require("Comment").setup()
-        end,
+        opts = {},
     },
 
     "hedyhli/outline.nvim",
@@ -208,13 +134,7 @@ return {
 
     {
         "chentoast/marks.nvim",
-        event = "BufReadPre",
-        config = function()
-            require("marks").setup({})
-        end,
+        event = "VeryLazy",
+        opts = {},
     },
-
-    -- AI
-    -- 'Exafunction/codeium.vim',
-    -- 'github/copilot.vim',
 }

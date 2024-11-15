@@ -1,10 +1,10 @@
 return {
     "David-Kunz/gen.nvim",
     opts = {
-        model = "mistral", -- The default model to use.
+        -- model = "qwen2.5-coder:14b", -- The default model to use.
     },
     cmd = "Gen",
     keys = {
-        { "<leader><leader>g", "<cmd>Gen<cr>", mode = { "n", "v" }, desc = "Gen AI" },
+        { "<leader><leader>g", ":Gen<CR>", mode = { "n", "v" }, desc = "Gen AI" },
     },
 }

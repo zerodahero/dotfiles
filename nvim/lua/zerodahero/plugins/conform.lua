@@ -29,6 +29,7 @@ return {
             rust = { "rustfmt" },
             markdown = { "mdformat" },
             yaml = { "yamlfmt" },
+            nim = { "nimpretty" },
             ["*"] = { "trim_newlines", "trim_whitespace" },
         },
         log_level = vim.log.levels.DEBUG,

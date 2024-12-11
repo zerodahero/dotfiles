@@ -56,8 +56,8 @@ alt - c         : yabai -m window --toggle float
 shift + ctrl + alt - c : ((yabai -m query --spaces --space | jq -re '.type == "bsp"') && yabai -m space --layout float) || yabai -m space --layout bsp
 
 # Change desktop
-alt - 1 : yabai -m display --focus 1
-alt - 2 : yabai -m display --focus 2
+# alt - 1 : yabai -m display --focus 1
+# alt - 2 : yabai -m display --focus 2
 # ctrl - 3 : yabai -m display --focus 2; yabai -m space --focus 1
 # ctrl - 4 : yabai -m display --focus 2; yabai -m space --focus 2
 # ctrl - 5 : yabai -m space --focus 5

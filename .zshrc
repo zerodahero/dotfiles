@@ -242,6 +242,16 @@ KUBE_PS1_NS_COLOR=blue
 # K8s context off by default
 kubeoff
 
+function prompt_kubecontext() {
+  [[ "${KUBE_PS1_ENABLED}" == "off" ]] && return
+  [[ -z "${KUBE_PS1_CONTEXT}" ]] && [[ "${KUBE_PS1_CONTEXT_ENABLE}" == true ]] && return
+  prompt_segment white green " $(kube_ps1)"
+}
+
+PROMPT_SEGMENT_POSITION=5 PROMPT_SEGMENT_NAME="prompt_kubecontext";\
+AGNOSTER_PROMPT_SEGMENTS=("${AGNOSTER_PROMPT_SEGMENTS[@]:0:$PROMPT_SEGMENT_POSITION-1}" "$PROMPT_SEGMENT_NAME" "${AGNOSTER_PROMPT_SEGMENTS[@]:$PROMPT_SEGMENT_POSITION-1}");\
+unset PROMPT_SEGMENT_POSITION PROMPT_SEGMENT_NAME
+
 # AWS profiles
 function awsctx () {
     if [ -z $1 ]; then
@@ -285,18 +295,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm end
-
-# Projen
-alias pj='npx projen'
-
-vsso() {
-   local profile=$1
-   if [ $# -eq 0 ]; then
-      profile=$(aws configure list-profiles | fzf)
-   fi
-   aws-sso-util login --profile $profile && awsume $profile
-   export AWS_PROFILE=$profile
-}
 
 zshstartuptime() {
    for i in $(seq 0 10); do time /bin/zsh -i -c exit; done

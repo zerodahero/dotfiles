@@ -15,9 +15,12 @@ ln -si "$HOME/dotfiles/formatters/yamlfmt" "$HOME/.config/yamlfmt/.yamlfmt"
 
 ## ZSH
 ln -si "$HOME/dotfiles/.zshrc" "$HOME/.zshrc"
-#ln -si "$HOME/dotfiles/.oh-my-zsh/custom/themes/agnoster.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/agnoster.zsh-theme"
 mkdir -p "$HOME/.zsh/lazy-loads"
 ln -si "$HOME/dotfiles/zsh/lazy-loads/kubectl.zsh" "$HOME/.zsh/lazy-loads/kubectl.zsh"
+
+### Agnoster, real theme from repo
+git clone https://github.com/agnoster/agnoster-zsh-theme.git "$HOME/.oh-my-zsh/custom/themes/agnoster"
+ln -si "$HOME/.oh-my-zsh/custom/themes/agnoster/agnoster.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/agnoster.zsh-theme"
 
 ### OS Specific  files
 case "$(uname -s)" in

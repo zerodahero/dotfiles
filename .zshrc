@@ -161,6 +161,8 @@ function git-undelete () {
     git checkout $(git rev-list -n 1 HEAD -- "$1")^ -- "$1"
 }
 
+alias git-bc="npx better-commits"
+
 function sub.env () {
     local envpath=${3:-".env"}
     if [ ! -f ${envpath} ]
@@ -265,8 +267,6 @@ function awsctx () {
 alias .j='just --justfile ~/.user.justfile --working-directory .'
 alias .n='just --justfile ~/.dotnet.justfile --working-directory .'
 alias .c='just --justfile ~/.clockify.justfile --working-directory .'
-
-# alias sail="[ -f sail ] && bash sail || bash vendor/bin/sail"
 
 # atuin (history search widget)
 export ATUIN_NOBIND="true"

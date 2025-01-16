@@ -1,7 +1,7 @@
 return {
     "Exafunction/codeium.vim",
     event = "BufEnter",
-    cond = vim.env.COPILOT_ENABLED ~= 0,
+    cond = vim.env.CODEIUM_ENABLED == '1' or vim.env.COPILOT_ENABLED ~= '1',
     config = function()
         vim.g.codeium_enabled = true
         vim.g.codeium_disable_bindings = 0

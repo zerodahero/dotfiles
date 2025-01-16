@@ -18,8 +18,8 @@ return {
         -- Define your formatters
         formatters_by_ft = {
             lua = { "stylua" },
-            javascript = { "biome", "eslint_d" },
-            typescript = { "biome", "eslint_d" },
+            javascript = { "biome", "eslint_d", "prettierd" },
+            typescript = { "biome", "eslint_d", "prettierd" },
             vue = { "biome", "eslint_d" },
             cs = { "csharpier" },
             dart = { "dart_format" },
@@ -32,9 +32,23 @@ return {
             nim = { "nimpretty" },
             ["*"] = { "trim_newlines", "trim_whitespace" },
         },
-        log_level = vim.log.levels.DEBUG,
+        -- log_level = vim.log.levels.DEBUG,
         -- Set up format-on-save
         -- format_on_save = { timeout_ms = 500, lsp_fallback = true },
+        formatters = {
+            biome = {
+                condition = function()
+                    return vim.loop.fs_realpath("biome.json") ~= nil or vim.loop.fs_realpath("biome.jsonc") ~= nil
+                end,
+            },
+            prettierd = {
+                condition = function()
+                    return vim.loop.fs_realpath(".prettierrc.js") ~= nil
+                        or vim.loop.fs_realpath(".prettierrc.mjs") ~= nil
+                        or vim.loop.fs_realpath(".prettierrc") ~= nil
+                end,
+            },
+        },
     },
     init = function()
         -- If you want the formatexpr, here is the place to set it

@@ -87,7 +87,15 @@ return {
                 vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
                 -- vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
                 vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-                vim.keymap.set("n", "<leader>h", ":LspOverloadsSignature<CR>", { noremap = true, silent = true })
+                vim.keymap.set(
+                    "n",
+                    "<leader>h",
+                    ":LspOverloadsSignature<CR>",
+                    { noremap = true, silent = true, buffer = bufnr }
+                )
+                vim.keymap.set("n", "<leader>k", function()
+                    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr }), { bufnr })
+                end, opts)
 
                 vim.keymap.set("n", "<leader><leader>cs", ":LspRestart omnisharp<CR>", { noremap = true })
                 vim.keymap.set("n", "<leader><leader>lsp", ":LspRestart<CR>", { noremap = true })
@@ -114,31 +122,31 @@ return {
                 handlers = {
                     -- this first function is the "default handler"
                     -- it applies to every language server without a "custom handler"
-                    function(server_name)
-                        if server_name == "tsserver" then
-                            server_name = "ts_ls"
-                        else
-                            require("lspconfig")[server_name].setup({})
-                        end
-                    end,
+                    -- function(server_name)
+                    --     if server_name == "tsserver" then
+                    --         server_name = "ts_ls"
+                    --     else
+                    --         require("lspconfig")[server_name].setup({})
+                    --     end
+                    -- end,
 
                     lua_ls = function()
                         local lua_opts = lsp_zero.nvim_lua_ls()
                         lspconfig.lua_ls.setup(lua_opts)
                     end,
-                    ts_ls = function()
-                        lspconfig.ts_ls.setup({ javascript = { validate = false } })
-                    end,
-                    volar = function()
-                        lspconfig.volar.setup({
-                            filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-                            init_options = {
-                                vue = {
-                                    hybridMode = false,
-                                },
-                            },
-                        })
-                    end,
+                    -- ts_ls = function()
+                    --     lspconfig.ts_ls.setup({ javascript = { validate = false } })
+                    -- end,
+                    -- volar = function()
+                    --     lspconfig.volar.setup({
+                    --         filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+                    --         init_options = {
+                    --             vue = {
+                    --                 hybridMode = false,
+                    --             },
+                    --         },
+                    --     })
+                    -- end,
                 },
             })
         end,
@@ -155,5 +163,10 @@ return {
                 desc = "Toggle lsp_lines",
             },
         },
+    },
+    {
+        "pmizio/typescript-tools.nvim",
+        dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+        opts = {},
     },
 }

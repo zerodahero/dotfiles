@@ -1,9 +1,6 @@
 return {
     { "EdenEast/nightfox.nvim", name = "nightfox" },
 
-    { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
-    "JoosepAlviste/nvim-ts-context-commentstring",
-
     "mbbill/undotree",
     "tpope/vim-surround",
     "tpope/vim-fugitive",

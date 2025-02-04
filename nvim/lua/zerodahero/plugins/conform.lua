@@ -30,6 +30,7 @@ return {
             markdown = { "mdformat" },
             yaml = { "yamlfmt" },
             nim = { "nimpretty" },
+            hurl = { "hurlfmt" },
             ["*"] = { "trim_newlines", "trim_whitespace" },
         },
         -- log_level = vim.log.levels.DEBUG,

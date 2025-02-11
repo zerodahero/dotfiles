@@ -84,8 +84,6 @@ return {
         end,
     },
 
-    "echasnovski/mini.nvim",
-
     {
         "glacambre/firenvim",
         build = function()
@@ -132,6 +130,13 @@ return {
     {
         "chentoast/marks.nvim",
         event = "VeryLazy",
+        opts = {},
+    },
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
+        ---@module 'render-markdown'
+        ---@type render.md.UserConfig
         opts = {},
     },
 }

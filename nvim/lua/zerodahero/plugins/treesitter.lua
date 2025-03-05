@@ -7,7 +7,7 @@ return {
 
             configs.setup({
                 -- A list of parser names, or "all"
-                ensure_installed = { "vimdoc", "c_sharp", "lua" },
+                ensure_installed = { "vimdoc", "lua" },
 
                 -- Install parsers synchronously (only applied to `ensure_installed`)
                 sync_install = false,
@@ -28,8 +28,6 @@ return {
             })
         end,
     },
-
-    { "JoosepAlviste/nvim-ts-context-commentstring" },
 
     {
         "nvim-treesitter/nvim-treesitter-context",

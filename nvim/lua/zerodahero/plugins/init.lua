@@ -39,10 +39,22 @@ return {
         },
     },
 
-    "ray-x/lsp_signature.nvim",
+    {
+        "ray-x/lsp_signature.nvim",
+        event = "InsertEnter",
+        opts = {
+            bind = true,
+        }
+    },
 
     { "SmiteshP/nvim-navic", opts = { lsp = { auto_attach = true, preference = { "volar" } }, highlight = true } },
-    "lukas-reineke/indent-blankline.nvim",
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        ---@module "ibl"
+        ---@type ibl.config
+        opts = {},
+    },
 
     {
         "rmagatti/alternate-toggler",
@@ -119,11 +131,6 @@ return {
     -- DOcument GEnterator (docblocks, etc)
     { "kkoomen/vim-doge", build = ":call doge#install()" },
 
-    {
-        "numToStr/Comment.nvim",
-        opts = {},
-    },
-
     "hedyhli/outline.nvim",
     "terrastruct/d2-vim",
 
@@ -138,5 +145,15 @@ return {
         ---@module 'render-markdown'
         ---@type render.md.UserConfig
         opts = {},
+    },
+
+    {
+        "folke/snacks.nvim",
+        priority = 1000,
+        lazy = false,
+        ---@type snacks.Config
+        opts = {
+            bigfile = { enabled = true },
+        },
     },
 }

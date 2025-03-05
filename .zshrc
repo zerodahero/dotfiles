@@ -296,6 +296,12 @@ case ":$PATH:" in
 esac
 # pnpm end
 
+# TIMEFMT='%J %U user %S system %P cpu %*E total'$'\n'\
+# 'avg shared (code):         %X KB'$'\n'\
+# 'avg unshared (data/stack): %D KB'$'\n'\
+# 'total (sum):               %K KB'$'\n'\
+# 'max memory:                %M KB'
+
 zshstartuptime() {
    for i in $(seq 0 10); do time /bin/zsh -i -c exit; done
 }

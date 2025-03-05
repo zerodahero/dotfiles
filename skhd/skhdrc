@@ -94,3 +94,4 @@ ctrl + cmd - 0x32 : id=$(yabai -m query --windows | jq -re '.[] | select(.title 
     yabai -m window --focus $id \
     || kitty -T ScratchPad nvim -c "PencilSoft" -c "lua vim.diagnostic.config({signs=false,underline=false})" -c "DisableAIComplete" ~/.scratchpad.md
 
+cmd - 0x32 -> :

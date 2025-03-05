@@ -123,13 +123,9 @@ return {
                 handlers = {
                     -- this first function is the "default handler"
                     -- it applies to every language server without a "custom handler"
-                    -- function(server_name)
-                    --     if server_name == "tsserver" then
-                    --         server_name = "ts_ls"
-                    --     else
-                    --         require("lspconfig")[server_name].setup({})
-                    --     end
-                    -- end,
+                    function(server_name)
+                        require("lspconfig")[server_name].setup({})
+                    end,
 
                     lua_ls = function()
                         local lua_opts = lsp_zero.nvim_lua_ls()

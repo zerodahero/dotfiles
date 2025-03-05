@@ -68,6 +68,7 @@ vim.keymap.set('n', 'H', ':bprev<cr>', { silent = true })
 
 -- Delete current buffer and goes back to the previous one
 vim.keymap.set('n', '<leader>qq', ':Bdelete<cr>', { silent = true })
+vim.keymap.set('n', '<leader>q!', ':Bdelete!<cr>', { silent = true })
 vim.keymap.set('n', '<leader>wq', function()
     vim.cmd('update')
     vim.cmd('Bdelete')

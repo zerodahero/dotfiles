@@ -31,6 +31,7 @@ return {
             yaml = { "yamlfmt" },
             nim = { "nimpretty" },
             hurl = { "hurlfmt" },
+            bash = { "shfmt" },
             ["*"] = { "trim_newlines", "trim_whitespace" },
         },
         -- log_level = vim.log.levels.DEBUG,

@@ -1,13 +1,26 @@
 return {
+    -- Theme
     { "EdenEast/nightfox.nvim", name = "nightfox" },
 
     "mbbill/undotree",
-    "tpope/vim-surround",
-    "tpope/vim-fugitive",
-    { "akinsho/git-conflict.nvim", version = "*", config = true },
+    {
+        "kylechui/nvim-surround",
+        version = "*",
+        event = "VeryLazy",
+        opts = {},
+    },
+    {
+        "akinsho/git-conflict.nvim",
+        version = "*",
+        config = true,
+    },
 
     "APZelos/blamer.nvim",
-    "tpope/tpope-vim-abolish",
+    {
+        "gregorias/coerce.nvim",
+        tag = "v4.1.0",
+        config = true,
+    },
 
     -- linter
     { "mfussenegger/nvim-lint" },
@@ -17,9 +30,6 @@ return {
 
     -- lsp status updates
     { "j-hui/fidget.nvim", opts = {} },
-
-    -- { "benfowler/telescope-luasnip.nvim", module = "telescope._extensions.luasnip" },
-    -- "adoyle-h/lsp-toggle.nvim",
 
     -- Debugging
     {
@@ -44,7 +54,7 @@ return {
         event = "InsertEnter",
         opts = {
             bind = true,
-        }
+        },
     },
 
     { "SmiteshP/nvim-navic", opts = { lsp = { auto_attach = true, preference = { "volar" } }, highlight = true } },
@@ -109,7 +119,14 @@ return {
     -- Buffer closing without closing windows
     "moll/vim-bbye",
     "arithran/vim-delete-hidden-buffers",
-    "axkirillov/hbac.nvim",
+
+    -- Closes unedited buffers above threshold
+    {
+        "axkirillov/hbac.nvim",
+        opts = {
+            threshold = 7,
+        },
+    },
 
     "HiPhish/rainbow-delimiters.nvim",
     {

@@ -18,8 +18,8 @@ return {
         -- Define your formatters
         formatters_by_ft = {
             lua = { "stylua" },
-            javascript = { "biome", "eslint_d", "prettierd" },
-            typescript = { "biome", "eslint_d", "prettierd" },
+            javascript = { "biome", "biome-organize-imports", "eslint_d", "prettierd" },
+            typescript = { "biome", "biome-organize-imports", "eslint_d", "prettierd" },
             vue = { "biome", "eslint_d" },
             cs = { "csharpier" },
             dart = { "dart_format" },
@@ -34,11 +34,16 @@ return {
             bash = { "shfmt" },
             ["*"] = { "trim_newlines", "trim_whitespace" },
         },
-        -- log_level = vim.log.levels.DEBUG,
+        log_level = vim.log.levels.DEBUG,
         -- Set up format-on-save
         -- format_on_save = { timeout_ms = 500, lsp_fallback = true },
         formatters = {
             biome = {
+                condition = function()
+                    return vim.loop.fs_realpath("biome.json") ~= nil or vim.loop.fs_realpath("biome.jsonc") ~= nil
+                end,
+            },
+            ["biome-organize-imports"] = {
                 condition = function()
                     return vim.loop.fs_realpath("biome.json") ~= nil or vim.loop.fs_realpath("biome.jsonc") ~= nil
                 end,
@@ -48,6 +53,15 @@ return {
                     return vim.loop.fs_realpath(".prettierrc.js") ~= nil
                         or vim.loop.fs_realpath(".prettierrc.mjs") ~= nil
                         or vim.loop.fs_realpath(".prettierrc") ~= nil
+                end,
+            },
+            eslint_d = {
+                condition = function()
+                    return vim.loop.fs_realpath(".eslint.config.js") ~= nil
+                        or vim.loop.fs_realpath(".eslint.config.mjs") ~= nil
+                        or vim.loop.fs_realpath(".eslintrc") ~= nil
+                        or vim.loop.fs_realpath(".eslintrc.json") ~= nil
+                        or vim.loop.fs_realpath(".eslintrc.yml") ~= nil
                 end,
             },
         },

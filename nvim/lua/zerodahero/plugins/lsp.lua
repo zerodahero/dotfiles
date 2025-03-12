@@ -120,6 +120,7 @@ return {
 
             require("mason-lspconfig").setup({
                 ensure_installed = {},
+                automatic_installation = true,
                 handlers = {
                     -- this first function is the "default handler"
                     -- it applies to every language server without a "custom handler"
@@ -167,14 +168,13 @@ return {
         opts = {
             settings = {
                 tsserver_file_preferences = function(ft)
-                    -- Some "ifology" using `ft` of opened file
                     return {
                         includeInlayParameterNameHints = "all",
                         includeInlayParameterNameHintsWhenArgumentMatchesName = true,
                         includeInlayFunctionParameterTypeHints = false,
-                        includeInlayVariableTypeHints = false,
+                        includeInlayVariableTypeHints = true,
                         includeInlayVariableTypeHintsWhenTypeMatchesName = false,
-                        includeInlayPropertyDeclarationTypeHints = false,
+                        includeInlayPropertyDeclarationTypeHints = true,
                         includeInlayFunctionLikeReturnTypeHints = true,
                         includeInlayEnumMemberValueHints = true,
                     }

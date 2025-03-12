@@ -1,7 +1,4 @@
 return {
-    -- Theme
-    { "EdenEast/nightfox.nvim", name = "nightfox" },
-
     "mbbill/undotree",
     {
         "kylechui/nvim-surround",
@@ -26,7 +23,17 @@ return {
     { "mfussenegger/nvim-lint" },
 
     -- nvim lua config
-    { "folke/neodev.nvim", opts = { library = { plugins = { "nvim-dap-ui" }, types = true } } },
+    {
+        "folke/lazydev.nvim",
+        ft = "lua", -- only load on lua files
+        opts = {
+            library = {
+                -- See the configuration section for more details
+                -- Load luvit types when the `vim.uv` word is found
+                { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+            },
+        },
+    },
 
     -- lsp status updates
     { "j-hui/fidget.nvim", opts = {} },

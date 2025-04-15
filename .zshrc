@@ -290,11 +290,12 @@ export PROJECTS=$HOME/projects
 function project() {
     if [[ -z $1 ]]; then
         local p=$(cat <(cat "$HOME/.projects") <(ls "$PROJECTS") | sort | fzf)
-        if [[ ! -z $p ]]; then
-            project $p
+        if [[ -n $p ]]; then
+           project $p
+           return 0
         fi
     else
-        if [[ $1 =~ ^[~/]* ]]; then
+        if [[ $1 =~ ^[~/] ]]; then
             cd $1
         else
             cd $PROJECTS/$1

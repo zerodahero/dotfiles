@@ -53,6 +53,7 @@ vim.keymap.set("n", "<leader>fj", builtin.jumplist, {})
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, {})
 vim.keymap.set("n", "<leader>fc", builtin.commands, {})
 vim.keymap.set("n", "<leader>fm", builtin.marks, {})
+vim.keymap.set("n", "<leader>fr", builtin.resume, {})
 vim.keymap.set("n", "<leader>fs", "<cmd>Telescope luasnip<cr>", { silent = true })
 vim.keymap.set("n", "<leader>fo", builtin.oldfiles, {})
 -- Attempts to find the matching test or file

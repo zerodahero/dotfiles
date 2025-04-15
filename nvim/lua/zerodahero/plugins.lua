@@ -12,7 +12,9 @@ return {
         config = true,
     },
 
-    "APZelos/blamer.nvim",
+    {
+        "lewis6991/gitsigns.nvim",
+    },
     {
         "gregorias/coerce.nvim",
         tag = "v4.1.0",
@@ -176,7 +178,7 @@ return {
         ---@type render.md.UserConfig
         opts = {
             code = {
-                border = 'thick'
+                border = "thick",
             },
         },
     },

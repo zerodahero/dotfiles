@@ -288,18 +288,21 @@ complete -o nospace -C /opt/homebrew/bin/bit bit
 ## Projects
 export PROJECTS=$HOME/projects
 function project() {
+    local p=""
     if [[ -z $1 ]]; then
-        local p=$(cat <(cat "$HOME/.projects") <(ls "$PROJECTS") | sort | fzf)
-        if [[ -n $p ]]; then
-           project $p
-           return 0
-        fi
+        p=$(cat <(cat "$HOME/.projects") <(ls "$PROJECTS") | sort | fzf)
     else
-        if [[ $1 =~ ^[~/] ]]; then
-            cd $1
-        else
-            cd $PROJECTS/$1
-        fi
+        p=$(cat <(cat "$HOME/.projects") <(ls "$PROJECTS") | sort | fzf --query "$1" -1)
+    fi
+
+    if [[ -z $p ]]; then
+        return 1
+    fi
+
+    if [[ $p =~ ^[~/] ]]; then
+        cd $p
+    else
+        cd $PROJECTS/$p
     fi
 }
 alias p=project

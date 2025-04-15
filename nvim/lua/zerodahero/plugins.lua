@@ -64,7 +64,13 @@ return {
         },
     },
 
-    { "SmiteshP/nvim-navic", opts = { lsp = { auto_attach = true, preference = { "volar" } }, highlight = true } },
+    {
+        "SmiteshP/nvim-navic",
+        opts = {
+            lsp = { auto_attach = true, preference = { "volar" } },
+            highlight = true,
+        },
+    },
     {
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
@@ -131,7 +137,7 @@ return {
     {
         "axkirillov/hbac.nvim",
         opts = {
-            threshold = 7,
+            threshold = 9,
         },
     },
 
@@ -168,7 +174,11 @@ return {
         dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
         ---@module 'render-markdown'
         ---@type render.md.UserConfig
-        opts = {},
+        opts = {
+            code = {
+                border = 'thick'
+            },
+        },
     },
 
     {
@@ -180,4 +190,6 @@ return {
             bigfile = { enabled = true },
         },
     },
+
+    { "kevinhwang91/nvim-bqf", ft = "qf" },
 }

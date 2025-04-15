@@ -267,6 +267,7 @@ function awsctx () {
 alias .j='just --justfile ~/.user.justfile --working-directory .'
 alias .n='just --justfile ~/.dotnet.justfile --working-directory .'
 alias .c='just --justfile ~/.clockify.justfile --working-directory .'
+alias .o='just --justfile ~/.ollama.justfile --working-directory .'
 
 # atuin (history search widget)
 export ATUIN_NOBIND="true"
@@ -283,6 +284,24 @@ alias vimdiff='nvim -d'
 [ -e ~/.fzf.zsh ] && source ~/.fzf.zsh
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/homebrew/bin/bit bit
+
+## Projects
+export PROJECTS=$HOME/projects
+function project() {
+    if [[ -z $1 ]]; then
+        local p=$(cat <(cat "$HOME/.projects") <(ls "$PROJECTS") | sort | fzf)
+        if [[ ! -z $p ]]; then
+            project $p
+        fi
+    else
+        if [[ $1 =~ ^[~/]* ]]; then
+            cd $1
+        else
+            cd $PROJECTS/$1
+        fi
+    fi
+}
+alias p=project
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="$HOME/.rd/bin:$PATH"
@@ -308,7 +327,16 @@ zshstartuptime() {
 # FNM
 _evalcache fnm env --use-on-cd --shell zsh
 
+# PyEnv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+_evalcache pyenv init - zsh
+
 ## [Completion]
 ## Completion scripts setup. Remove the following line to uninstall
 [[ -f /Users/zero/.dart-cli-completion/zsh-config.zsh ]] && . /Users/zero/.dart-cli-completion/zsh-config.zsh || true
 ## [/Completion]
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

@@ -29,7 +29,7 @@ return {
             rust = { "rustfmt" },
             markdown = { "mdformat" },
             yaml = { "yamlfmt" },
-            nim = { "nimpretty" },
+            nim = { "nph" },
             hurl = { "hurlfmt" },
             bash = { "shfmt" },
             ["*"] = { "trim_newlines", "trim_whitespace" },

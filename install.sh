@@ -39,6 +39,13 @@ case "$(uname -s)" in
     ;;
 esac
 
+## Global justfiles
+# ln -si "$HOME/dotfiles/ollama.justfile" "$HOME/.ollama.justfile"
+
 ### Kitty
 ln -si "$HOME/dotfiles/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
 ln -si "$HOME/dotfiles/kitty/current-theme.conf" "$HOME/.config/kitty/current-theme.conf"
+
+## Projects directory setup
+mkdir -p "$HOME/projects"
+[ -f "$HOME/.projects" ] || echo "$HOME/dotfiles" > "$HOME/.projects"

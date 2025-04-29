@@ -55,7 +55,7 @@ return {
             {
                 "microsoft/vscode-js-debug",
                 lazy = true,
-                build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out",
+                build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out && git restore .",
             },
         },
     },
@@ -183,6 +183,18 @@ return {
                 border = "thick",
             },
         },
+    },
+    {
+        "iamcco/markdown-preview.nvim",
+        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+        build = "cd app && npm install && git restore .",
+        keys = {
+            { "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview" },
+        },
+        init = function()
+            vim.g.mkdp_filetypes = { "markdown" }
+        end,
+        ft = { "markdown" },
     },
 
     {

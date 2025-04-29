@@ -132,6 +132,16 @@ return {
                         local lua_opts = lsp_zero.nvim_lua_ls()
                         lspconfig.lua_ls.setup(lua_opts)
                     end,
+
+                    nim_langserver = function()
+                        lspconfig.nim_langserver.setup({
+                            settings = {
+                                nim = {
+                                    notificationVerbosity = "warning"
+                                }
+                            }
+                        })
+                    end,
                     -- ts_ls = function()
                     --     lspconfig.ts_ls.setup({ javascript = { validate = false } })
                     -- end,

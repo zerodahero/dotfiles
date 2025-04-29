@@ -32,6 +32,7 @@ return {
             nim = { "nph" },
             hurl = { "hurlfmt" },
             bash = { "shfmt" },
+            sql = { "sleek" },
             ["*"] = { "trim_newlines", "trim_whitespace" },
         },
         log_level = vim.log.levels.DEBUG,

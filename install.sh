@@ -40,9 +40,8 @@ case "$(uname -s)" in
 esac
 
 ## Global justfiles
-# ln -si "$HOME/dotfiles/ollama.justfile" "$HOME/.ollama.justfile"
 
-### Kitty
+## Kitty
 ln -si "$HOME/dotfiles/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
 ln -si "$HOME/dotfiles/kitty/current-theme.conf" "$HOME/.config/kitty/current-theme.conf"
 

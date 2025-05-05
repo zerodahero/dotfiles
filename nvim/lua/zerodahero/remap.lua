@@ -33,10 +33,7 @@ vim.keymap.set("n", "<C-H>", "<C-W><C-H>")
 vim.keymap.set("n", "<C-L>", "<C-W><C-L>")
 -- vim.keymap.set("n", "<C-W>z", "<C-W>| <C-W>_")
 -- vim.keymap.set("n", "<C-W>z", "<C-W>=")
-vim.keymap.set("n", "<C-W>z", function()
-    require("mini.misc").zoom()
-end)
-
+--
 -- autosave
 vim.keymap.set("n", "<leader>ns", ":ASToggle<CR>")
 

@@ -61,21 +61,6 @@ return {
     },
 
     {
-        "ray-x/lsp_signature.nvim",
-        event = "InsertEnter",
-        opts = {
-            bind = true,
-        },
-    },
-
-    {
-        "SmiteshP/nvim-navic",
-        opts = {
-            lsp = { auto_attach = true, preference = { "volar" } },
-            highlight = true,
-        },
-    },
-    {
         "lukas-reineke/indent-blankline.nvim",
         main = "ibl",
         ---@module "ibl"
@@ -112,30 +97,6 @@ return {
             "nvim-tree/nvim-web-devicons", -- optional, for file icons
         },
     },
-    { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", opt = true } },
-    { "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
-
-    "simeji/winresizer",
-    {
-        "kwkarlwang/bufresize.nvim",
-        config = function()
-            require("bufresize").setup()
-        end,
-    },
-
-    {
-        "glacambre/firenvim",
-        build = function()
-            vim.fn["firenvim#install"](0)
-        end,
-    },
-
-    -- Little floating window with file name
-    "b0o/incline.nvim",
-
-    -- Buffer closing without closing windows
-    "moll/vim-bbye",
-    "arithran/vim-delete-hidden-buffers",
 
     -- Closes unedited buffers above threshold
     {
@@ -143,6 +104,11 @@ return {
         opts = {
             threshold = 9,
         },
+    },
+    {
+        "Aasim-A/scrollEOF.nvim",
+        event = { "CursorMoved", "WinScrolled" },
+        opts = {},
     },
 
     "HiPhish/rainbow-delimiters.nvim",
@@ -159,8 +125,13 @@ return {
             "nvim-neotest/neotest-jest",
         },
     },
-    { "folke/twilight.nvim", opts = {} },
-    { "folke/zen-mode.nvim", opts = {} },
+
+    {
+        "glacambre/firenvim",
+        build = function()
+            vim.fn["firenvim#install"](0)
+        end,
+    },
 
     -- DOcument GEnterator (docblocks, etc)
     { "kkoomen/vim-doge", build = ":call doge#install()" },

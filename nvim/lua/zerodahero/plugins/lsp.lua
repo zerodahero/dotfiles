@@ -118,6 +118,18 @@ return {
 
             local lspconfig = require("lspconfig")
 
+            lspconfig.nim_langserver.setup({
+                settings = {
+                    nim = {
+                        logNimsuggest = false,
+                        notificationVerbosity = "warning",
+                    },
+                },
+            })
+
+            -- vim.lsp.enable('sqruff')
+            vim.lsp.enable('postgres_lsp')
+
             require("mason-lspconfig").setup({
                 ensure_installed = {},
                 automatic_installation = true,
@@ -132,29 +144,6 @@ return {
                         local lua_opts = lsp_zero.nvim_lua_ls()
                         lspconfig.lua_ls.setup(lua_opts)
                     end,
-
-                    nim_langserver = function()
-                        lspconfig.nim_langserver.setup({
-                            settings = {
-                                nim = {
-                                    notificationVerbosity = "warning"
-                                }
-                            }
-                        })
-                    end,
-                    -- ts_ls = function()
-                    --     lspconfig.ts_ls.setup({ javascript = { validate = false } })
-                    -- end,
-                    -- volar = function()
-                    --     lspconfig.volar.setup({
-                    --         filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
-                    --         init_options = {
-                    --             vue = {
-                    --                 hybridMode = false,
-                    --             },
-                    --         },
-                    --     })
-                    -- end,
                 },
             })
         end,
@@ -217,5 +206,21 @@ return {
                 group = nvim_metals_group,
             })
         end,
+    },
+
+    {
+        "ray-x/lsp_signature.nvim",
+        event = "InsertEnter",
+        opts = {
+            bind = true,
+        },
+    },
+
+    {
+        "SmiteshP/nvim-navic",
+        opts = {
+            lsp = { auto_attach = true, preference = { "volar" } },
+            highlight = true,
+        },
     },
 }

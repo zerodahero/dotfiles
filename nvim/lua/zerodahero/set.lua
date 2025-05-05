@@ -55,6 +55,9 @@ vim.g.surround_no_insert_mappings = 1
 
 vim.opt.fileignorecase = false
 
+vim.opt.list = true
+vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
 -- Kitty fix
 if vim.env.TERM == 'xterm-kitty' then
   vim.cmd([[autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif]])

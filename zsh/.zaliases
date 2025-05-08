@@ -1,0 +1,15 @@
+alias dco="docker compose"
+
+alias t=todo.sh
+alias vim=nvim
+alias vimdiff='nvim -d'
+
+alias p=project
+
+alias .w='just --justfile ~/.window.justfile --working-directory .'
+alias .j='just --justfile ~/.user.justfile --working-directory .'
+alias .n='just --justfile ~/.dotnet.justfile --working-directory .'
+alias .c='just --justfile ~/.clockify.justfile --working-directory .'
+alias .o='just --justfile ~/.ollama.justfile --working-directory .'
+
+# vim: ft=zsh sw=2 ts=2 et

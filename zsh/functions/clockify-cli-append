@@ -1,0 +1,8 @@
+local desc=$(clockify-cli show current -f "{{ .Description }}") 
+if [ -z "$desc" ]
+then
+	echo "No time being currently tracked"
+	return
+fi
+clockify-cli edit current --description="${desc}
+$1"

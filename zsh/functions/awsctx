@@ -1,0 +1,7 @@
+if [ -z $1 ]
+then
+	sed -n -E 's/^\[(.+)\]$/\1/p' ~/.aws/credentials
+	return
+fi
+export AWS_PROFILE=$1 
+aws configure list

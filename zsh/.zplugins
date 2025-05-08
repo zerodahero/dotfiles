@@ -1,0 +1,23 @@
+## Init
+$ZSH_CUSTOM/plugins/p10k-instaprompt
+mattmc3/zephyr path:plugins/homebrew
+$ZSH_CUSTOM/plugins/environment
+
+## Completions
+mattmc3/ez-compinit
+zsh-users/zsh-completions kind:fpath path:src
+
+## Prompt
+romkatv/powerlevel10k
+
+## Custom
+$ZSH_CUSTOM/plugins/git kind:defer
+$ZSH_CUSTOM/plugins/javascript kind:defer
+$ZSH_CUSTOM/plugins/code-langs kind:defer
+
+## Utils
+romkatv/zsh-bench kind:path
+zdharma-continuum/fast-syntax-highlighting kind:defer
+mattmc3/zfunctions
+atuinsh/atuin kind:defer
+$ZSH_CUSTOM/plugins/tools kind:defer

@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
 ## Nvim
 mkdir -p "$HOME/.config"
@@ -15,18 +16,20 @@ mkdir -p "$HOME/.config/yamlfmt"
 ln -si "$HOME/dotfiles/formatters/yamlfmt" "$HOME/.config/yamlfmt/.yamlfmt"
 
 ## ZSH
-ln -si "$HOME/dotfiles/.zshrc" "$HOME/.zshrc"
+ln -si "$HOME/dotfiles/zsh/.zshrc" "$HOME/.zshrc"
+ln -si "$HOME/dotfiles/zsh/.zaliases" "$HOME/.zaliases"
+ln -si "$HOME/dotfiles/zsh/.zstyles" "$HOME/.zstyles"
 mkdir -p "$HOME/.zsh/lazy-loads"
 ln -si "$HOME/dotfiles/zsh/lazy-loads/kubectl.zsh" "$HOME/.zsh/lazy-loads/kubectl.zsh"
-
-### Agnoster, real theme from repo
-git clone https://github.com/agnoster/agnoster-zsh-theme.git "$HOME/.oh-my-zsh/custom/themes/agnoster"
-ln -si "$HOME/.oh-my-zsh/custom/themes/agnoster/agnoster.zsh-theme" "$HOME/.oh-my-zsh/custom/themes/agnoster.zsh-theme"
+ln -si "$HOME/dotfiles/zsh/.zplugins" "$HOME/.zplugins"
+ln -si "$HOME/dotfiles/zsh/.p10k.zsh" "$HOME/.p10k.zsh"
+ln -si "$HOME/dotfiles/zsh/functions/" "$HOME/.zsh/functions"
+ln -si "$HOME/dotfiles/zsh/lib/" "$HOME/.zsh/lib"
+ln -si "$HOME/dotfiles/zsh/plugins/" "$HOME/.zsh/plugins"
 
 ### OS Specific  files
 case "$(uname -s)" in
     Darwin)
-        ln -si "$HOME/dotfiles/.zshrc-darwin" "$HOME/.zshrc-darwin"
         mkdir -p "$HOME/.config/yabai" "$HOME/.config/skhd"
         ln -si "$HOME/dotfiles/yabai/yabairc" "$HOME/.config/yabai/yabairc"
         ln -si "$HOME/dotfiles/yabai/intellij_yabai.sh" "$HOME/.config/yabai/intellij_yabai.sh"

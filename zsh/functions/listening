@@ -1,0 +1,16 @@
+if [ $# -lt 1 ]
+then
+	echo "Usage: listening <port>"
+	exit 1
+fi
+local PIDS=$(lsof -t -i :$1) 
+if [ ${#PIDS[@]} -eq 0 ]
+then
+	echo "Nothing listening on $1"
+	return 0
+fi
+lsof -iTCP:$1 -sTCP:LISTEN -n -P
+for PID in ${PIDS[@]}
+do
+	ps -p $PID -o pid,ppid,time,command
+done

@@ -280,6 +280,7 @@ export PATH="/opt/homebrew/opt/llvm@13/bin:$PATH"
 
 alias vim=nvim
 alias vimdiff='nvim -d'
+export MANPAGER='nvim +Man!'
 
 [ -e ~/.fzf.zsh ] && source ~/.fzf.zsh
 autoload -U +X bashcompinit && bashcompinit

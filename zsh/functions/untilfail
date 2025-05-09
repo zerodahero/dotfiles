@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# Check if any command is provided
+if [ $# -eq 0 ]; then
+    echo "Usage: repeat_until_fail <command> [args...]" >&2
+    echo "Error: No command provided." >&2
+    return 127 # Standard exit code for "command not found" or invalid usage
+fi
+
+local count=0
+local exit_status=0
+
+# Announce the command being repeated
+echo "INFO: Will repeat command: '$@'"
+echo "INFO: Press Ctrl+C to stop manually."
+
+# Loop indefinitely until the command fails
+while true; do
+    count=$((count + 1))
+    echo "---"
+    echo "INFO: Attempt #$count: Executing '$@'"
+
+    # Execute the command with all its arguments
+    "$@"
+    exit_status=$? # Capture the exit status of the command
+
+    if [ $exit_status -ne 0 ]; then
+      echo "---"
+      echo "FAILURE: Command '$@' failed with exit status $exit_status after $count attempt(s)."
+      return $exit_status # Return the failed command's exit status
+    else
+      echo "SUCCESS: Command '$@' succeeded (exit status 0). Repeating..."
+    fi
+
+    # Optional: Add a small delay to prevent overwhelming the system or logs,
+    # especially for very fast commands. Uncomment the line below if needed.
+    # sleep 1
+done

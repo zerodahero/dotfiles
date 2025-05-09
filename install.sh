@@ -26,6 +26,7 @@ ln -si "$HOME/dotfiles/zsh/.p10k.zsh" "$HOME/.p10k.zsh"
 ln -si "$HOME/dotfiles/zsh/functions/" "$HOME/.zsh/functions"
 ln -si "$HOME/dotfiles/zsh/lib/" "$HOME/.zsh/lib"
 ln -si "$HOME/dotfiles/zsh/plugins/" "$HOME/.zsh/plugins"
+ln -si "$HOME/dotfiles/zsh/zshrc.d/" "$HOME/.zshrc.d"
 
 ### OS Specific  files
 case "$(uname -s)" in

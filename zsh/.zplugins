@@ -16,8 +16,11 @@ $ZSH_CUSTOM/plugins/javascript kind:defer
 $ZSH_CUSTOM/plugins/code-langs kind:defer
 
 ## Utils
+jeffreytse/zsh-vi-mode
 romkatv/zsh-bench kind:path
 zdharma-continuum/fast-syntax-highlighting kind:defer
 mattmc3/zfunctions
 atuinsh/atuin kind:defer
 $ZSH_CUSTOM/plugins/tools kind:defer
+
+mattmc3/zshrc.d kind:defer

@@ -14,7 +14,6 @@ export PROJECTS=$HOME/projects
 
 # atuin (history search widget)
 export ATUIN_NOBIND="true"
-bindkey '^r' _atuin_search_widget
 
 export ANDROID_SDK_ROOT="$HOME/Library/Android/sdk"
 export ANDROID_HOME="$HOME/Library/Android/sdk"

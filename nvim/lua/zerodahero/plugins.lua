@@ -153,6 +153,9 @@ return {
             code = {
                 border = "thick",
             },
+            checkbox = {
+                -- bullet = true,
+            }
         },
     },
     {
@@ -177,6 +180,5 @@ return {
             bigfile = { enabled = true },
         },
     },
-
     { "kevinhwang91/nvim-bqf", ft = "qf" },
 }

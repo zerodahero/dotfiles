@@ -1,6 +1,46 @@
 return {
 
-    { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons", opt = true } },
+    {
+        "nvim-lualine/lualine.nvim",
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+        opts = {
+            options = {
+                -- theme = "ayu_mirage"
+                theme = "auto",
+            },
+            sections = {
+                lualine_a = { "mode", "PencilMode" },
+                lualine_b = { "branch", "diff", "diagnostics" },
+                lualine_c = {
+                    -- 'filename',
+                    "navic",
+                },
+                lualine_x = {
+                    "encoding",
+                    "fileformat",
+                    "filetype",
+                },
+                lualine_y = { "progress" },
+                lualine_z = { "location" },
+            },
+            extensions = {
+                "nvim-tree",
+                "trouble",
+                "mason",
+                "lazy",
+            },
+            -- tabline = {
+            --     lualine_a = {'buffers'},
+            --     lualine_b = {},
+            --     lualine_c = {{'filename', file_status = true, path = 1}},
+            --     lualine_x = {},
+            --     lualine_y = {},
+            --     lualine_z = {'tabs'}
+            -- }
+        },
+    },
     { "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
 
     {
@@ -31,6 +71,19 @@ return {
                 vim.g.focus_maximised = true
                 focus.resize("equalise")
             end, { noremap = true })
+
+            local ignore_filetypes = { "NvimTree" }
+            vim.api.nvim_create_autocmd("FileType", {
+                group = augroup,
+                callback = function(_)
+                    if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+                        vim.b.focus_disable = true
+                    else
+                        vim.b.focus_disable = false
+                    end
+                end,
+                desc = "Disable focus autoresize for FileType",
+            })
         end,
     },
 

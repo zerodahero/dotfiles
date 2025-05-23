@@ -16,5 +16,17 @@
       "\t${3:commands}"
     ],
     "description": "Create new recipe"
+  },
+  "bash recipe": {
+    "prefix": "brec",
+    "body": [
+      "# ${1:This recipe does something}",
+      "${2:name}:",
+      "\t#!/usr/bin/env bash",
+      "\tset -euxo pipefail",
+      "",
+      "\t${3:commands}"
+    ],
+    "description": "Create new bash recipe"
   }
 }

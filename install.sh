@@ -28,6 +28,10 @@ ln -si "$HOME/dotfiles/zsh/lib/" "$HOME/.zsh/lib"
 ln -si "$HOME/dotfiles/zsh/plugins/" "$HOME/.zsh/plugins"
 ln -si "$HOME/dotfiles/zsh/zshrc.d/" "$HOME/.zshrc.d"
 
+## Mise
+ln -si "$HOME/dotfiles/mise/config.toml" "$HOME/.config/mise.toml"
+
+
 ### OS Specific  files
 case "$(uname -s)" in
     Darwin)

@@ -16,14 +16,14 @@ return {
         modes = {
             nospell_diagnostics = {
                 mode = "diagnostics",
-                filter = function(items)
-                    return vim.tbl_filter(function(item)
-                        return item.source ~= "cspell"
-                    end, items)
-                end
-                -- filter = {
-                --     ["not"] = { source = "cspell" },
-                -- },
+                -- filter = function(items)
+                --     return vim.tbl_filter(function(item)
+                --         return item.item.source ~= "cspell"
+                --     end, items)
+                -- end
+                filter = {
+                    ["not"] = { source = "cspell" },
+                },
             },
         },
     }, -- for default options, refer to the configuration section for custom setup.

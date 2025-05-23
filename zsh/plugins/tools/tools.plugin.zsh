@@ -4,6 +4,6 @@
 (type kbcli &> /dev/null) && source <(kbcli completion zsh)
 (type restic &> /dev/null) && source $HOME/.restic/resticrc
 
-cached-eval "$(thefuck --alias)"
+cached-eval 'thefuck' thefuck --alias
 # _evalcache direnv hook zsh
 

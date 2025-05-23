@@ -2,7 +2,7 @@
 # ANTIDOTE (plugins)
 #
 
-export ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.zsh/}
+export ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.zsh}
 
 # Set the root name of the plugins files (.txt and .zsh) antidote will use.
 zsh_plugins=$HOME/.zplugins

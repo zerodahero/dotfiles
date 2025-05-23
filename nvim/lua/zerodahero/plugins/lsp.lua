@@ -128,7 +128,7 @@ return {
             })
 
             -- vim.lsp.enable('sqruff')
-            vim.lsp.enable('postgres_lsp')
+            vim.lsp.enable("postgres_lsp")
 
             require("mason-lspconfig").setup({
                 ensure_installed = {},

@@ -3,16 +3,29 @@
   "contributes": {
     "snippets": [
       {
-        "language": ["d2"],
+        "language": [
+          "d2"
+        ],
         "path": "./d2.json"
       },
       {
-        "language": ["csharp", "cs"],
+        "language": [
+          "csharp",
+          "cs"
+        ],
         "path": "./csharp.json"
       },
       {
         "language": "just",
         "path": "./just.json"
+      },
+      {
+        "language": [
+          "bash",
+          "sh",
+          "zsh"
+        ],
+        "path": "./shell.json"
       },
       {
         "language": "lua",

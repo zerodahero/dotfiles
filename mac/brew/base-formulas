@@ -15,12 +15,13 @@ k9s
 kubectx
 luarocks
 neovim
+mise
 parallel
 portal
 ripgrep
 stylua
 thefuck
-tldr
+tlrc
 todo-txt
 yazi
 yq

@@ -3,3 +3,5 @@
 zstyle ':antidote:bundle' use-friendly-names 'yes'
 zstyle ':antidote:plugin:*' defer-options '-p'
 zstyle ':antidote:*' zcompile 'yes'
+zstyle ':plugin:ez-compinit' 'compstyle' 'zshzoo'
+zstyle ':completion:*' completer _complete _ignored _files

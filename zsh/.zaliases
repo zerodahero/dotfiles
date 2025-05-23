@@ -12,4 +12,6 @@ alias .n='just --justfile ~/.dotnet.justfile --working-directory .'
 alias .c='just --justfile ~/.clockify.justfile --working-directory .'
 alias .o='just --justfile ~/.ollama.justfile --working-directory .'
 
+alias please=sudo
+
 # vim: ft=zsh sw=2 ts=2 et

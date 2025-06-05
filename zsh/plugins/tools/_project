@@ -1,0 +1,30 @@
+#compdef project
+
+# Zsh completion function for the 'project' command
+# This command expects one argument, which can be:
+# 1. A path within a specific base directory.
+# 2. An option from a list defined in an external file (one value per line).
+
+_project() {
+  local -r base_project_dir="$PROJECTS"
+  local -r options_file="$HOME/.projects"
+  local -a dynamic_options
+  local cur_context="$cur_context" # Ensure cur_context is localized
+
+  # Check if we are completing the first argument (index 1)
+  if (( CURRENT == 2 )); then
+    if [[ -r "$options_file" ]]; then
+      dynamic_options=("${(@fN)$(<"$options_file")}")
+      dynamic_options=(${dynamic_options:#\#*})
+    fi
+
+    _alternative \
+      "paths:projects:_path_files -W \"$base_project_dir\" -/ -S ''" \
+      "custom_paths:custom:( ${dynamic_options[@]} )"
+  else
+    # If it's not the first argument, offer no completions.
+    return 1
+  fi
+}
+
+# vim: ft=zsh

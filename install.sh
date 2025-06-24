@@ -14,6 +14,9 @@ mkdir -p "$HOME/.config/yamllint"
 ln -si "$HOME/dotfiles/formatters/yamllint" "$HOME/.config/yamllint/config"
 mkdir -p "$HOME/.config/yamlfmt"
 ln -si "$HOME/dotfiles/formatters/yamlfmt" "$HOME/.config/yamlfmt/.yamlfmt"
+ln -si "$HOME/dotfiles/formatters/cspell.json" "$HOME/.cspell.json"
+mkdir -p "$HOME/.config/cspell"
+touch "$HOME/.config/cspell/user-dictionary.txt"
 
 ## ZSH
 ln -si "$HOME/dotfiles/zsh/.zshrc" "$HOME/.zshrc"
@@ -31,21 +34,19 @@ ln -si "$HOME/dotfiles/zsh/zshrc.d/" "$HOME/.zshrc.d"
 ## Mise
 ln -si "$HOME/dotfiles/mise/config.toml" "$HOME/.config/mise.toml"
 
-
 ### OS Specific  files
 case "$(uname -s)" in
-    Darwin)
-        mkdir -p "$HOME/.config/yabai" "$HOME/.config/skhd"
-        ln -si "$HOME/dotfiles/yabai/yabairc" "$HOME/.config/yabai/yabairc"
-        ln -si "$HOME/dotfiles/yabai/intellij_yabai.sh" "$HOME/.config/yabai/intellij_yabai.sh"
-        ln -si "$HOME/dotfiles/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
-        ln -si "$HOME/dotfiles/window.justfile" "$HOME/.window.justfile"
-        [ -f "$HOME/.user.justfile" ] || cp -n "$HOME/dotfiles/user.justfile.tmpl" "$HOME/.user.justfile"
-        mkdir -p "$HOME/Library/KeyBindings"
-        ln -si "$HOME/dotfiles/mac/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/"
+Darwin)
+    mkdir -p "$HOME/.config/yabai" "$HOME/.config/skhd"
+    ln -si "$HOME/dotfiles/yabai/yabairc" "$HOME/.config/yabai/yabairc"
+    ln -si "$HOME/dotfiles/yabai/intellij_yabai.sh" "$HOME/.config/yabai/intellij_yabai.sh"
+    ln -si "$HOME/dotfiles/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
+    ln -si "$HOME/dotfiles/window.justfile" "$HOME/.window.justfile"
+    [ -f "$HOME/.user.justfile" ] || cp -n "$HOME/dotfiles/user.justfile.tmpl" "$HOME/.user.justfile"
+    mkdir -p "$HOME/Library/KeyBindings"
+    ln -si "$HOME/dotfiles/mac/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/"
     ;;
-    Linux)
-    ;;
+Linux) ;;
 esac
 
 ## Global justfiles

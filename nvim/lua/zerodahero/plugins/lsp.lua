@@ -1,151 +1,270 @@
 return {
-    {
-        "VonHeikemen/lsp-zero.nvim",
-        branch = "v4.x",
-        lazy = true,
-        config = false,
-    },
-    {
-        "williamboman/mason.nvim",
-        lazy = false,
-        config = true,
-    },
-
-    -- Autocompletion
-    {
-        "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
+    { -- Autocompletion
+        "saghen/blink.cmp",
+        event = "VimEnter",
+        version = "1.*",
         dependencies = {
-            { "L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp" },
-            { "hrsh7th/nvim-cmp" },
-            { "hrsh7th/cmp-buffer" },
-            { "hrsh7th/cmp-path" },
-            { "saadparwaiz1/cmp_luasnip" },
-            { "hrsh7th/cmp-nvim-lsp" },
-            { "hrsh7th/cmp-nvim-lsp-signature-help" },
+            {
+                "L3MON4D3/LuaSnip",
+                version = "2.*",
+                build = (function()
+                    return "make install_jsregexp"
+                end)(),
+                dependencies = {},
+                opts = {},
+            },
+            "folke/lazydev.nvim",
         },
-        config = function()
-            local cmp = require("cmp")
-            local cmp_select = { behavior = cmp.SelectBehavior.Select }
+        --- @module 'blink.cmp'
+        --- @type blink.cmp.Config
+        opts = {
+            keymap = {
+                preset = "default",
+                ["<C-b>"] = { "show", "show_documentation", "hide_documentation" },
+            },
+            appearance = {
+                nerd_font_variant = "mono",
+            },
+            completion = {
+                -- By default, you may press `<c-space>` to show the documentation.
+                -- Optionally, set `auto_show = true` to show the documentation after a delay.
+                documentation = { auto_show = false, auto_show_delay_ms = 500 },
+            },
 
-            local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-            cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
-
-            local cmp_format = require("lsp-zero").cmp_format()
-
-            cmp.setup({
-                completion = { completeopt = "menu,menuone,noinsert" },
-                mapping = cmp.mapping.preset.insert({
-                    -- disable completion with tab
-                    -- this helps with copilot setup
-                    ["<Tab>"] = nil,
-                    ["<S-Tab>"] = nil,
-                    ["<CR>"] = nil,
-                    ["<C-p>"] = cmp.mapping.select_prev_item(cmp_select),
-                    ["<C-n>"] = cmp.mapping.select_next_item(cmp_select),
-                    ["<C-y>"] = cmp.mapping.confirm({ select = true }),
-                    ["<C-Space>"] = cmp.mapping.complete(),
-                }),
-                formatting = cmp_format,
-                sources = {
-                    { name = "path" },
-                    { name = "nvim_lsp" },
-                    { name = "luasnip" },
-                    { name = "buffer" },
-                    { name = "nvim_lua" },
-                    { name = "nvim_lsp_signature_help" },
-                    { name = "render-markdown" },
+            sources = {
+                default = { "lsp", "path", "snippets", "lazydev" },
+                providers = {
+                    lazydev = { module = "lazydev.integrations.blink", score_offset = 100 },
                 },
-            })
-        end,
+            },
+
+            snippets = { preset = "luasnip" },
+
+            fuzzy = { implementation = "lua" },
+
+            signature = { enabled = true },
+        },
     },
 
-    -- LSP
     {
+        -- Main LSP Configuration
         "neovim/nvim-lspconfig",
-        cmd = { "LspInfo", "LspInstall", "LspStart" },
-        event = { "BufReadPre", "BufNewFile" },
         dependencies = {
-            { "hrsh7th/cmp-nvim-lsp" },
-            { "williamboman/mason.nvim" },
-            { "williamboman/mason-lspconfig.nvim" },
-            { "Issafalcon/lsp-overloads.nvim" },
-            { "Hoffs/omnisharp-extended-lsp.nvim" },
+            { "mason-org/mason.nvim", opts = {} },
+            "mason-org/mason-lspconfig.nvim",
+
+            { "j-hui/fidget.nvim", opts = {} },
+
+            "saghen/blink.cmp",
         },
         config = function()
-            local lsp_zero = require("lsp-zero")
+            vim.api.nvim_create_autocmd("LspAttach", {
+                desc = "LSP Actions",
+                group = vim.api.nvim_create_augroup("lsp-attach", { clear = true }),
+                callback = function(event)
+                    local opts = { buffer = event.buf }
+                    vim.keymap.set("n", "K", "<cmd>lua vim.lsp.buf.hover()<cr>", opts)
+                    vim.keymap.set("n", "gd", "<cmd>lua vim.lsp.buf.definition()<cr>", opts)
+                    vim.keymap.set("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<cr>", opts)
+                    vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<cr>", opts)
+                    vim.keymap.set("n", "go", "<cmd>lua vim.lsp.buf.type_definition()<cr>", opts)
+                    vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<cr>", opts)
+                    vim.keymap.set("n", "gs", "<cmd>lua vim.lsp.buf.signature_help()<cr>", opts)
+                    vim.keymap.set("n", "<F2>", "<cmd>lua vim.lsp.buf.rename()<cr>", opts)
+                    -- vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
+                    vim.keymap.set("n", "<F4>", "<cmd>lua vim.lsp.buf.code_action()<cr>", opts)
+                    vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
+                    vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
+                    -- vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
+                    vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
+                    -- vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
+                    vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+                    -- vim.keymap.set(
+                    --     "n",
+                    --     "<leader>h",
+                    --     ":LspOverloadsSignature<CR>",
+                    --     { noremap = true, silent = true, buffer = bufnr }
+                    -- )
+                    -- vim.keymap.set("n", "<leader>k", function()
+                    --     vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr }), { bufnr })
+                    -- end, opts)
 
-            -- lsp_attach is where you enable features that only work
-            -- if there is a language server active in the file
-            local lsp_attach = function(client, bufnr)
-                local opts = { buffer = bufnr }
+                    -- vim.keymap.set("n", "<leader><leader>cs", ":LspRestart omnisharp<CR>", { noremap = true })
+                    vim.keymap.set("n", "<leader><leader>lsp", ":LspRestart<CR>", { noremap = true })
 
-                lsp_zero.default_keymaps({ buffer = bufnr })
+                    --- Guard against servers without the signatureHelper capability
+                    -- if client.server_capabilities.signatureHelpProvider then
+                    --     require("lsp-overloads").setup(client, {})
+                    -- end
 
-                vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
-                vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
-                -- vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
-                vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
-                -- vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
-                vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-                vim.keymap.set(
-                    "n",
-                    "<leader>h",
-                    ":LspOverloadsSignature<CR>",
-                    { noremap = true, silent = true, buffer = bufnr }
-                )
-                vim.keymap.set("n", "<leader>k", function()
-                    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr }), { bufnr })
-                end, opts)
+                    -- This function resolves a difference between neovim nightly (version 0.11) and stable (version 0.10)
+                    ---@param client vim.lsp.Client
+                    ---@param method vim.lsp.protocol.Method
+                    ---@param bufnr? integer some lsp support methods only in specific files
+                    ---@return boolean
+                    local function client_supports_method(client, method, bufnr)
+                        if vim.fn.has("nvim-0.11") == 1 then
+                            return client:supports_method(method, bufnr)
+                        else
+                            return client.supports_method(method, { bufnr = bufnr })
+                        end
+                    end
 
-                vim.keymap.set("n", "<leader><leader>cs", ":LspRestart omnisharp<CR>", { noremap = true })
-                vim.keymap.set("n", "<leader><leader>lsp", ":LspRestart<CR>", { noremap = true })
+                    -- The following two autocommands are used to highlight references of the
+                    -- word under your cursor when your cursor rests there for a little while.
+                    --    See `:help CursorHold` for information about when this is executed
+                    --
+                    -- When you move your cursor, the highlights will be cleared (the second autocommand).
+                    local client = vim.lsp.get_client_by_id(event.data.client_id)
+                    if
+                        client
+                        and client_supports_method(
+                            client,
+                            vim.lsp.protocol.Methods.textDocument_documentHighlight,
+                            event.buf
+                        )
+                    then
+                        local highlight_augroup =
+                            vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
+                        vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+                            buffer = event.buf,
+                            group = highlight_augroup,
+                            callback = vim.lsp.buf.document_highlight,
+                        })
 
-                --- Guard against servers without the signatureHelper capability
-                if client.server_capabilities.signatureHelpProvider then
-                    require("lsp-overloads").setup(client, {})
-                end
-            end
+                        vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+                            buffer = event.buf,
+                            group = highlight_augroup,
+                            callback = vim.lsp.buf.clear_references,
+                        })
 
-            lsp_zero.extend_lspconfig({
-                sign_text = true,
-                lsp_attach = lsp_attach,
-                capabilities = require("cmp_nvim_lsp").default_capabilities(),
+                        vim.api.nvim_create_autocmd("LspDetach", {
+                            group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
+                            callback = function(event2)
+                                vim.lsp.buf.clear_references()
+                                vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
+                            end,
+                        })
+                    end
+
+                    if
+                        client
+                        and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf)
+                    then
+                        vim.keymap.set("n", "<leader>k", function()
+                            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+                        end, opts)
+                    end
+                end,
             })
-            lsp_zero.configure("omnisharp", {
-                handlers = { ["textDocument/definition"] = require("omnisharp_extended").handler },
+
+            -- Diagnostic Config
+            -- See :help vim.diagnostic.Opts
+            vim.diagnostic.config({
+                severity_sort = true,
+                float = { border = "rounded", source = "if_many" },
+                underline = { severity = vim.diagnostic.severity.ERROR },
+                signs = vim.g.have_nerd_font and {
+                    text = {
+                        [vim.diagnostic.severity.ERROR] = "󰅚 ",
+                        [vim.diagnostic.severity.WARN] = "󰀪 ",
+                        [vim.diagnostic.severity.INFO] = "󰋽 ",
+                        [vim.diagnostic.severity.HINT] = "󰌶 ",
+                    },
+                } or {},
+                virtual_text = false, -- use lsp-lines for virtual text
+                -- virtual_text = {
+                --     source = "if_many",
+                --     spacing = 2,
+                --     format = function(diagnostic)
+                --         local diagnostic_message = {
+                --             [vim.diagnostic.severity.ERROR] = diagnostic.message,
+                --             [vim.diagnostic.severity.WARN] = diagnostic.message,
+                --             [vim.diagnostic.severity.INFO] = diagnostic.message,
+                --             [vim.diagnostic.severity.HINT] = diagnostic.message,
+                --         }
+                --         return diagnostic_message[diagnostic.severity]
+                --     end,
+                -- },
             })
 
-            local lspconfig = require("lspconfig")
-
-            lspconfig.nim_langserver.setup({
-                settings = {
-                    nim = {
-                        logNimsuggest = false,
-                        notificationVerbosity = "warning",
+            local servers = {
+                -- clangd = {},
+                -- gopls = {},
+                -- pyright = {},
+                -- rust_analyzer = {},
+                -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
+                --
+                -- Some languages (like typescript) have entire language plugins that can be useful:
+                --    https://github.com/pmizio/typescript-tools.nvim
+                --
+                -- But for many setups, the LSP (`ts_ls`) will work just fine
+                -- ts_ls = {},
+                --
+                nim_langserver = {
+                    -- cmd = { "nim-langserver" }, -- This is the default, so you can remove this line
+                    -- filetypes = { "nim", "nimble" }, -- This is the default, so you can remove this line
+                    -- capabilities = capabilities,
+                    settings = {
+                        nim = {
+                            logNimsuggest = false,
+                            notificationVerbosity = "warning",
+                        },
                     },
                 },
-            })
 
-            -- vim.lsp.enable('sqruff')
-            vim.lsp.enable("postgres_lsp")
+                lua_ls = {
+                    -- cmd = { ... },
+                    -- filetypes = { ... },
+                    -- capabilities = {},
+                    settings = {
+                        Lua = {
+                            completion = {
+                                callSnippet = "Replace",
+                            },
+                            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
+                            -- diagnostics = { disable = { 'missing-fields' } },
+                        },
+                    },
+                },
+            }
+
+            -- Ensure the servers and tools above are installed
+            --
+            -- To check the current status of installed tools and/or manually install
+            -- other tools, you can run
+            --    :Mason
+            --
+            -- You can press `g?` for help in this menu.
+            --
+            -- `mason` had to be setup earlier: to configure its options see the
+            -- `dependencies` table for `nvim-lspconfig` above.
+            --
+            -- You can add other tools here that you want Mason to install
+            -- for you, so that they are available from within Neovim.
+            local ensure_installed = vim.tbl_keys(servers or {})
+            -- vim.list_extend(ensure_installed, {
+            --     "stylua", -- Used to format Lua code
+            -- })
 
             require("mason-lspconfig").setup({
-                ensure_installed = {},
-                automatic_installation = true,
-                handlers = {
-                    -- this first function is the "default handler"
-                    -- it applies to every language server without a "custom handler"
-                    function(server_name)
-                        require("lspconfig")[server_name].setup({})
-                    end,
-
-                    lua_ls = function()
-                        local lua_opts = lsp_zero.nvim_lua_ls()
-                        lspconfig.lua_ls.setup(lua_opts)
-                    end,
-                },
+                -- automatic_enable = true, -- automatically enable all servers that are installed
+                ensure_installed = ensure_installed,
+                -- handlers = {
+                --     function(server_name)
+                --         local server = servers[server_name] or {}
+                --         -- This handles overriding only values explicitly passed
+                --         -- by the server configuration above. Useful when disabling
+                --         -- certain features of an LSP (for example, turning off formatting for ts_ls)
+                --         server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+                --         require("lspconfig")[server_name].setup(server)
+                --     end,
+                -- },
             })
+
+            for server_name, config in pairs(servers) do
+                vim.lsp.config(server_name, config)
+            end
         end,
     },
     {
@@ -192,7 +311,12 @@ return {
 
             metals_config.init_options.statusBarProvider = "off"
 
-            metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+            -- TODO: move to blink
+            -- metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+            metals_config.settings = {
+                javaHome = vim.fn.getenv("JAVA_HOME_PROJECT") or vim.fn.getenv("JAVA_HOME"),
+            }
 
             return metals_config
         end,

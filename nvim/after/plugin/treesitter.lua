@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<leader>cc", ":TSContextToggle<CR>")
+vim.keymap.set("n", "<leader>cc", ":TSContext toggle<CR>")
 vim.keymap.set("n", "<leader>jc", function()
   require("treesitter-context").go_to_context(vim.v.count1)
 end, { silent = true })

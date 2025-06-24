@@ -1,0 +1,16 @@
+{
+    "dictionaries": [
+        "en_US",
+        "user-dictionary",
+        "typescript",
+        "bash",
+        "filetypes"
+    ],
+    "dictionaryDefinitions": [
+        {
+            "name": "user-dictionary",
+            "path": "~/.cspell/user-dictionary.txt",
+            "addWords": true
+        }
+    ]
+}

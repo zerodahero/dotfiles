@@ -24,6 +24,7 @@ vim.opt.incsearch = true
 vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
 vim.opt.signcolumn = 'yes'
 vim.opt.isfname:append('@-@')
 
@@ -44,6 +45,8 @@ vim.g.netrw_liststyle = 3
 vim.opt.spell = true
 vim.opt.spelllang = 'en_us'
 vim.opt.spellsuggest = 'best,9'
+
+vim.opt.laststatus = 2
 
 vim.g.load_doxygen_syntax = 1
 vim.g.doxygen_enhanced_color = 1

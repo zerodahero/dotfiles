@@ -25,27 +25,4 @@ return {
             vim.g.copilot_enabled = 1
         end,
     },
-    {
-        "CopilotC-Nvim/CopilotChat.nvim",
-        cond = vim.env.COPILOT_ENABLED == "1",
-        dependencies = {
-            { "github/copilot.vim" },
-            { "nvim-lua/plenary.nvim", branch = "master" },
-        },
-        build = "make tiktoken", -- Only on MacOS or Linux
-        opts = {
-            -- See Configuration section for options
-        },
-        -- See Commands section for default commands if you want to lazy load on them
-        keys = {
-            {
-                "<leader>ccp",
-                function()
-                    local actions = require("CopilotChat.actions")
-                    require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
-                end,
-                desc = "CopilotChat - Prompt actions",
-            },
-        },
-    },
 }

@@ -39,9 +39,6 @@ return {
         },
     },
 
-    -- lsp status updates
-    { "j-hui/fidget.nvim", opts = {} },
-
     -- Debugging
     {
         "mfussenegger/nvim-dap",
@@ -102,7 +99,11 @@ return {
     {
         "axkirillov/hbac.nvim",
         opts = {
-            threshold = 9,
+            autoclose = true, -- set autoclose to false if you want to close manually
+            threshold = 9, -- hbac will start closing unedited buffers once that number is reached
+            close_command = function(bufnr)
+                vim.cmd("Bdelete " .. bufnr)
+            end,
         },
     },
     {
@@ -149,13 +150,14 @@ return {
         dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
         ---@module 'render-markdown'
         ---@type render.md.UserConfig
+        ft = { "markdown", "codecompanion" },
         opts = {
             code = {
                 border = "thick",
             },
             checkbox = {
                 -- bullet = true,
-            }
+            },
         },
     },
     {

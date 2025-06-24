@@ -63,11 +63,13 @@ vim.keymap.set("n", "<leader>ft", function()
     local testSuffix = "Test"
     if filetype == "typescript" or filetype == "javascript" then
         testSuffix = ".test"
+    elseif filetype == "scala" then
+        testSuffix = "Suite"
     end
 
     local filename = vim.fn.expand("%:t:r")
     if filename:sub(-#testSuffix) == testSuffix then
-        builtin.find_files({ default_text = filename:sub(0, -5) })
+        builtin.find_files({ default_text = filename:sub(1, -#testSuffix - 1) })
     else
         builtin.find_files({ default_text = filename .. testSuffix })
     end

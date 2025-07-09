@@ -12,9 +12,6 @@ romkatv/powerlevel10k
 
 ## Custom
 $ZSH_CUSTOM/plugins/mise kind:defer
-$ZSH_CUSTOM/plugins/git kind:defer
-# $ZSH_CUSTOM/plugins/javascript kind:defer
-# $ZSH_CUSTOM/plugins/code-langs kind:defer
 
 ## Utils
 jeffreytse/zsh-vi-mode
@@ -24,4 +21,5 @@ mattmc3/zfunctions
 atuinsh/atuin kind:defer
 $ZSH_CUSTOM/plugins/tools kind:defer
 
-mattmc3/zshrc.d kind:defer
+mattmc3/zshrc.d   kind:defer
+olets/zsh-abbr    kind:defer

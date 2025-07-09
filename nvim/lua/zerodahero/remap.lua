@@ -82,8 +82,7 @@ vim.keymap.set("n", "<leader>q1", function()
     end
 end, { silent = true })
 
-vim.g.doge_mapping = "<leader>doc"
-
+-- Scratch buffer
 vim.keymap.set("n", "<leader><leader>`", function()
     vim.api.nvim_command(":enew")
     vim.api.nvim_create_buf(false, true)

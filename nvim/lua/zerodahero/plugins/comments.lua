@@ -13,6 +13,8 @@ return {
                     line = "gcc",
                 },
             })
+            local ft = require("Comment.ft")
+            ft.set("vhs", "# %s")
         end,
     },
     -- {

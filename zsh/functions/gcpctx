@@ -1,0 +1,16 @@
+local acct=""
+local fzf_opts=()
+[[ -n "$1" ]] && fzf_opts+=(--query "$1" -1)
+
+acct=$(gcloud auth list --format=json | jq -r '.[].account' | fzf "${fzf_opts[@]}")
+if [[ -z $acct ]]
+then
+    echo "No account selected."
+    return 1
+fi
+
+gcloud config set account "$acct"
+
+gcloud auth list --filter=status:ACTIVE --format=flattened
+
+# vi: set ft=zsh:

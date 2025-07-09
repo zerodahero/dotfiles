@@ -23,9 +23,6 @@ return {
         config = true,
     },
 
-    -- linter
-    { "mfussenegger/nvim-lint" },
-
     -- nvim lua config
     {
         "folke/lazydev.nvim",
@@ -67,18 +64,14 @@ return {
 
     {
         "rmagatti/alternate-toggler",
-        config = function()
-            vim.keymap.set("n", "<leader>b", function()
-                require("alternate-toggler").toggleAlternate()
-            end)
-        end,
-        event = { "BufReadPost" }, -- lazy load after reading a buffer
+        opts = {},
+        keys = {
+            { "<leader>b", "<cmd>lua require('alternate-toggler').toggleAlternate()<cr>", desc = "Toggle Alternate" },
+        },
     },
     {
         "windwp/nvim-autopairs",
-        config = function()
-            require("nvim-autopairs").setup({})
-        end,
+        opts = {},
     },
 
     -- Configured in prose.lua
@@ -135,7 +128,13 @@ return {
     },
 
     -- DOcument GEnterator (docblocks, etc)
-    { "kkoomen/vim-doge", build = ":call doge#install()" },
+    {
+        "kkoomen/vim-doge",
+        build = ":call doge#install()",
+        init = function ()
+            vim.g.doge_mapping = "<leader>doc"
+        end,
+    },
 
     "hedyhli/outline.nvim",
     "terrastruct/d2-vim",

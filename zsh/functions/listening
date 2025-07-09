@@ -3,7 +3,7 @@ then
 	echo "Usage: listening <port>"
 	exit 1
 fi
-local PIDS=$(lsof -t -i :$1) 
+local PIDS=$(lsof -t -i :$1)
 if [ ${#PIDS[@]} -eq 0 ]
 then
 	echo "Nothing listening on $1"
@@ -14,3 +14,5 @@ for PID in ${PIDS[@]}
 do
 	ps -p $PID -o pid,ppid,time,command
 done
+
+# vi: set ft=zsh:

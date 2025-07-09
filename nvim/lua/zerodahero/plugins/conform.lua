@@ -36,6 +36,7 @@ return {
             typescript = { "biome", "biome-organize-imports", "eslint_d", "prettierd" },
             vue = { "biome", "eslint_d" },
             yaml = { "yamlfmt" },
+            toml = { "taplo" },
             ["*"] = { "trim_newlines", "trim_whitespace" },
         },
         log_level = vim.log.levels.DEBUG,

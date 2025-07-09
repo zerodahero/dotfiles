@@ -1,0 +1,31 @@
+if [[ -z "$1" ]]; then
+  echo "Toggles a file between YAML and JSON formats (to stdout)."
+  echo "Usage: $0 <yaml_or_json_file>"
+  return 1
+fi
+
+if [[ ! -x "$(command -v yq)" ]]; then
+  echo "yq command not found. Please install yq to use this script."
+  return 1
+fi
+
+file="$1"
+file_stem="${file:t:r}"
+
+if [[ ! -f "$file" ]]; then
+  echo "File not found: $file"
+  return 1
+fi
+
+if [[ "$file" == *.yaml || "$file" == *.yml ]]; then
+  # Convert YAML to JSON
+  yq -p yaml -o json "$file"
+elif [[ "$file" == *.json ]]; then
+  # Convert JSON to YAML
+  yq -p json -o yaml "$file"
+else
+  echo "Unsupported file format. Please provide a YAML or JSON file."
+  return 1
+fi
+
+# vi: set ft=zsh:

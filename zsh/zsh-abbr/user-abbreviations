@@ -1,0 +1,5 @@
+abbr "gcb"="git checkout -b"
+abbr "gco"="git checkout"
+abbr "gp"="git push"
+abbr "gpl"="git pull"
+abbr "kc"="kubectl"

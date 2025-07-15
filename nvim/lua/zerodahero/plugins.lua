@@ -106,6 +106,7 @@ return {
     },
 
     "HiPhish/rainbow-delimiters.nvim",
+
     {
         "nvim-neotest/neotest",
         dependencies = {
@@ -135,9 +136,6 @@ return {
             vim.g.doge_mapping = "<leader>doc"
         end,
     },
-
-    "hedyhli/outline.nvim",
-    "terrastruct/d2-vim",
 
     {
         "chentoast/marks.nvim",

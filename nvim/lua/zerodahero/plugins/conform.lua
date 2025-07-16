@@ -7,7 +7,14 @@ return {
             -- Customize or remove this keymap to your liking
             "<leader>mf",
             function()
-                require("conform").format({ async = true, lsp_format = "fallback" })
+                require("conform").format({ async = true, lsp_format = "fallback" }, function(err)
+                    if not err then
+                        local mode = vim.api.nvim_get_mode().mode
+                        if vim.startswith(string.lower(mode), "v") then
+                            vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", true)
+                        end
+                    end
+                end)
             end,
             mode = "",
             desc = "Format buffer",
@@ -27,7 +34,7 @@ return {
             javascript = { "biome", "biome-organize-imports", "eslint_d", "prettierd" },
             json = { "fixjson" },
             lua = { "stylua" },
-            markdown = { "mdformat" },
+            markdown = { "mdformat", "injected" },
             nim = { "nimpretty" },
             php = { "php_cs_fixer" },
             rust = { "rustfmt" },
@@ -39,13 +46,26 @@ return {
             toml = { "taplo" },
             ["*"] = { "trim_newlines", "trim_whitespace" },
         },
-        log_level = vim.log.levels.DEBUG,
+        -- log_level = vim.log.levels.DEBUG,
         -- Set up format-on-save
         -- format_on_save = { timeout_ms = 500, lsp_fallback = true },
         formatters = {
             biome = {
                 condition = function()
-                    return vim.loop.fs_realpath("biome.json") ~= nil or vim.loop.fs_realpath("biome.jsonc") ~= nil
+                    return (vim.loop.fs_realpath("biome.json") ~= nil or vim.loop.fs_realpath("biome.jsonc") ~= nil)
+                        -- no config, so use biome by default
+                        or (
+                            vim.loop.fs_realpath("biome.json") == nil
+                            and vim.loop.fs_realpath("biome.jsonc") == nil
+                            and vim.loop.fs_realpath(".prettierrc.js") == nil
+                            and vim.loop.fs_realpath(".prettierrc.mjs") == nil
+                            and vim.loop.fs_realpath(".prettierrc") == nil
+                            and vim.loop.fs_realpath(".eslint.config.js") == nil
+                            and vim.loop.fs_realpath(".eslint.config.mjs") == nil
+                            and vim.loop.fs_realpath(".eslintrc") == nil
+                            and vim.loop.fs_realpath(".eslintrc.json") == nil
+                            and vim.loop.fs_realpath(".eslintrc.yml") == nil
+                        )
                 end,
             },
             ["biome-organize-imports"] = {
@@ -68,6 +88,11 @@ return {
                         or vim.loop.fs_realpath(".eslintrc.json") ~= nil
                         or vim.loop.fs_realpath(".eslintrc.yml") ~= nil
                 end,
+            },
+            injected = {
+                options = {
+                    ignore_errors = true,
+                },
             },
         },
     },

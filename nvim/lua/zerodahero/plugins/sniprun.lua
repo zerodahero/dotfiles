@@ -30,7 +30,7 @@ return {
     },
 
     keys = {
-        { "<leader>r", "<cmd>SnipRun<cr>", mode = { "n", "v" }, desc = "Run Snippet" },
-        { "<leader>R", "<cmd>SnipReset<cr>", desc = "Reset Snippet" },
+        { "<leader>rr", "<cmd>SnipRun<cr>", mode = { "n", "v" }, desc = "Run Snippet" },
+        { "<leader>rR", "<cmd>SnipReset<cr>", desc = "Reset Snippet" },
     },
 }

@@ -268,6 +268,18 @@ return {
         end,
     },
     {
+        "cwrau/yaml-schema-detect.nvim",
+        ---@module "yaml-schema-detect"
+        ---@type YamlSchemaDetectOptions
+        opts = {
+            disable_keymap = true,
+        },
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+        },
+        ft = { "yaml" },
+    },
+    {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         opts = {},
         keys = {

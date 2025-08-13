@@ -58,5 +58,10 @@
             "case word in [ [(] pattern [ | pattern ] ... ) list ;; ] ... esac\n",
             "A case command first expands word, and tries to match it against each pattern in turn."
         ]
+    },
+    "script_dir": {
+        "prefix": "script_dir",
+        "body": "SCRIPT_DIR=$(cd -- \"$(dirname -- \"${BASH_SOURCE[0]}\")\" &> /dev/null && pwd)\n\n",
+        "description": "Get the directory of the current script."
     }
 }

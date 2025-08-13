@@ -119,6 +119,7 @@ return {
     { "simeji/winresizer" },
     {
         "nvim-zh/colorful-winsep.nvim",
+        commit = "7bbe4e1353c0fe37c98bad2758aafc410280f6b3",
         config = true,
         event = { "WinLeave" },
     },

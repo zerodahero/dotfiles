@@ -65,6 +65,10 @@ vim.keymap.set("n", "<leader>ft", function()
         testSuffix = ".test"
     elseif filetype == "scala" then
         testSuffix = "Suite"
+    elseif filetype == "go" then
+        testSuffix = "_test"
+    elseif filetype == "bash" or filetype == "sh" then
+        testSuffix = ".bats"
     end
 
     local filename = vim.fn.expand("%:t:r")

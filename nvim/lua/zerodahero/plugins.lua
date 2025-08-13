@@ -84,7 +84,19 @@ return {
     {
         "nvim-tree/nvim-tree.lua",
         dependencies = {
-            "nvim-tree/nvim-web-devicons", -- optional, for file icons
+            {
+                "nvim-tree/nvim-web-devicons",
+                opts = {
+                    override_by_extension = {
+                        ["bats"] = {
+                            icon = "",
+                            color = "#CBCB41",
+                            cterm_color = "185",
+                            name = "bats",
+                        },
+                    },
+                },
+            },
         },
     },
 
@@ -105,7 +117,9 @@ return {
         opts = {},
     },
 
-    "HiPhish/rainbow-delimiters.nvim",
+    {
+        "HiPhish/rainbow-delimiters.nvim",
+    },
 
     {
         "nvim-neotest/neotest",
@@ -132,7 +146,7 @@ return {
     {
         "kkoomen/vim-doge",
         build = ":call doge#install()",
-        init = function ()
+        init = function()
             vim.g.doge_mapping = "<leader>doc"
         end,
     },
@@ -155,6 +169,7 @@ return {
             checkbox = {
                 -- bullet = true,
             },
+            completions = { blink = { enabled = true } },
         },
     },
     {

@@ -20,7 +20,11 @@ return {
         opts = {
             keymap = {
                 preset = "default",
-                ["<C-b>"] = { "show", "show_documentation", "hide_documentation" },
+                -- ["<C-b>"] = { "show", "show_documentation", "hide_documentation" },
+                ["<Tab>"] = false,
+                ["<S-Tab>"] = false,
+                ["<C-l>"] = { "snippet_forward", "fallback" },
+                ["<C-j>"] = { "snippet_backward", "fallback" },
             },
             appearance = {
                 nerd_font_variant = "mono",
@@ -311,6 +315,30 @@ return {
                 end,
             },
         },
+    },
+
+    {
+        "apple/pkl-neovim",
+        lazy = true,
+        ft = "pkl",
+        build = function()
+            require("pkl-neovim").init()
+
+            -- Set up syntax highlighting.
+            vim.cmd("TSInstall pkl")
+        end,
+        config = function()
+            -- Set up snippets.
+            require("luasnip.loaders.from_snipmate").lazy_load()
+
+            -- Configure pkl-lsp
+            -- vim.g.pkl_neovim = {
+            -- start_command = { "java", "-jar", "/path/to/pkl-lsp.jar" },
+            -- or if pkl-lsp is installed with brew:
+            -- start_command = { "pkl-lsp" },
+            -- pkl_cli_path = "pkl",
+            -- }
+        end,
     },
     {
         "scalameta/nvim-metals",

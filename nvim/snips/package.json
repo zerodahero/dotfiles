@@ -48,6 +48,10 @@
         "path": "./docker-compose.json"
       },
       {
+        "language": "yaml",
+        "path": "./k8s.json"
+      },
+      {
         "language": "dockerfile",
         "path": "./docker-file.json"
       },

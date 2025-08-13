@@ -24,8 +24,8 @@ return {
     opts = {
         -- Define your formatters
         formatters_by_ft = {
-            bash = { "shfmt" },
-            sh = { "shfmt" },
+            bash = { "shellharden" },
+            sh = { "shellharden" },
             cs = { "csharpier" },
             dart = { "dart_format" },
             go = { "gofmt" },
@@ -39,7 +39,7 @@ return {
             php = { "php_cs_fixer" },
             rust = { "rustfmt" },
             scala = { "scalafmt" },
-            sql = { "sqruff" },
+            sql = { "sqruff", "sqlfluff", "pg_format" },
             typescript = { "biome", "biome-organize-imports", "eslint_d", "prettierd" },
             vue = { "biome", "eslint_d" },
             yaml = { "yamlfmt" },
@@ -93,6 +93,16 @@ return {
                 options = {
                     ignore_errors = true,
                 },
+            },
+            sqruff = {
+                condition = function()
+                    return vim.loop.fs_realpath(".sqruff") ~= nil
+                end,
+            },
+            sqlfluff = {
+                condition = function()
+                    return vim.loop.fs_realpath(".sqlfluff") ~= nil
+                end,
             },
         },
     },

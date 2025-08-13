@@ -4,6 +4,7 @@ return {
     opts = {
         keywords = {
             FUTURE = { icon = "󰈑 ", color = "info" },
+            REMOVEME = { icon = "󰅙 ", color = "error", alt = { "REMOVE", "DELETEME", "DELETE" } },
         },
     },
 }

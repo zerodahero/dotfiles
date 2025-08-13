@@ -54,6 +54,7 @@ esac
 ## Kitty
 ln -si "$HOME/dotfiles/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
 ln -si "$HOME/dotfiles/kitty/current-theme.conf" "$HOME/.config/kitty/current-theme.conf"
+ln -si "$HOME/dotfiles/kitty/project_tab_title.py" "$HOME/.config/kitty/project_tab_title.py"
 
 ## Projects directory setup
 mkdir -p "$HOME/projects"

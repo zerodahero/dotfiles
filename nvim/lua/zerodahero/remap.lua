@@ -58,30 +58,6 @@ vim.keymap.set("n", "<leader>mz", ":ZenMode<CR>")
 vim.keymap.set("n", "L", ":bnext<cr>", { silent = true })
 vim.keymap.set("n", "H", ":bprev<cr>", { silent = true })
 
--- Delete current buffer and goes back to the previous one
-vim.keymap.set("n", "<leader>qq", ":Bdelete<cr>", { silent = true })
-vim.keymap.set("n", "<leader>q!", ":Bdelete!<cr>", { silent = true })
-vim.keymap.set("n", "<leader>wq", function()
-    vim.cmd("update")
-    vim.cmd("Bdelete")
-end, { silent = true })
-vim.keymap.set("n", "<leader>qa", function()
-    vim.cmd(":DeleteHiddenBuffers")
-    vim.cmd(":bufdo :Bdelete")
-    -- require('mini.starter').open()
-end, { silent = true })
-
-vim.keymap.set("n", "<leader>q1", function()
-    local bufnr = vim.api.nvim_get_current_buf()
-    vim.cmd(":DeleteHiddenBuffers")
-
-    for _, n in ipairs(vim.api.nvim_list_bufs()) do
-        if n ~= bufnr then
-            vim.cmd(":Bdelete" .. n)
-        end
-    end
-end, { silent = true })
-
 -- Scratch buffer
 vim.keymap.set("n", "<leader><leader>`", function()
     vim.api.nvim_command(":enew")

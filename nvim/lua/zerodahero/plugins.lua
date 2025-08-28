@@ -158,14 +158,5 @@ return {
         opts = {},
     },
 
-    {
-        "folke/snacks.nvim",
-        priority = 1000,
-        lazy = false,
-        ---@type snacks.Config
-        opts = {
-            bigfile = { enabled = true },
-        },
-    },
     { "kevinhwang91/nvim-bqf", ft = "qf" },
 }

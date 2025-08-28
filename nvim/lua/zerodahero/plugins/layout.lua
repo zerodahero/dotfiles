@@ -134,10 +134,6 @@ return {
         event = "VeryLazy",
     },
 
-    -- Buffer closing without closing windows
-    { "moll/vim-bbye" },
-    { "arithran/vim-delete-hidden-buffers" },
-
     { "folke/twilight.nvim", opts = {} },
     { "folke/zen-mode.nvim", opts = {} },
 }

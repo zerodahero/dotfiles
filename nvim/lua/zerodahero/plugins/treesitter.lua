@@ -35,6 +35,13 @@ return {
                         ["ab"] = "@block.outer",
                     },
                 },
+                move = {
+                    enable = true,
+                    set_jumps = true,
+                    goto_previous_start = {
+                        ["[["] = "@block.outer",
+                    },
+                },
             },
         },
     },

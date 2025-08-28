@@ -26,7 +26,7 @@ return {
         formatters_by_ft = {
             bash = { "shellharden" },
             sh = { "shellharden" },
-            cs = { "csharpier" },
+            -- cs = { "csharpier" },
             dart = { "dart_format" },
             go = { "gofmt" },
             html = { "prettierd" },
@@ -38,6 +38,7 @@ return {
             nim = { "nimpretty" },
             php = { "php_cs_fixer" },
             rust = { "rustfmt" },
+            python = { "ruff" },
             scala = { "scalafmt" },
             sql = { "sqruff", "sqlfluff", "pg_format" },
             typescript = { "biome", "biome-organize-imports", "eslint_d", "prettierd" },

@@ -89,7 +89,7 @@ return {
                 opts = {
                     override_by_extension = {
                         ["bats"] = {
-                            icon = "",
+                            icon = "󰭟",
                             color = "#CBCB41",
                             cterm_color = "185",
                             name = "bats",
@@ -132,6 +132,7 @@ return {
             "Issafalcon/neotest-dotnet",
             "ChristianChiarulli/neovim-codicons",
             "nvim-neotest/neotest-jest",
+            "nvim-neotest/neotest-python",
         },
     },
 
@@ -155,34 +156,6 @@ return {
         "chentoast/marks.nvim",
         event = "VeryLazy",
         opts = {},
-    },
-    {
-        "MeanderingProgrammer/render-markdown.nvim",
-        dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
-        ---@module 'render-markdown'
-        ---@type render.md.UserConfig
-        ft = { "markdown", "codecompanion" },
-        opts = {
-            code = {
-                border = "thick",
-            },
-            checkbox = {
-                -- bullet = true,
-            },
-            completions = { blink = { enabled = true } },
-        },
-    },
-    {
-        "iamcco/markdown-preview.nvim",
-        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-        build = "cd app && npm install && git restore .",
-        keys = {
-            { "<leader>mp", "<cmd>MarkdownPreviewToggle<cr>", desc = "Markdown Preview" },
-        },
-        init = function()
-            vim.g.mkdp_filetypes = { "markdown" }
-        end,
-        ft = { "markdown" },
     },
 
     {

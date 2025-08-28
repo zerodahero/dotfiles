@@ -1,0 +1,120 @@
+{
+    "createt": {
+        "prefix": "createt",
+        "body": [
+            "CREATE TABLE ${1:tableName} (",
+            "\t${2:attribute(s)}",
+            ");"
+        ],
+        "description": "Create regular table"
+    },
+    "createti": {
+        "prefix": "createti",
+        "body": [
+            "CREATE TABLE IF NOT EXISTS ${1:tableName} (",
+            "\t${2:attribute(s)}",
+            ");"
+        ],
+        "description": "Create table with conditional"
+    },
+    "created": {
+        "prefix": "created",
+        "body": [
+            "CREATE DATABASE ${1:name};"
+        ],
+        "description": "Create regular table"
+    },
+    "createdi": {
+        "prefix": "createdi",
+        "body": [
+            "CREATE DATABASE IF NOT EXISTS ${1:name};"
+        ],
+        "description": "Create table with conditional"
+    },
+    "insert": {
+        "prefix": "insert",
+        "body": [
+            "INSERT INTO ${1:tableName} (",
+            "\t${2:attribute(s)}",
+            ") VALUES ( ${3:values} )"
+        ],
+        "description": "Insert value(s)"
+    },
+    "dropt": {
+        "prefix": "dropt",
+        "body": [
+            "DROP TABLE ${1:tableName};"
+        ],
+        "description": "Drop table"
+    },
+    "dropd": {
+        "prefix": "dropd",
+        "body": [
+            "DROP DATABASE ${1:dbName};"
+        ],
+        "description": "Drop database"
+    },
+    "dropti": {
+        "prefix": "dropti",
+        "body": [
+            "DROP TABLE IF EXISTS ${1:tableName};"
+        ],
+        "description": "Drop table with conditional"
+    },
+    "dropdi": {
+        "prefix": "dropdi",
+        "body": [
+            "DROP DATABASE IF EXISTS ${1:dbName};"
+        ],
+        "description": "Drop database with conditional"
+    },
+    "select": {
+        "prefix": "select",
+        "body": [
+            "SELECT ${1:attribute(s)} FROM ${2:tableName};"
+        ],
+        "description": "Regular select"
+    },
+    "selectw": {
+        "prefix": "selectw",
+        "body": [
+            "SELECT ${1:attribute(s)}",
+            "\tFROM ${2:tableName}",
+            "\tWHERE ${3:condition};"
+        ],
+        "description": "Select with condition"
+    },
+    "updatet": {
+        "prefix": "updatet",
+        "body": [
+            "UPDATE ${1:tableName}",
+            "\tSET ${2:attribute(s)}",
+            "\tWHERE ${3:condition};"
+        ],
+        "description": "Update table"
+    },
+    "delete": {
+        "prefix": "delete",
+        "body": [
+            "DELETE FROM ${1:tableName}",
+            "\tWHERE ${3:condition};"
+        ],
+        "description": "Delete records"
+    },
+    "altert": {
+        "prefix": "altert",
+        "body": [
+            "ALTER TABLE ${1:tableName}",
+            "\t ${2:intructions};"
+        ],
+        "description": "Alter table"
+    },
+    "alterad": {
+        "prefix": "alterad",
+        "body": [
+            "ALTER TABLE ${1:tableName}",
+            "\tADD COLUMN ${2:col_name};"
+        ],
+        "description": "Alter table - Add column"
+    }
+}

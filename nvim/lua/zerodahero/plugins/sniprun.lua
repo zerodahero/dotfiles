@@ -30,8 +30,8 @@ return {
     },
 
     keys = {
-        { "<leader>rr", "<cmd>SnipRun<cr>", mode = { "n", "v" }, desc = "Run Snippet" },
-        { "<leader>rR", "<cmd>SnipReset<cr>", desc = "Reset SnipRun" },
-        { "<leader>rc", "<cmd>SnipClose<cr>", desc = "Close SnipRun" },
+        { "<leader>rr", "<Plug>SnipRun", mode = { "n", "v" }, desc = "Run Snippet" },
+        { "<leader>rR", "<Plug>SnipReset", desc = "Reset SnipRun" },
+        { "<leader>rc", "<Plug>SnipClose", desc = "Close SnipRun" },
     },
 }

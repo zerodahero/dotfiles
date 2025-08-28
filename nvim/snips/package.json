@@ -58,6 +58,14 @@
       {
         "language": "typescript",
         "path": "./typescript.json"
+      },
+      {
+        "language": "sql",
+        "path": "./sql.json"
+      },
+      {
+        "language": "sql",
+        "path": "./pgsql-utils.json"
       }
     ]
   }

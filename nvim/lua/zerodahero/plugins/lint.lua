@@ -8,6 +8,7 @@ return {
         lint.linters_by_ft = {
             dockerfile = { "hadolint" },
             sql = { "sqlfluff" },
+            python = { "ruff" },
             -- yaml = { "kube-linter" },
         }
 

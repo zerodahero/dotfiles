@@ -1,0 +1,32 @@
+{
+    "tablesizes": {
+        "prefix": "tablesizes",
+        "body": [
+            "SELECT",
+            "\ttable_name,",
+            "\tpg_size_pretty(table_size) AS table_size,",
+            "\tpg_size_pretty(indexes_size) AS indexes_size,",
+            "\tpg_size_pretty(total_size) AS total_size",
+            "FROM (",
+            "\tSELECT",
+            "\t\ttable_name,",
+            "\t\tpg_table_size(table_name) AS table_size,",
+            "\t\tpg_indexes_size(table_name) AS indexes_size,",
+            "\t\tpg_total_relation_size(table_name) AS total_size",
+            "\tFROM (",
+            "\t\tSELECT ('\"' || table_schema || '\".\"' || table_name || '\"') AS table_name",
+            "\t\tFROM information_schema.tables",
+            "\t) AS all_tables",
+            "\tORDER BY total_size DESC",
+            ") AS pretty_sizes;"
+        ],
+        "description": "Gets the pretty sizes of all tables, indexes"
+    },
+    "walsize": {
+        "prefix": "walsize",
+        "body": [
+            "SELECT pg_size_pretty(sum(size)) FROM pg_ls_waldir();"
+        ],
+        "description": "Gets the size of wal on disk"
+    }
+}

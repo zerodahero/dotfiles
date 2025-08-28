@@ -59,23 +59,39 @@ vim.keymap.set("n", "<leader>fo", builtin.oldfiles, {})
 -- Attempts to find the matching test or file
 vim.keymap.set("n", "<leader>ft", function()
     local filetype = vim.bo.filetype
-
-    local testSuffix = "Test"
-    if filetype == "typescript" or filetype == "javascript" then
-        testSuffix = ".test"
-    elseif filetype == "scala" then
-        testSuffix = "Suite"
-    elseif filetype == "go" then
-        testSuffix = "_test"
-    elseif filetype == "bash" or filetype == "sh" then
-        testSuffix = ".bats"
-    end
-
     local filename = vim.fn.expand("%:t:r")
-    if filename:sub(-#testSuffix) == testSuffix then
-        builtin.find_files({ default_text = filename:sub(1, -#testSuffix - 1) })
+
+    -- Define test patterns for different filetypes
+    local test_patterns = {
+        typescript = { pattern = ".test", location = "suffix" },
+        javascript = { pattern = ".test", location = "suffix" },
+        scala = { pattern = "Suite", location = "suffix" },
+        go = { pattern = "_test", location = "suffix" },
+        bash = { pattern = ".bats", location = "suffix" },
+        sh = { pattern = ".bats", location = "suffix" },
+        python = { pattern = "test_", location = "prefix" },
+    }
+
+    local pattern_data = test_patterns[filetype]
+
+    if pattern_data then
+        local pattern = pattern_data.pattern
+        local location = pattern_data.location
+
+        if location == "suffix" and filename:match(pattern .. "$") then
+            -- If the file has the test suffix, search for the non-test file
+            builtin.find_files({ default_text = filename:gsub(pattern .. "$", "") })
+        elseif location == "prefix" and filename:match("^" .. pattern) then
+            -- If the file has the test prefix, search for the non-test file
+            builtin.find_files({ default_text = filename:gsub("^" .. pattern, "") })
+        else
+            -- Otherwise, search for the test file
+            local new_filename = (location == "prefix" and pattern .. filename) or (filename .. pattern)
+            builtin.find_files({ default_text = new_filename })
+        end
     else
-        builtin.find_files({ default_text = filename .. testSuffix })
+        -- Fallback for unrecognized filetypes
+        builtin.find_files({ default_text = filename })
     end
 end, {})
 

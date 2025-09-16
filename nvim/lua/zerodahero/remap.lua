@@ -80,3 +80,4 @@ vim.keymap.set(
     "c<c-r>=substitute(system('base64 --decode', @\"), '\\n','', 'g')<cr><esc>",
     { noremap = true }
 )
+

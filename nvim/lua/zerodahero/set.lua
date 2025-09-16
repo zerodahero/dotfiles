@@ -7,6 +7,7 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.ignorecase = true
 vim.opt.cursorline = true
+vim.opt.showmode = false
 
 vim.opt.smartindent = true
 vim.opt.autoindent = true

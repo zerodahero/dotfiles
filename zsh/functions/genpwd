@@ -1,0 +1,5 @@
+pw_length="${1:-20}"
+
+head -n 10 </dev/urandom | LC_CTYPE=C tr -dc "[:alnum:]" | fold -w "${pw_length}" | head -n 1
+
+# vi: set ft=zsh:

@@ -45,12 +45,13 @@ return {
             { "theHamsta/nvim-dap-virtual-text" },
 
             -- Adapters
-            { "mxsdev/nvim-dap-vscode-js" },
-            {
-                "microsoft/vscode-js-debug",
-                lazy = true,
-                build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out && git restore .",
-            },
+            -- This has all sorts of issues
+            -- { "mxsdev/nvim-dap-vscode-js" },
+            -- {
+            --     "microsoft/vscode-js-debug",
+            --     lazy = true,
+            --     build = "npm install --legacy-peer-deps && npx gulp vsDebugServerBundle && mv dist out && git restore .",
+            -- },
         },
     },
 
@@ -105,10 +106,8 @@ return {
         "axkirillov/hbac.nvim",
         opts = {
             autoclose = true, -- set autoclose to false if you want to close manually
-            threshold = 9, -- hbac will start closing unedited buffers once that number is reached
-            close_command = function(bufnr)
-                vim.cmd("Bdelete " .. bufnr)
-            end,
+            threshold = 8, -- hbac will start closing unedited buffers once that number is reached
+            close_command = function(bufnr) require("snacks").bufdelete({ buf = bufnr }) end,
         },
     },
     {
@@ -136,20 +135,18 @@ return {
         },
     },
 
-    {
-        "glacambre/firenvim",
-        build = function()
-            vim.fn["firenvim#install"](0)
-        end,
-    },
+    -- {
+    --     "glacambre/firenvim",
+    --     build = function() vim.fn["firenvim#install"](0) end,
+    -- },
+
+    { "HiPhish/jinja.vim" },
 
     -- DOcument GEnterator (docblocks, etc)
     {
         "kkoomen/vim-doge",
         build = ":call doge#install()",
-        init = function()
-            vim.g.doge_mapping = "<leader>doc"
-        end,
+        init = function() vim.g.doge_mapping = "<leader>doc" end,
     },
 
     {

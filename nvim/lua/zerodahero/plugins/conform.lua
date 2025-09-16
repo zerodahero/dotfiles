@@ -38,7 +38,7 @@ return {
             nim = { "nimpretty" },
             php = { "php_cs_fixer" },
             rust = { "rustfmt" },
-            python = { "ruff" },
+            python = { "ruff", "ruff_format", "ruff_organize_imports" },
             scala = { "scalafmt" },
             sql = { "sqruff", "sqlfluff", "pg_format" },
             typescript = { "biome", "biome-organize-imports", "eslint_d", "prettierd" },

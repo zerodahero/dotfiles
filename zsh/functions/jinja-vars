@@ -1,0 +1,8 @@
+[[ -n "$1" ]] || {
+    echo "Parses a (unique) list of expressions/variables used by the jinja template."
+    echo "Usage: jinja-vars <jinja_template_file>"
+}
+
+grep '{{' "$1" | sed -E 's/^.*\{\{[[:space:]]*(.*)[[:space:]]*\}\}.*$/\1/' | sort | uniq
+
+# vi: set ft=zsh:

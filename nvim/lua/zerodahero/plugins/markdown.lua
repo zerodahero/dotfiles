@@ -1,38 +1,46 @@
 return {
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+        dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
+        ---@module 'render-markdown'
+        ---@type render.md.UserConfig
+        ft = { "markdown", "codecompanion" },
+        opts = {
+            code = {
+                border = "thick",
+            },
+            checkbox = {
+                -- bullet = true,
+            },
+            completions = { blink = { enabled = true } },
+        },
+    },
     -- {
-    --     "MeanderingProgrammer/render-markdown.nvim",
-    --     dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
-    --     ---@module 'render-markdown'
-    --     ---@type render.md.UserConfig
-    --     ft = { "markdown", "codecompanion" },
+    --     "OXY2DEV/markview.nvim",
+    --     lazy = false,
+    --
+    --     -- For `nvim-treesitter` users.
+    --     priority = 49,
+    --
+    --     dependencies = {
+    --         "saghen/blink.cmp"
+    --     },
     --     opts = {
-    --         code = {
-    --             border = "thick",
+    --         preview = {
+    --             raw_previews = {
+    --                 markdown = {"tables"}
+    --             }
     --         },
-    --         checkbox = {
-    --             -- bullet = true,
-    --         },
-    --         completions = { blink = { enabled = true } },
+    --         markdown = {
+    --             code_blocks = {
+    --                 label_direction = "left"
+    --             }
+    --         }
+    --     },
+    --     keys = {
+    --         { "<leader>mm", "<cmd>Markview Toggle<cr>", desc = "Markdown inline Preview" },
     --     },
     -- },
-    {
-        "OXY2DEV/markview.nvim",
-        lazy = false,
-
-        -- For `nvim-treesitter` users.
-        priority = 49,
-
-        dependencies = {
-            "saghen/blink.cmp"
-        },
-        opts = {
-            markdown = {
-                code_blocks = {
-                    label_direction = "left"
-                }
-            }
-        }
-    },
     -- {
     --     "iamcco/markdown-preview.nvim",
     --     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },

@@ -7,9 +7,7 @@ return {
             {
                 "L3MON4D3/LuaSnip",
                 version = "2.*",
-                build = (function()
-                    return "make install_jsregexp"
-                end)(),
+                build = (function() return "make install_jsregexp" end)(),
                 dependencies = {},
                 opts = {},
             },
@@ -155,9 +153,14 @@ return {
                         client
                         and client_supports_method(client, vim.lsp.protocol.Methods.textDocument_inlayHint, event.buf)
                     then
-                        vim.keymap.set("n", "<leader>k", function()
-                            vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
-                        end, opts)
+                        vim.keymap.set(
+                            "n",
+                            "<leader>k",
+                            function()
+                                vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
+                            end,
+                            opts
+                        )
                     end
                 end,
             })
@@ -289,9 +292,7 @@ return {
         keys = {
             {
                 "<leader>l",
-                function()
-                    require("lsp_lines").toggle()
-                end,
+                function() require("lsp_lines").toggle() end,
                 desc = "Toggle lsp_lines",
             },
         },
@@ -364,9 +365,7 @@ return {
             local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
             vim.api.nvim_create_autocmd("FileType", {
                 pattern = self.ft,
-                callback = function()
-                    require("metals").initialize_or_attach(metals_config)
-                end,
+                callback = function() require("metals").initialize_or_attach(metals_config) end,
                 group = nvim_metals_group,
             })
         end,
@@ -386,5 +385,11 @@ return {
             lsp = { auto_attach = true, preference = { "volar" } },
             highlight = true,
         },
+    },
+
+    {
+        "qvalentin/helm-ls.nvim",
+        ft = "helm",
+        opts = {},
     },
 }

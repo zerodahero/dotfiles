@@ -10,3 +10,4 @@ nvim/lazy-lock.json
 .zplugins.zsh
 zsh/plugins/mise/_mise
 nvim/spell/en.utf-8.*
+.DS_Store

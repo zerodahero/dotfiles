@@ -43,6 +43,7 @@ Darwin)
     ln -si "$HOME/dotfiles/yabai/intellij_yabai.sh" "$HOME/.config/yabai/intellij_yabai.sh"
     ln -si "$HOME/dotfiles/skhd/skhdrc" "$HOME/.config/skhd/skhdrc"
     ln -si "$HOME/dotfiles/window.justfile" "$HOME/.window.justfile"
+    ln -si "$HOME/dotfiles/k8s.justfile" "$HOME/.k8s.justfile"
     [ -f "$HOME/.user.justfile" ] || cp -n "$HOME/dotfiles/user.justfile.tmpl" "$HOME/.user.justfile"
     mkdir -p "$HOME/Library/KeyBindings"
     ln -si "$HOME/dotfiles/mac/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/"

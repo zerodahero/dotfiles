@@ -22,3 +22,5 @@ export PATH="$PATH:/Users/zack.teska/Library/Application Support/Coursier/bin"
 # >>> JVM installed by coursier >>>
 # export JAVA_HOME="/Users/zack.teska/Library/Caches/Coursier/arc/https/github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.6%252B7/OpenJDK21U-jdk_aarch64_mac_hotspot_21.0.6_7.tar.gz/jdk-21.0.6+7/Contents/Home"
 # <<< JVM installed by coursier <<<
+
+export PATH="$HOME/.local/bin:$PATH"

@@ -16,6 +16,7 @@ neotest.setup({
         }),
         require("neotest-dotnet"),
         require("neotest-jest"),
+        require("neotest-mocha"),
     },
 })
 

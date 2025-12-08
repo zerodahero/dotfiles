@@ -96,14 +96,10 @@ return {
                 },
             },
             sqruff = {
-                condition = function()
-                    return vim.loop.fs_realpath(".sqruff") ~= nil
-                end,
+                condition = function() return vim.loop.fs_realpath(".sqruff") ~= nil end,
             },
             sqlfluff = {
-                condition = function()
-                    return vim.loop.fs_realpath(".sqlfluff") ~= nil
-                end,
+                condition = function() return vim.loop.fs_realpath(".sqlfluff") ~= nil end,
             },
         },
     },

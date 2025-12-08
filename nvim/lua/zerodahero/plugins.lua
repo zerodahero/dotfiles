@@ -144,6 +144,7 @@ return {
             "Issafalcon/neotest-dotnet",
             "ChristianChiarulli/neovim-codicons",
             "nvim-neotest/neotest-jest",
+            "adrigzr/neotest-mocha",
             "nvim-neotest/neotest-python",
         },
     },

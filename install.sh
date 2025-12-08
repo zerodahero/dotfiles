@@ -18,6 +18,7 @@ ln -si "$HOME/dotfiles/formatters/yamlfmt" "$HOME/.config/yamlfmt/.yamlfmt"
 ln -si "$HOME/dotfiles/formatters/cspell.json" "$HOME/.cspell.json"
 mkdir -p "$HOME/.config/cspell"
 touch "$HOME/.config/cspell/user-dictionary.txt"
+ln -si "$HOME/dotfiles/formatters/pg_format" "$HOME/.pg_format"
 
 ## ZSH
 ln -si "$HOME/dotfiles/zsh/.zshrc" "$HOME/.zshrc"

@@ -17,6 +17,7 @@ luarocks
 neovim
 mise
 parallel
+pgformatter
 portal
 ripgrep
 stylua

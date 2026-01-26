@@ -1,0 +1,16 @@
+{
+  "Front Matter": {
+    "prefix": [
+      "head",
+      "front"
+    ],
+    "body": [
+      "---",
+      "title: ${1}",
+      "tags:",
+      "\t- ${2:food}",
+      "---"
+    ],
+    "description": ""
+  }
+}

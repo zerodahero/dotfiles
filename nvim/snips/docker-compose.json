@@ -120,5 +120,22 @@
       "\t\t- ${1:value}"
     ],
     "description": ""
+  },
+  "DockerCompose": {
+    "prefix": "docker-compose",
+    "body": [
+      "version: '3'",
+      "services:",
+      "\t$1:",
+      "\t\timage: ${2:image}",
+      "\t\tcontainer_name: ${3:container_name}",
+      "\t\tports:",
+      "\t\t\t- \"${4:host_port}:${5:container_port}\"",
+      "\t\tvolumes:",
+      "\t\t\t- ${6:host_volume}:${7:container_volume}",
+      "\t\tenvironment:",
+      "\t\t\t- ${8:env_var}=${9:env_value}"
+    ],
+    "description": "A full Docker Compose example snippet"
   }
 }

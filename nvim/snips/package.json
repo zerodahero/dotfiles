@@ -16,6 +16,10 @@
         "path": "./csharp.json"
       },
       {
+        "language": "cook",
+        "path": "./cook.json"
+      },
+      {
         "language": "just",
         "path": "./just.json"
       },

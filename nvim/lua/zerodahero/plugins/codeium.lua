@@ -1,5 +1,5 @@
 return {
-    "Exafunction/codeium.vim",
+    "Exafunction/windsurf.vim",
     event = "BufEnter",
     cond = vim.env.CODEIUM_ENABLED == '1',
     config = function()

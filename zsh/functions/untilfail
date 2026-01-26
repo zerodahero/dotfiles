@@ -2,7 +2,7 @@
 
 # Check if any command is provided
 if [ $# -eq 0 ]; then
-    echo "Usage: repeat_until_fail <command> [args...]" >&2
+    echo "Usage: untilfail <command> [args...]" >&2
     echo "Error: No command provided." >&2
     return 127 # Standard exit code for "command not found" or invalid usage
 fi

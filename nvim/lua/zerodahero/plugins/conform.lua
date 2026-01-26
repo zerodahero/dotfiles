@@ -34,6 +34,8 @@ return {
             javascript = { "biome", "biome-organize-imports", "eslint_d", "prettierd" },
             json = { "fixjson" },
             lua = { "stylua" },
+            latex = { "tex-fmt" },
+            tex = { "tex-fmt" },
             markdown = { "mdformat", "injected" },
             nim = { "nimpretty" },
             php = { "php_cs_fixer" },

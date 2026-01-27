@@ -1,0 +1,96 @@
+# Standard function safety
+emulate -L zsh
+setopt err_return no_unset pipe_fail
+
+# Load datetime
+zmodload zsh/datetime
+
+local journal_dir="$HOME/journal"
+local current_week
+local journal_file
+local prev_file
+
+mkdir -p "$journal_dir"
+
+# Date Calculation (e.g., "2025-w05")
+strftime -s current_week "%Y-w%V" $EPOCHSECONDS
+journal_file="$journal_dir/${current_week}.md"
+
+# --- Main Logic ---
+if [[ ! -f "$journal_file" ]]; then
+
+  # Find the previous file
+  # (.): plain files, (om): sort by mod time, [1]: first one, (N): null glob
+  local -a latest_entries
+  latest_entries=($journal_dir/*.md(.om[1]N))
+
+  if (( $#latest_entries > 0 )); then
+    prev_file="${latest_entries[1]}"
+
+    # Check for Backlog existence (Warn if missing)
+    local has_backlog=0
+    if grep -q "^## Backlog" "$prev_file"; then
+      has_backlog=1
+    else
+      print -u2 "⚠️  Warning: No '## Backlog' found in previous entry."
+    fi
+
+    # Start writing the new file
+    {
+      # 1. New Main Header
+      print "# ${current_week}"
+      print ""
+
+      # 2. Process THE BACKLOG
+      # Logic: Scan the '## Backlog' section. Only print lines containing "- [ ]"
+      print "## Backlog"
+      if (( has_backlog )); then
+        awk '
+          /^## Backlog/ { inside=1; next }
+          /^## /        { inside=0 }
+          # Match "- [ ]" anywhere in the line (handles indentation automatically)
+          inside && /- \[ \]/ { print }
+        ' "$prev_file"
+      fi
+      print ""
+
+      # 3. Process THE LAST DAY (Rollover)
+      awk '
+        # A. If we hit a header, reset the buffer (We only want the LAST section)
+        /^## / {
+          header=$0;
+          body="";
+          next
+        }
+
+        # B. EXCLUSION LIST (Search and Destroy)
+        # We assume any line containing these patterns is trash.
+        # We do not use ^ anchors, so this works even if indented.
+
+        /- \[[xX]\]/ { next }  # Skip - [x] or - [X]
+        /- \[[<>]\]/ { next }  # Skip - [<] or - [>]
+        /~~/         { next }  # Skip struck-through lines
+
+        # C. Keep everything else
+        {
+          body = body "\n" $0
+        }
+
+        # D. End of file: Print the content of the LAST header found
+        END {
+          if (header) {
+            print header
+            print body
+          }
+        }
+      ' "$prev_file"
+
+    } > "$journal_file"
+
+  else
+    # Case: No previous files exist
+    print "# ${current_week}\n\n## Backlog\n" > "$journal_file"
+  fi
+fi
+
+nvim "$journal_file"

@@ -85,6 +85,7 @@ esac
 link "$HOME/dotfiles/kitty/kitty.conf" "$HOME/.config/kitty/kitty.conf"
 link "$HOME/dotfiles/kitty/current-theme.conf" "$HOME/.config/kitty/current-theme.conf"
 link "$HOME/dotfiles/kitty/project_tab_title.py" "$HOME/.config/kitty/project_tab_title.py"
+[ -f "$HOME/.config/kitty/kitty.app.icns" ] || curl -L -o "$HOME/.config/kitty/kitty.app.icns" "https://github.com/k0nserv/kitty-icon/raw/refs/heads/main/build/outrun.icns"
 
 ## Projects directory setup
 mkdir -p "$HOME/projects"

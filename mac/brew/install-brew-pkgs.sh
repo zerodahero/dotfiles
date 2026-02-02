@@ -7,7 +7,7 @@ if ! type brew &> /dev/null; then
     exit 1
 fi
 
-comment_pattern = '/^#/d'
+comment_pattern='/^#/d'
 
 echo "Formulas"
 sed $comment_pattern base-formulas | xargs brew install --dry-run --formula

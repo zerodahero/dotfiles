@@ -7,11 +7,13 @@ if ! type brew &> /dev/null; then
     exit 1
 fi
 
+comment_pattern = '/^#/d'
+
 echo "Formulas"
-cat base-formulas | xargs brew install --dry-run --formula
+sed $comment_pattern base-formulas | xargs brew install --dry-run --formula
 
 echo "Casks"
-cat base-casks | xargs brew install --dry-run --cask
+sed $comment_pattern base-casks | xargs brew install --dry-run --cask
 
 # Ask to confirm
 read -p "Do you want to install these packages? (y/n): " answer
@@ -20,5 +22,5 @@ if [[ $answer != "y" ]]; then
     exit 1
 fi
 
-cat base-formulas | xargs brew install --formula
-cat base-casks | xargs brew install --cask
+sed $comment_pattern base-formulas | xargs brew install --formula
+sed $comment_pattern base-casks | xargs brew install --cask

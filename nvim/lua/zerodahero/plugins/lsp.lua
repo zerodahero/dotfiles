@@ -55,7 +55,12 @@ return {
             { "mason-org/mason.nvim", opts = {} },
             "mason-org/mason-lspconfig.nvim",
 
-            { "j-hui/fidget.nvim", opts = {} },
+            {
+                "j-hui/fidget.nvim",
+                opts = {
+                    notification = { window = { avoid = { "NvimTree" } } },
+                },
+            },
 
             "saghen/blink.cmp",
         },
@@ -234,6 +239,30 @@ return {
                         },
                     },
                 },
+
+                jsonls = {
+                    settings = {
+                        json = {
+                            schemas = require("schemastore").json.schemas(),
+                            validate = { enable = true },
+                        },
+                    },
+                },
+
+                yamlls = {
+                    settings = {
+                        yaml = {
+                            schemaStore = {
+                                -- You must disable built-in schemaStore support if you want to use
+                                -- this plugin and its advanced options like `ignore`.
+                                enable = false,
+                                -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+                                url = "",
+                            },
+                            schemas = require("schemastore").yaml.schemas(),
+                        },
+                    },
+                },
             }
 
             -- Ensure the servers and tools above are installed
@@ -286,6 +315,7 @@ return {
         },
         ft = { "yaml" },
     },
+    { "b0o/schemastore.nvim" },
     {
         "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
         opts = {},
@@ -330,15 +360,15 @@ return {
         end,
         config = function()
             -- Set up snippets.
-            require("luasnip.loaders.from_snipmate").lazy_load()
+            -- require("luasnip.loaders.from_snipmate").lazy_load()
 
             -- Configure pkl-lsp
-            -- vim.g.pkl_neovim = {
-            -- start_command = { "java", "-jar", "/path/to/pkl-lsp.jar" },
-            -- or if pkl-lsp is installed with brew:
-            -- start_command = { "pkl-lsp" },
-            -- pkl_cli_path = "pkl",
-            -- }
+            vim.g.pkl_neovim = {
+                -- start_command = { "java", "-jar", "/path/to/pkl-lsp.jar" },
+                -- or if pkl-lsp is installed with brew:
+                start_command = { "pkl-lsp" },
+                pkl_cli_path = "$HOMEBREW_PREFIX/bin/pkl-lsp",
+            }
         end,
     },
     {

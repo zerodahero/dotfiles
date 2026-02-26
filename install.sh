@@ -62,6 +62,9 @@ link "$HOME/dotfiles/zsh/lib/" "$HOME/.zsh/lib"
 link "$HOME/dotfiles/zsh/plugins/" "$HOME/.zsh/plugins"
 link "$HOME/dotfiles/zsh/zshrc.d/" "$HOME/.zshrc.d"
 
+## Tasks
+link "$HOME/dotfiles/tasks/taskrc" "$HOME/.taskrc"
+
 ## Mise
 link "$HOME/dotfiles/mise/config.toml" "$HOME/.config/mise.toml"
 

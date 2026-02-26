@@ -1,12 +1,33 @@
 return {
     {
         "nvim-treesitter/nvim-treesitter",
+        lazy = false,
         build = ":TSUpdate",
-        main = "nvim-treesitter.configs",
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
             "nvim-treesitter/nvim-treesitter-context",
         },
+        config = function()
+            local filetypes = {
+                "bash",
+                "c",
+                "cooklang",
+                "diff",
+                "html",
+                "lua",
+                "luadoc",
+                "markdown",
+                "markdown_inline",
+                "query",
+                "vim",
+                "vimdoc",
+            }
+            require("nvim-treesitter").install(filetypes)
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = filetypes,
+                callback = function() vim.treesitter.start() end,
+            })
+        end,
         opts = {
             ensure_installed = {
                 "bash",

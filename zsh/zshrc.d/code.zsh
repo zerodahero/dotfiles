@@ -16,7 +16,7 @@ export CLOUDSDK_PYTHON_SITEPACKAGES=1
 export PATH="$HOME/.juliaup/bin:$PATH"
 
 # >>> coursier install directory >>>
-export PATH="$PATH:/Users/zack.teska/Library/Application Support/Coursier/bin"
+export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
 # <<< coursier install directory <<<
 
 # >>> JVM installed by coursier >>>

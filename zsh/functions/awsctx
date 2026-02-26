@@ -1,10 +1,19 @@
-if [ -z $1 ]
-then
-	sed -n -E 's/^\[(.+)\]$/\1/p' ~/.aws/credentials
-	return
+local profile=""
+local fzf_opts=()
+[[ -n "$1" ]] && fzf_opts+=(--query "$1" -1)
+
+profile=$(sed -n -E 's/^\[(profile )(.+)\]$/\2/p; s/^\[(default)\]$/\1/p' ~/.aws/config | fzf "${fzf_opts[@]}")
+if [[ -z $profile ]]; then
+    echo "No profile selected."
+    return 1
 fi
-export AWS_PROFILE=$1
+
+export AWS_PROFILE=$profile
+
+if aws configure get sso_session --profile "$profile" &>/dev/null; then
+    aws sso login --profile "$profile"
+fi
+
 aws configure list
 
 # vi: set ft=zsh:
-

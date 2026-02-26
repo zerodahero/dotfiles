@@ -2,7 +2,7 @@ return {
     "michaelb/sniprun",
     branch = "master",
 
-    build = "sh install.sh",
+    build = "sh ./install.sh",
     opts = {
         display = { "TerminalWithCode" },
         display_options = {

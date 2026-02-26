@@ -1,0 +1,76 @@
+local template="${1:-.env.example}"
+local envfile="${2:-.env}"
+
+if [[ ! -f "$template" ]]; then
+    echo "Template not found: $template"
+    return 1
+fi
+
+if [[ ! -f "$envfile" ]]; then
+    echo "Env file not found: $envfile"
+    return 1
+fi
+
+local -a template_keys template_commented_keys env_keys env_commented_keys
+local line key
+
+while IFS= read -r line || [[ -n "$line" ]]; do
+    if [[ "$line" =~ ^[[:space:]]*#[[:space:]]*(.*=.*)$ ]]; then
+        key="${match[1]%%=*}"
+        key="${key##[[:space:]]}"
+        [[ -n "$key" ]] && template_commented_keys+=("$key")
+        continue
+    fi
+    [[ "$line" =~ ^[[:space:]]*$ ]] && continue
+    key="${line%%=*}"
+    [[ -n "$key" ]] && template_keys+=("$key")
+done < "$template"
+
+while IFS= read -r line || [[ -n "$line" ]]; do
+    if [[ "$line" =~ ^[[:space:]]*#[[:space:]]*(.*=.*)$ ]]; then
+        key="${match[1]%%=*}"
+        key="${key##[[:space:]]}"
+        [[ -n "$key" ]] && env_commented_keys+=("$key")
+        continue
+    fi
+    [[ "$line" =~ ^[[:space:]]*$ ]] && continue
+    key="${line%%=*}"
+    [[ -n "$key" ]] && env_keys+=("$key")
+done < "$envfile"
+
+local added=0 removed=0
+
+# Add keys present in template but missing from envfile
+for key in "${template_keys[@]}"; do
+    if ! (( ${env_keys[(I)$key]} )); then
+        local template_line
+        template_line=$(grep -m1 "^${key}=" "$template")
+        printf '\n%s\n' "$template_line" >> "$envfile"
+        echo "  + $key"
+        (( added++ ))
+    fi
+done
+
+# Add optional (commented) keys from template missing entirely from envfile
+for key in "${template_commented_keys[@]}"; do
+    if ! (( ${env_keys[(I)$key]} )) && ! (( ${env_commented_keys[(I)$key]} )); then
+        local template_line
+        template_line=$(grep -m1 "#.*${key}=" "$template")
+        printf '\n%s\n' "$template_line" >> "$envfile"
+        echo "  + $key (optional)"
+        (( added++ ))
+    fi
+done
+
+# Comment out keys present in envfile but absent from template (and not commented out there)
+for key in "${env_keys[@]}"; do
+    if ! (( ${template_keys[(I)$key]} )) && ! (( ${template_commented_keys[(I)$key]} )); then
+        sed -i '' "s/^${key}=/# [removed from ${template}] ${key}=/" "$envfile"
+        echo "  - $key"
+        (( removed++ ))
+    fi
+done
+
+echo "$added added, $removed removed."
+
+# vi: set ft=zsh:

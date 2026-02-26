@@ -43,9 +43,11 @@ vim.opt.hidden = true
 
 vim.g.netrw_liststyle = 3
 
-vim.opt.spell = true
+vim.opt.spell = false
 vim.opt.spelllang = "en_us"
 vim.opt.spellsuggest = "best,9"
+vim.opt.spellcapcheck = ""
+vim.opt.spelloptions:append("camel")
 
 vim.opt.laststatus = 2
 

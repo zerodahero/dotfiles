@@ -24,12 +24,13 @@ mise
 parallel
 pgformatter
 portal
+poppler
 ripgrep
 stylua
 sqlfluff
 thefuck
 tlrc
-todo-txt
+task
 vhs
 watchexec
 yazi
@@ -40,3 +41,9 @@ koekeishiya/formulae/skhd
 koekeishiya/formulae/yabai
 quarylabs/quary/sqruff
 saulpw/vd/visidata
+
+# No docker desktop
+colima
+docker
+docker-compose
+docker-buildx

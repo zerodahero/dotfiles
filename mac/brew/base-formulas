@@ -25,6 +25,7 @@ parallel
 pgformatter
 portal
 poppler
+pre-commit
 ripgrep
 stylua
 sqlfluff

@@ -263,6 +263,17 @@ return {
                         },
                     },
                 },
+
+                tofu_ls = {
+                    handlers = {
+                        ["textDocument/signatureHelp"] = function(err, result, ctx, config)
+                            -- If the error is the "file not found" code, just ignore it
+                            if err and err.code == -32098 then return end
+                            -- Otherwise, use the default handler
+                            vim.lsp.handlers["textDocument/signatureHelp"](err, result, ctx, config)
+                        end,
+                    },
+                },
             }
 
             -- Ensure the servers and tools above are installed

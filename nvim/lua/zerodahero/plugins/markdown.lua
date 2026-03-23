@@ -15,6 +15,13 @@ return {
             completions = { blink = { enabled = true } },
         },
     },
+    {
+        "jmbuhr/otter.nvim",
+        dependencies = {
+            "nvim-treesitter/nvim-treesitter",
+        },
+        opts = {},
+    },
     -- {
     --     "OXY2DEV/markview.nvim",
     --     lazy = false,
@@ -58,5 +65,5 @@ return {
         keys = {
             { "<leader>mp", ":Vivify<cr>", desc = "Markdown Preview" },
         },
-    }
+    },
 }

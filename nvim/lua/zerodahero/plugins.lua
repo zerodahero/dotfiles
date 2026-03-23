@@ -7,30 +7,6 @@ return {
         opts = {},
     },
     {
-        "akinsho/git-conflict.nvim",
-        version = "*",
-        config = true,
-    },
-
-    {
-        "lewis6991/gitsigns.nvim",
-        event = "BufReadPre",
-        opts = {
-            on_attach = function(bufnr)
-                local gitsigns = require("gitsigns")
-                local function map(mode, l, r, opts)
-                    opts = opts or {}
-                    opts.buffer = bufnr
-                    vim.keymap.set(mode, l, r, opts)
-                end
-                map("n", "<leader>hb", function() gitsigns.blame_line({ full = true }) end)
-                map("n", "<leader>hd", gitsigns.diffthis)
-                map("n", "<leader>tb", gitsigns.toggle_current_line_blame)
-                map("n", "<leader>tw", gitsigns.toggle_word_diff)
-            end,
-        },
-    },
-    {
         "gregorias/coerce.nvim",
         tag = "v4.1.0",
         config = true,
@@ -119,7 +95,7 @@ return {
         "axkirillov/hbac.nvim",
         opts = {
             autoclose = true, -- set autoclose to false if you want to close manually
-            threshold = 8, -- hbac will start closing unedited buffers once that number is reached
+            threshold = 7, -- hbac will start closing unedited buffers once that number is reached
             close_command = function(bufnr) require("snacks").bufdelete({ buf = bufnr }) end,
         },
     },

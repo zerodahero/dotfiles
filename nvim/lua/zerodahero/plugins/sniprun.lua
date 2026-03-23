@@ -30,8 +30,25 @@ return {
     },
 
     keys = {
-        { "<leader>rr", "<Plug>SnipRun", mode = { "n", "v" }, desc = "Run Snippet" },
+        { "<leader>rr", "<Plug>SnipRun", mode = { "n" }, desc = "Run Snippet" },
+        { "<leader>rr", "<Plug>SnipRun", mode = { "v" }, desc = "Run Snippet" },
         { "<leader>rR", "<Plug>SnipReset", desc = "Reset SnipRun" },
         { "<leader>rc", "<Plug>SnipClose", desc = "Close SnipRun" },
+        {
+            "<leader>ry",
+            function()
+                -- 1. Run Sniprun on the visual selection
+                vim.cmd("SnipRun")
+
+                -- 2. Brief delay to let Sniprun process, then yank the last output
+                -- Note: Sniprun stores the last output in a global variable
+                local output = _G.SnipRun_last_output or ""
+                if output ~= "" then
+                    vim.fn.setreg("+", output)
+                    print("Code executed and output copied to clipboard!")
+                end
+            end,
+            desc = "Run Snippet and copy output",
+        },
     },
 }

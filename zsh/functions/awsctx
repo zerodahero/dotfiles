@@ -10,6 +10,14 @@ fi
 
 export AWS_PROFILE=$profile
 
+local region
+region=$(aws configure get region --profile "$profile" 2>/dev/null)
+if [[ -n $region ]]; then
+    export AWS_REGION=$region
+else
+    unset AWS_REGION
+fi
+
 if aws configure get sso_session --profile "$profile" &>/dev/null; then
     aws sso login --profile "$profile"
 fi

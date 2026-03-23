@@ -24,3 +24,5 @@ export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
 # <<< JVM installed by coursier <<<
 
 export PATH="$HOME/.local/bin:$PATH"
+
+export PATH="$PATH:$HOMEBREW_PREFIX/opt/libpq/bin"

@@ -7,6 +7,7 @@ alias p=project
 alias .w='just --justfile ~/.window.justfile --working-directory .'
 alias .j='just --justfile ~/.user.justfile --working-directory .'
 alias .k='just --justfile ~/.k8s.justfile --working-directory .'
+alias .a='just --justfile ~/.aws.justfile --working-directory .'
 
 alias ':q'='exit'
 
@@ -17,5 +18,6 @@ alias please=sudo
 ##
 alias glog="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ad) %C(bold blue)<%an>%Creset' --date=short"
 alias git-bc="npx better-commits"
+alias gpsup="git push --set-upstream origin $(git-current-branch)"
 
 # vim: ft=zsh sw=2 ts=2 et

@@ -1,0 +1,54 @@
+#
+# Creates a new git worktree
+#
+
+local git=${commands[git]}
+local worktree_name="$1"
+
+if [[ -z "$worktree_name" ]]; then
+  echo "Usage: git-worktree-add <worktree-name>" >&2
+  return 1
+fi
+
+local cwd="$PWD"
+
+if [[ "$cwd" != "$HOME/projects/"* ]]; then
+  echo "Error: must be in a ~/projects/* directory" >&2
+  return 1
+fi
+
+# Extract project_name: first directory component after ~/projects/
+local project_name="${${cwd#$HOME/projects/}%%/*}"
+
+# Determine the upstream default branch
+local default_branch
+default_branch="$($git remote show origin 2>/dev/null | sed -n 's/.*HEAD branch: //p')"
+if [[ -z "$default_branch" ]]; then
+  echo "Error: could not determine upstream default branch" >&2
+  return 1
+fi
+
+# Fetch latest from origin
+$git fetch origin "$default_branch" || return 1
+
+local new_branch="zat/$worktree_name"
+local path="$HOME/projects/worktrees/$project_name/$worktree_name"
+
+$git worktree add -b "$new_branch" "$path" "origin/$default_branch" || return 1
+
+# Set upstream tracking so `git push` works without -u
+$git config "branch.$new_branch.remote" origin
+$git config "branch.$new_branch.merge" "refs/heads/$new_branch"
+
+local trusted=false
+if mise trust --show &>/dev/null; then
+  trusted=true
+fi
+
+cd "$path"
+
+if $trusted; then
+  mise trust
+fi
+
+# vi: set ft=zsh:

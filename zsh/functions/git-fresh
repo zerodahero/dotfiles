@@ -1,1 +1,2 @@
-git checkout $1 && git fetch origin && git pull --prune
+local branch=${1:-$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')}
+git switch "$branch" && git pull --prune

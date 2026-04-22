@@ -15,6 +15,7 @@ return {
             })
             local ft = require("Comment.ft")
             ft.set("vhs", "# %s")
+            ft.set("env", "# %s")
         end,
     },
     -- {

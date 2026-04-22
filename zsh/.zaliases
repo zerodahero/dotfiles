@@ -20,4 +20,7 @@ alias glog="git log --graph --pretty='%Cred%h%Creset -%C(auto)%d%Creset %s %Cgre
 alias git-bc="npx better-commits"
 alias gpsup="git push --set-upstream origin $(git-current-branch)"
 
+alias fancy="just --justfile ${PROJECTS}/fancy-docs/justfile"
+
 # vim: ft=zsh sw=2 ts=2 et
+

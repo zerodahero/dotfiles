@@ -1,0 +1,46 @@
+# vim: set ft=gitconfig:
+[include]
+    path = ~/.gitconfig.local
+
+[push]
+    autoSetupRemote = true
+
+[alias]
+    file-history = "log --follow --patch --"
+    unstage = "restore --staged"
+    dv = "!nvim -c 'DiffviewOpen'"
+    dvh = "!nvim -c 'DiffviewFileHistory'"
+
+[core]
+    pager = delta
+
+[init]
+    defaultBranch = main
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    dark = true
+    side-by-side = true
+    hunk-header-style = omit
+
+[merge]
+    conflictStyle = zdiff3
+
+[rerere]
+    enabled = true
+
+[diff]
+    tool = difftastic
+    algorithm = histogram
+
+[difftool]
+    prompt = false
+
+[difftool "difftastic"]
+    cmd = difft "$LOCAL" "$REMOTE"
+
+[pager]
+    difftool = true

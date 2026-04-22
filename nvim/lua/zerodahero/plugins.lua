@@ -155,4 +155,17 @@ return {
     },
 
     { "kevinhwang91/nvim-bqf", ft = "qf" },
+
+    {
+        "atiladefreitas/dooing",
+        config = function()
+            require("dooing").setup({
+                window = {
+                    width = 100,
+                    height = 100,
+                },
+                quick_keys = false,
+            })
+        end,
+    },
 }

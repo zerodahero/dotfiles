@@ -10,7 +10,15 @@ return {
             lsp_progress = {
                 enable = false,
             },
+            window = {
+                config = function()
+                    local has_statusline = vim.o.laststatus > 0
+                    local pad = has_statusline and 1 or 0
+                    return { anchor = "SE", col = vim.o.columns, row = vim.o.lines - pad }
+                end,
+            },
         })
+        vim.api.nvim_create_user_command("Messages", function() MiniNotify.show_history() end, {})
         local map = require("mini.map")
         map.setup({
             symbols = {

@@ -35,6 +35,10 @@ link() {
     esac
 }
 
+## Git
+link "$HOME/dotfiles/git/config" "$HOME/.gitconfig"
+[ -f "$HOME/.gitconfig.local" ] || cp -n "$HOME/dotfiles/git/config.local.tmpl" "$HOME/.gitconfig.local"
+
 ## Nvim
 link "$HOME/dotfiles/nvim" "$HOME/.config/nvim"
 

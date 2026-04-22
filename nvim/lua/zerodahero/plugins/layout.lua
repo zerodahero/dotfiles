@@ -101,7 +101,7 @@ return {
                 focus.resize("equalise")
             end, { noremap = true })
 
-            local ignore_filetypes = { "NvimTree" }
+            local ignore_filetypes = { "NvimTree", "DiffviewFiles", "DiffviewFileHistory" }
             vim.api.nvim_create_autocmd("FileType", {
                 group = augroup,
                 callback = function(_)

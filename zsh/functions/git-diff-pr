@@ -1,0 +1,17 @@
+#
+# Opens nvim DiffView to review PR
+#
+
+local git=${commands[git]}
+local branch=$($git branch --show-current)
+local remote=$($git config branch.$branch.remote)
+local merge=$($git config branch.$branch.merge | sed 's|refs/heads/||')
+
+if [[ -z "$merge" || "$merge" == "$branch" ]]; then
+  local symref=$($git symbolic-ref refs/remotes/${remote:-origin}/HEAD 2>/dev/null)
+  merge=${symref#refs/remotes/${remote:-origin}/}
+fi
+
+nvim -c "DiffviewOpen ${remote:-origin}/${merge:-main}"
+
+# vi: set ft=zsh:

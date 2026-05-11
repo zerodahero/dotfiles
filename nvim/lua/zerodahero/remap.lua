@@ -15,6 +15,12 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
+-- Linux-style Home/End
+vim.keymap.set({ "n", "v" }, "<Home>", "^", { noremap = true })
+vim.keymap.set({ "n", "v" }, "<End>", "$", { noremap = true })
+vim.keymap.set("i", "<Home>", "<C-o>^", { noremap = true })
+vim.keymap.set("i", "<End>", "<C-o>$", { noremap = true })
+
 vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("n", "<leader>s", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])

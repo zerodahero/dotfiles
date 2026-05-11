@@ -66,9 +66,7 @@ return {
 
     -- Configured in prose.lua
     "preservim/vim-pencil",
-    "preservim/vim-wordy",
     "rudism/telescope-dict.nvim",
-    "dbmrq/vim-ditto",
     -- 'preservim/vim-lexical'
 
     {
@@ -141,11 +139,14 @@ return {
         -- end,
     },
 
-    -- DOcument GEnterator (docblocks, etc)
     {
-        "kkoomen/vim-doge",
-        build = ":call doge#install()",
-        init = function() vim.g.doge_mapping = "<leader>doc" end,
+        "danymat/neogen",
+        opts = {
+            snippet_engine = "luasnip",
+        },
+        keys = {
+            { "<leader>doc", function() require("neogen").generate() end, desc = "Generate doc comment" },
+        },
     },
 
     {
@@ -167,5 +168,13 @@ return {
                 quick_keys = false,
             })
         end,
+    },
+
+    {
+        "karb94/neoscroll.nvim",
+        opts = {
+            respect_scrolloff = true,
+            stop_eof = false,
+        },
     },
 }

@@ -5,6 +5,7 @@ return {
     ---@type snacks.Config
     opts = {
         bigfile = { enabled = true },
+        notifier = { enabled = true },
     },
     keys = {
         { "<leader>qq", function() Snacks.bufdelete() end, desc = "Delete Buffer" },

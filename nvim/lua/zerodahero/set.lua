@@ -57,7 +57,6 @@ vim.g.doxygen_enhanced_color = 1
 vim.g.editorconfig = true
 vim.g.EditorConfig_exclude_patterns = { "fugitive://.*", "scp://.*" }
 
-vim.g.surround_no_insert_mappings = 1
 vim.g.sql_type_default = "pgsql"
 
 vim.opt.fileignorecase = false
@@ -65,8 +64,3 @@ vim.opt.fileignorecase = false
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }
 
--- Kitty fix
-if vim.env.TERM == "xterm-kitty" then
-    vim.cmd([[autocmd UIEnter * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[>1u") | endif]])
-    vim.cmd([[autocmd UILeave * if v:event.chan ==# 0 | call chansend(v:stderr, "\x1b[<1u") | endif]])
-end

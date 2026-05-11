@@ -34,7 +34,7 @@ def worktree_short(worktree: str) -> str:
     parts = worktree.split('-', 1)
     if len(parts) == 2 and parts[0] in COMMIT_TYPE_ICONS:
         icon = COMMIT_TYPE_ICONS[parts[0]]
-        return f"{icon}:{parts[1]}"
+        return f"{icon}{parts[1]}"
     if len(parts) == 2 and parts[0] in {'style', 'revert'}:
         return f"{parts[0]}:{parts[1]}"
     return worktree
@@ -51,7 +51,7 @@ def main(args) -> str | None:
     if cwd.startswith(worktrees_dir + os.sep):
         parts = os.path.relpath(cwd, worktrees_dir).split(os.sep)
         if len(parts) >= 2:
-            return f"[{project_abbr(parts[0])}] {worktree_short(parts[1])}"
+            return f"[{project_abbr(parts[0])}]{worktree_short(parts[1])}"
 
     if cwd.startswith(projects_dir + os.sep):
         try:

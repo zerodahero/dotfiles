@@ -97,13 +97,13 @@ return {
             end, { noremap = true })
 
             vim.keymap.set("n", "<c-w>=", function()
-                vim.g.focus_maximised = true
+                vim.g.focus_maximised = false
                 focus.resize("equalise")
             end, { noremap = true })
 
             local ignore_filetypes = { "NvimTree", "DiffviewFiles", "DiffviewFileHistory" }
             vim.api.nvim_create_autocmd("FileType", {
-                group = augroup,
+                group = vim.api.nvim_create_augroup("focus-disable", { clear = false }),
                 callback = function(_)
                     if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
                         vim.b.focus_disable = true

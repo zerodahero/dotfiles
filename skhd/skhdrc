@@ -97,7 +97,6 @@ ctrl + cmd - 0x32 : id=$(yabai -m query --windows | jq -re '.[] | select(.title 
     --working-directory=~ \
     --instance-group=scratchpad \
     mise x -- nvim \
-        -c "PencilSoft" \
         -c "lua vim.diagnostic.config({signs=false,underline=false})" \
         -c "DisableAIComplete" \
         + ~/.scratchpad.md

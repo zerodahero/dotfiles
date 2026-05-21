@@ -8,8 +8,17 @@ return {
     },
     {
         "gregorias/coerce.nvim",
-        tag = "v4.1.0",
-        config = true,
+        tag = "v5.0.0",
+        event = "VeryLazy",
+        opts = {
+            default_mode_keymap_prefixes = {
+                -- normal_mode keeps the default `cr`
+                visual_mode = "<leader>cr",
+            },
+            default_mode_mask = {
+                motion_mode = false,
+            },
+        },
     },
 
     -- nvim lua config
@@ -64,10 +73,9 @@ return {
         opts = {},
     },
 
-    -- Configured in prose.lua
-    "preservim/vim-pencil",
+    -- Soft-wrap + visual-line nav for prose filetypes is configured directly
+    -- in nvim/after/plugin/prose.lua (no plugin required).
     "rudism/telescope-dict.nvim",
-    -- 'preservim/vim-lexical'
 
     {
         "nvim-tree/nvim-tree.lua",

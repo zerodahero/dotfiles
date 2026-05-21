@@ -11,7 +11,12 @@ return {
                 theme = "auto",
             },
             sections = {
-                lualine_a = { "mode", "PencilMode" },
+                lualine_a = {
+                    "mode",
+                    function()
+                        return vim.b.prose_enabled and vim.fn.nr2char(0xF03ED) or ""
+                    end,
+                },
                 lualine_b = { "branch", "diff", "diagnostics" },
                 lualine_c = {
                     -- 'filename',

@@ -53,6 +53,12 @@ def main(args) -> str | None:
         if len(parts) >= 2:
             return f"[{project_abbr(parts[0])}]{worktree_short(parts[1])}"
 
+    sandbox_dir = os.path.join(projects_dir, 'sandbox')
+    if cwd.startswith(sandbox_dir + os.sep):
+        parts = os.path.relpath(cwd, sandbox_dir).split(os.sep)
+        if parts and parts[0]:
+            return f"🏖️{to_camel_case(parts[0])}"
+
     if cwd.startswith(projects_dir + os.sep):
         try:
             relative_path = os.path.relpath(cwd, projects_dir)

@@ -15,11 +15,6 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
--- Linux-style Home/End
-vim.keymap.set({ "n", "v" }, "<Home>", "^", { noremap = true })
-vim.keymap.set({ "n", "v" }, "<End>", "$", { noremap = true })
-vim.keymap.set("i", "<Home>", "<C-o>^", { noremap = true })
-vim.keymap.set("i", "<End>", "<C-o>$", { noremap = true })
 
 vim.keymap.set("n", "Q", "<nop>")
 
@@ -55,8 +50,8 @@ vim.keymap.set("n", "<lt>", "<<", { noremap = true })
 -- winresizer
 vim.g.winresizer_start_key = "<C-w>r"
 
--- Pencil
-vim.keymap.set("n", "<leader>md", ":PencilToggle<CR>")
+-- Prose (soft-wrap + visual-line nav)
+vim.keymap.set("n", "<leader>md", ":ProseToggle<CR>")
 -- ZenMode
 vim.keymap.set("n", "<leader>mz", ":ZenMode<CR>")
 

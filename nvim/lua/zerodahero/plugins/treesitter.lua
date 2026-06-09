@@ -21,6 +21,8 @@ return {
                 "python",
                 "query",
                 "typescript",
+                "nim",
+                "svelte",
                 "vim",
                 "vimdoc",
             }

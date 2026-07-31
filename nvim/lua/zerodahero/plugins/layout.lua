@@ -23,6 +23,19 @@ return {
                     "navic",
                 },
                 lualine_x = {
+                    {
+                        -- Molten: show the kernel(s) attached to the current buffer.
+                        function()
+                            local ok, status = pcall(require, "molten.status")
+                            if not ok then return "" end
+                            local got, kernels = pcall(status.kernels)
+                            if not got or not kernels or kernels == "" then return "" end
+                            return "⚛ " .. kernels
+                        end,
+                        cond = function()
+                            return vim.fn.exists("*MoltenStatusLineKernels") == 1
+                        end,
+                    },
                     "encoding",
                     "fileformat",
                     "filetype",

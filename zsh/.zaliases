@@ -22,5 +22,9 @@ alias gpsup="git push --set-upstream origin $(git-current-branch)"
 
 alias fancy="just --justfile ${PROJECTS}/fancy-docs/justfile"
 
+alias wifichan='system_profiler -json SPAirPortDataType | jq "[.SPAirPortDataType[0].spairport_airport_interfaces[0].spairport_airport_other_local_wireless_networks[].spairport_network_channel] | group_by(.) | map({(.[0]): length}) | add"'
+
+alias claude-serena='claude --system-prompt="$(serena prompts print-cc-system-prompt-override)"'
+
 # vim: ft=zsh sw=2 ts=2 et
 

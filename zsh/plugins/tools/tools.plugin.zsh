@@ -4,4 +4,3 @@
 (type restic &> /dev/null) && source $HOME/.restic/resticrc
 
 cached-eval 'thefuck' thefuck --alias
-

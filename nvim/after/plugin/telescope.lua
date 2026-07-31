@@ -46,7 +46,11 @@ telescope.load_extension("dap")
 -- end, {})
 vim.keymap.set("n", "<leader>ff", builtin.find_files, {})
 vim.keymap.set("n", "<leader>fa", function()
-    builtin.find_files({ no_ignore = true })
+    builtin.find_files({
+        -- Show gitignored files (.env, etc.) but skip the .git object store,
+        -- which is what makes a plain no_ignore=true crawl so slow.
+        find_command = { "fd", "--type", "f", "--hidden", "--no-ignore", "--exclude", ".git" },
+    })
 end, {})
 vim.keymap.set("n", "<leader>fg", builtin.live_grep, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})

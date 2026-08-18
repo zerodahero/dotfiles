@@ -1,0 +1,39 @@
+# Machine-local Kopia ignore rules -- gitignore syntax, anchored to $HOME.
+#
+# Copied to ~/.kopiaignore.local by install.sh and never tracked in git.
+# The dotfiles repo is public; this file is where anything machine-specific
+# goes, so the public kopiaignore stays free of identifying detail.
+#
+# Put here anything that would reveal:
+#   - which applications are installed (app cache directories)
+#   - client, employer or project names (directories under ~/projects)
+#   - hostnames, usernames, bucket names
+#
+# A leading "/" anchors to $HOME. A trailing "/" matches directories only.
+# Re-run `kopia snapshot estimate ~` after every change.
+
+# --- Electron / chat / browser app caches ------------------------------
+# These dirs are large and mostly regenerable, but naming them discloses your
+# installed software. Add the ones that apply, e.g.:
+#   /Library/Application Support/<app>/Cache/
+#   /Library/Application Support/<app>/Code Cache/
+#   /Library/Application Support/<app>/GPUCache/
+#
+# CAUTION: some app data under Application Support is device-only and cannot
+# be recovered from anywhere else -- messaging history is the common case.
+# Ignore specific cache subdirectories, not a whole app directory, unless you
+# are certain the app's state is recoverable from its server.
+
+# --- language toolchains not covered by the public list ----------------
+#   /.<toolchain>/
+
+# --- tool state and logs you consider disposable -----------------------
+#   /.<tool>/projects/
+#   /.<tool>/logs/
+
+# --- large regenerable data under ~/projects ---------------------------
+# Prefer a .gitignore inside the project (honoured automatically) over an
+# entry here, so the rule travels with the repository.
+#   /projects/<name>/<large-generated-dir>/
+
+# vim: set ft=gitignore:

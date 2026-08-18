@@ -1,0 +1,83 @@
+# Kopia ignore rules -- gitignore syntax, anchored to $HOME.
+#
+# Symlinked to ~/.kopiaignore by install.sh. This file is PUBLIC: it contains
+# only paths that are regenerable on any dev Mac. Anything that reveals which
+# apps, clients or projects live on this machine belongs in ~/.kopiaignore.local
+# (untracked, seeded from kopiaignore.local.tmpl).
+#
+# A leading "/" anchors to the directory holding this file, i.e. $HOME.
+# A trailing "/" matches directories only. No leading "/" matches at any depth.
+#
+# Verify the effect of any change before it reaches the repository:
+#     kopia snapshot estimate ~
+
+# --- virtual machine disk images (largest single win by far) ----------
+/.config/colima/
+/.config/lima/
+/.local/share/containers/
+/Library/Containers/com.docker.docker/Data/vms/
+
+# --- local model weights: large, re-pullable ---------------------------
+/.ollama/
+/.cache/huggingface/
+/.cache/lm-studio/
+
+# --- OS and browser caches ---------------------------------------------
+/Library/Caches/
+/Library/Logs/
+/Library/Saved Application State/
+/Library/HTTPStorages/
+/Library/Metadata/CoreSpotlight/
+/Library/Containers/*/Data/Library/Caches/
+/Library/Group Containers/*/Library/Caches/
+/.cache/
+
+# --- package manager stores and toolchain caches -----------------------
+/Library/pnpm/
+/.npm/
+/.yarn/cache/
+/.bun/install/cache/
+/.rustup/
+/.cargo/registry/
+/.gradle/caches/
+/.m2/repository/
+/.go/pkg/mod/
+/.local/share/uv/
+/.local/share/virtualenvs/
+
+# --- trash and OS noise ------------------------------------------------
+/.Trash/
+.DS_Store
+._*
+.Spotlight-V100
+.fseventsd
+.TemporaryItems
+*.swp
+
+# --- build artefacts and dependency trees (any depth) ------------------
+# Mostly redundant with .gitignore honouring, but these are the ones worth
+# catching even outside a git repository.
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.terraform/
+.tox/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+target/debug/
+target/release/
+
+# --- deliberately NOT ignored -----------------------------------------
+# ~/.ssh, ~/.gnupg          credentials and keys
+# ~/Desktop, ~/Documents    iCloud-redirected, but real user data
+# ~/Library/Mobile Documents  holds Desktop + Documents
+# ~/Library/Application Support  holds app data that exists nowhere else
+# ~/Pictures, ~/projects, ~/dotfiles
+#
+# Do not blanket-ignore ~/Library. Some app data under it is device-only and
+# unrecoverable; prune specific subdirectories in ~/.kopiaignore.local instead.
+
+# vim: set ft=gitignore:

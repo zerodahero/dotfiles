@@ -82,6 +82,8 @@ Darwin)
     link "$HOME/dotfiles/k8s.justfile" "$HOME/.k8s.justfile"
     [ -f "$HOME/.user.justfile" ] || cp -n "$HOME/dotfiles/user.justfile.tmpl" "$HOME/.user.justfile"
     link "$HOME/dotfiles/mac/DefaultKeyBinding.dict" "$HOME/Library/KeyBindings/DefaultKeyBinding.dict"
+    link "$HOME/dotfiles/kopia/kopiaignore" "$HOME/.kopiaignore"
+    [ -f "$HOME/.kopiaignore.local" ] || cp -n "$HOME/dotfiles/kopia/kopiaignore.local.tmpl" "$HOME/.kopiaignore.local"
     ;;
 Linux) ;;
 esac

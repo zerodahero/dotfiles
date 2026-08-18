@@ -1,0 +1,5 @@
+silly catalog --random "${GLITCH_N:-50}" --tsv "$@" \
+  | fzf --no-sort --prompt='glitch> ' \
+  | cut -f2- | tr -d '\n' | pbcopy
+
+# vi: set ft=zsh:

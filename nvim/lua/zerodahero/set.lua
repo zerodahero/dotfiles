@@ -59,7 +59,14 @@ vim.g.EditorConfig_exclude_patterns = { "fugitive://.*", "scp://.*" }
 
 vim.g.sql_type_default = "pgsql"
 
+-- Don't conceal quotes in json. The bundled syntax/json.vim hides them with
+-- `concealends` whenever conceallevel > 1, and markview leaves conceallevel=3
+-- on any window that has shown a markdown buffer.
+vim.g.vim_json_conceal = 0
+
 vim.opt.fileignorecase = false
+
+vim.opt.diffopt:append("linematch:60")
 
 vim.opt.list = true
 vim.opt.listchars = { tab = "» ", trail = "·", nbsp = "␣" }

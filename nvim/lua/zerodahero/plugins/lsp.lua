@@ -77,14 +77,11 @@ return {
                     vim.keymap.set("n", "go", vim.lsp.buf.type_definition, opts)
                     vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
                     vim.keymap.set("n", "gs", vim.lsp.buf.signature_help, opts)
-                    vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
-                    -- vim.keymap.set({ "n", "x" }, "<F3>", "<cmd>lua vim.lsp.buf.format({async = true})<cr>", opts)
-                    vim.keymap.set("n", "<F4>", vim.lsp.buf.code_action, opts)
                     vim.keymap.set("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
                     vim.keymap.set("n", "<leader>vd", vim.diagnostic.open_float, opts)
-                    -- vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
+                    vim.keymap.set("n", "<leader>vca", vim.lsp.buf.code_action, opts)
                     vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
-                    -- vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
+                    vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
                     -- vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
                     -- vim.keymap.set(
                     --     "n",
@@ -171,9 +168,71 @@ return {
                 end,
             })
 
+            -- Underline spelling mistakes, and only spelling mistakes.
+            --
+            -- The `underline` option below filters by severity alone, and that
+            -- cannot isolate spelling: typos_lsp and harper_ls both report at
+            -- HINT, next to harper's grammar rules and every real LSP hint. A
+            -- custom handler can filter on whatever it likes. Handlers run when
+            -- `vim.diagnostic.config` holds a truthy key of the same name, so
+            -- `spell_underline` below switches this on. See :help diagnostic-handlers
+            local function is_spelling(diagnostic)
+                if diagnostic.source == "typos" then
+                    -- typos only ever reports misspellings
+                    return true
+                end
+                -- harper also emits AnA, RepeatedWords, Spaces, SplitWords ...
+                return diagnostic.source == "Harper" and diagnostic.code == "SpellCheck"
+            end
+
+            -- One extmark namespace per diagnostic namespace, so clearing the
+            -- marks for one server does not wipe the other's.
+            local spell_marks = setmetatable({}, {
+                __index = function(tbl, namespace)
+                    local id = vim.api.nvim_create_namespace("spell_underline." .. namespace)
+                    rawset(tbl, namespace, id)
+                    return id
+                end,
+            })
+
+            local function clear_spell_marks(namespace, bufnr)
+                if vim.api.nvim_buf_is_valid(bufnr) then
+                    vim.api.nvim_buf_clear_namespace(bufnr, spell_marks[namespace], 0, -1)
+                end
+            end
+
+            vim.diagnostic.handlers.spell_underline = {
+                show = function(namespace, bufnr, diagnostics, _)
+                    clear_spell_marks(namespace, bufnr)
+                    for _, diagnostic in ipairs(diagnostics) do
+                        if is_spelling(diagnostic) then
+                            -- Guard the extmark: a stale diagnostic can point
+                            -- past the end of a buffer that has since changed.
+                            pcall(
+                                vim.api.nvim_buf_set_extmark,
+                                bufnr,
+                                spell_marks[namespace],
+                                diagnostic.lnum,
+                                diagnostic.col,
+                                {
+                                    end_row = diagnostic.end_lnum,
+                                    end_col = diagnostic.end_col,
+                                    hl_group = "SpellBad",
+                                    priority = vim.hl.priorities.diagnostics,
+                                }
+                            )
+                        end
+                    end
+                end,
+                hide = clear_spell_marks,
+            }
+
             -- Diagnostic Config
             -- See :help vim.diagnostic.Opts
             vim.diagnostic.config({
+                -- Must be a table, not `true`: the handler dispatch indexes
+                -- this value looking for a `severity` filter.
+                spell_underline = {},
                 severity_sort = true,
                 float = { border = "rounded", source = "if_many" },
                 underline = { severity = vim.diagnostic.severity.ERROR },
@@ -261,6 +320,36 @@ return {
                                 url = "",
                             },
                             schemas = require("schemastore").yaml.schemas(),
+                        },
+                    },
+                },
+
+                -- Spell checking. `typos` only flags known misspelling ->
+                -- correction pairs, so it stays quiet on identifiers and tool
+                -- names. Safe to run on every filetype.
+                typos_lsp = {
+                    init_options = {
+                        diagnosticSeverity = "Hint",
+                    },
+                },
+
+                -- `harper` is a full dictionary check plus grammar rules. It is
+                -- exhaustive but flags any unknown word, so keep it on prose.
+                -- Note it does not recognise `zsh` and falls back to checking
+                -- the whole file rather than just comments.
+                harper_ls = {
+                    -- Matches the prose filetypes in after/plugin/prose.lua
+                    filetypes = { "markdown", "text", "tex", "gitcommit" },
+                    settings = {
+                        ["harper-ls"] = {
+                            userDictPath = vim.fn.expand("~/.config/harper-ls/dictionary.txt"),
+                            dialect = "American",
+                            diagnosticSeverity = "hint",
+                            linters = {
+                                SpellCheck = true,
+                                LongSentences = false,
+                                SentenceCapitalization = false,
+                            },
                         },
                     },
                 },

@@ -26,3 +26,8 @@ export PATH="$PATH:$HOME/Library/Application Support/Coursier/bin"
 export PATH="$HOME/.local/bin:$PATH"
 
 export PATH="$PATH:$HOMEBREW_PREFIX/opt/libpq/bin"
+
+export PLANNOTATOR_PORT="52400-52499"
+
+# For act - https://nektosact.com/missing_functionality/docker_context.html
+export DOCKER_HOST=$(docker context inspect --format '{{.Endpoints.docker.Host}}')

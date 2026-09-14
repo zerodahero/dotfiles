@@ -16,13 +16,10 @@ return {
         modes = {
             nospell_diagnostics = {
                 mode = "diagnostics",
-                -- filter = function(items)
-                --     return vim.tbl_filter(function(item)
-                --         return item.item.source ~= "cspell"
-                --     end, items)
-                -- end
+                -- `typos` is typos_lsp, `Harper` is harper_ls. Both report at
+                -- HINT severity and would otherwise bury real diagnostics.
                 filter = {
-                    ["not"] = { source = "cspell" },
+                    ["not"] = { source = { "typos", "Harper" } },
                 },
             },
         },

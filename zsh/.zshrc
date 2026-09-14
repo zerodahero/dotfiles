@@ -12,6 +12,7 @@ unset zlib
 
 ## Aliases
 [[ -r ${ZDOTDIR:-$HOME}/.zaliases ]] && source ${ZDOTDIR:-$HOME}/.zaliases
+[[ -r ${ZDOTDIR:-$HOME}/.zaliases.local ]] && source ${ZDOTDIR:-$HOME}/.zaliases.local
 
 # Lazy loads
 source "$HOME/.zsh/lazy-loads/kubectl.zsh"

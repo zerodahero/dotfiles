@@ -14,17 +14,20 @@ return {
                 "cooklang",
                 "diff",
                 "html",
+                "hurl",
+                "javascript",
                 "lua",
                 "luadoc",
                 "markdown",
                 "markdown_inline",
+                "nim",
                 "python",
                 "query",
-                "typescript",
-                "nim",
                 "svelte",
+                "typescript",
                 "vim",
                 "vimdoc",
+                "zsh",
             }
             require("nvim-treesitter").install(filetypes)
             vim.api.nvim_create_autocmd("FileType", {

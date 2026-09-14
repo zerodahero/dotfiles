@@ -50,8 +50,7 @@ link "$HOME/dotfiles/formatters/sqruff" "$HOME/.sqruff"
 link "$HOME/dotfiles/formatters/markdownlint.jsonc" "$HOME/.markdownlint.jsonc"
 link "$HOME/dotfiles/formatters/yamllint" "$HOME/.config/yamllint/config"
 link "$HOME/dotfiles/formatters/yamlfmt" "$HOME/.config/yamlfmt/.yamlfmt"
-link "$HOME/dotfiles/formatters/cspell.json" "$HOME/.cspell.json"
-mkdir -p "$HOME/.config/cspell" && touch "$HOME/.config/cspell/user-dictionary.txt"
+mkdir -p "$HOME/.config/harper-ls" && touch "$HOME/.config/harper-ls/dictionary.txt"
 link "$HOME/dotfiles/formatters/pg_format" "$HOME/.pg_format"
 
 ## ZSH

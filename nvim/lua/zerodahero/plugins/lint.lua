@@ -15,10 +15,7 @@ return {
         -- Leave the dialect up to the sqlfluff config
         lint.linters.sqlfluff.args = { "lint", "--format=json" }
 
-        lint.linters.cspell = require("lint.util").wrap(lint.linters.cspell, function(diagnostic)
-            diagnostic.severity = vim.diagnostic.severity.HINT
-            return diagnostic
-        end)
+        -- Spell checking lives in typos_lsp and harper_ls, see plugins/lsp.lua
 
         local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
@@ -27,14 +24,12 @@ return {
             callback = function()
                 if vim.bo.modifiable then
                     lint.try_lint()
-                    lint.try_lint("cspell")
                 end
             end,
         })
 
         vim.keymap.set("n", "<leader>ml", function()
             lint.try_lint()
-            lint.try_lint("cspell")
         end, { desc = "Lint current buffer" })
 
         -- Show linters for the current buffer's file type

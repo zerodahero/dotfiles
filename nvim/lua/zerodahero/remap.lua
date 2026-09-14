@@ -82,3 +82,7 @@ vim.keymap.set(
     { noremap = true }
 )
 
+vim.keymap.set("n", "<leader>pp", function()
+  vim.cmd.edit(vim.fn.getcwd() .. "/.claude/plan/current.md")
+end, { desc = "Open current plan" })
+

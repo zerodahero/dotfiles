@@ -15,7 +15,6 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
-
 vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("n", "<leader>s", [[:s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
@@ -82,7 +81,9 @@ vim.keymap.set(
     { noremap = true }
 )
 
-vim.keymap.set("n", "<leader>pp", function()
-  vim.cmd.edit(vim.fn.getcwd() .. "/.claude/plan/current.md")
-end, { desc = "Open current plan" })
-
+vim.keymap.set(
+    "n",
+    "<leader>pp",
+    function() vim.cmd.edit(vim.fn.getcwd() .. "/.claude/plan/current.md") end,
+    { desc = "Open current plan" }
+)

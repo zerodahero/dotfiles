@@ -1,5 +1,14 @@
+# Global mise config AND the machine bootstrap definition.
+#
+# Deployed to ~/.config/mise/config.toml (the documented global config path).
+# Also discovered as a project config from the repo root, which is what lets
+# `mise bootstrap` work from a fresh clone before any symlink exists.
+#
+# Run `mise bootstrap` to provision a machine. Everything OS-specific lives in
+# mise/config.<os>.toml, selected by MISE_ENV via .miserc.toml.
+
 [tools]
-node = '24'
+node   = '24'
 python = '3.13'
 
 [settings]
@@ -11,4 +20,131 @@ idiomatic_version_file_enable_tools = ['node', 'python']
 corepack = true
 
 [env]
-MISE_NODE_COREPACK=true
+MISE_NODE_COREPACK = true
+
+# ---------------------------------------------------------------------------
+# [dotfiles] -- replaces the link() calls in install.sh.
+#
+# Sources are absolute on purpose. The docs resolve relative sources against
+# "the directory of the config file that declares the entry", and this file is
+# reachable as both ~/.config/mise/config.toml and ~/dotfiles/mise/config.toml
+# depending on cwd, which makes that directory ambiguous.
+#
+# A bare string value means mode = "symlink", the default.
+#
+# NOTE: no symlink-each anywhere in this repo. A directory source gets ONE link
+# for the whole directory, which is what `ln -s` did and what nvim and zsh/plugins
+# require -- lazy.nvim and zsh write generated files back into those directories
+# and .gitignore expects them to land in the repo. symlink-each mirrors the tree
+# and only links files that already exist, so those writes would never arrive.
+# ---------------------------------------------------------------------------
+[dotfiles]
+
+# --- git -------------------------------------------------------------------
+"~/.gitconfig" = "~/dotfiles/git/config"
+# Rendered, not seeded. Values come from [vars] in the untracked
+# ~/.config/mise/config.local.toml, which never enters this public repo.
+"~/.gitconfig.local" = { source = "~/dotfiles/git/config.local.tmpl", mode = "template" }
+
+# --- nvim ------------------------------------------------------------------
+# ONE link for the whole directory. See the symlink-each note above.
+"~/.config/nvim" = "~/dotfiles/nvim"
+
+# --- global formatter configs ----------------------------------------------
+"~/.editorconfig"            = "~/dotfiles/formatters/editorconfig"
+"~/.lua-format"              = "~/dotfiles/formatters/lua-format"
+"~/.stylua.toml"             = "~/dotfiles/formatters/stylua.toml"
+"~/.sqruff"                  = "~/dotfiles/formatters/sqruff"
+"~/.markdownlint.jsonc"      = "~/dotfiles/formatters/markdownlint.jsonc"
+"~/.pg_format"               = "~/dotfiles/formatters/pg_format"
+"~/.taplo.toml"              = "~/dotfiles/formatters/taplo.toml"
+"~/.config/yamllint/config"  = "~/dotfiles/formatters/yamllint"
+"~/.config/yamlfmt/.yamlfmt" = "~/dotfiles/formatters/yamlfmt"
+
+# --- zsh -------------------------------------------------------------------
+"~/.zshrc"                      = "~/dotfiles/zsh/.zshrc"
+"~/.zaliases"                   = "~/dotfiles/zsh/.zaliases"
+"~/.zstyles"                    = "~/dotfiles/zsh/.zstyles"
+"~/.zplugins"                   = "~/dotfiles/zsh/.zplugins"
+"~/.p10k.zsh"                   = "~/dotfiles/zsh/.p10k.zsh"
+"~/.zsh/lazy-loads/kubectl.zsh" = "~/dotfiles/zsh/lazy-loads/kubectl.zsh"
+# Whole-directory links. zsh/plugins also receives generated files
+# (*.zwc, plugins/mise/_mise), so symlink-each is wrong here too.
+"~/.zsh/functions" = "~/dotfiles/zsh/functions"
+"~/.zsh/lib"       = "~/dotfiles/zsh/lib"
+"~/.zsh/plugins"   = "~/dotfiles/zsh/plugins"
+"~/.zshrc.d"       = "~/dotfiles/zsh/zshrc.d"
+
+# --- kitty (config is cross-platform; the .icns icon is macOS-only) --------
+"~/.config/kitty/kitty.conf"           = "~/dotfiles/kitty/kitty.conf"
+"~/.config/kitty/current-theme.conf"   = "~/dotfiles/kitty/current-theme.conf"
+"~/.config/kitty/project_tab_title.py" = "~/dotfiles/kitty/project_tab_title.py"
+
+# --- PATH for the curl-installed mise --------------------------------------
+# An edit entry, not a whole file: ~/.zshenv is not ours to own.
+#
+# mise installs to ~/.local/bin, but this repo only adds that to PATH in
+# zsh/zshrc.d/code.zsh, which is .zshrc -- interactive shells only. ~/.zshenv
+# runs for EVERY zsh, including the non-interactive shells hooks use, and
+# before ~/.zprofile, where the mise shims block calls bare `mise`.
+#
+# Without this, removing a Homebrew-installed mise leaves nothing to resolve
+# `mise` in those contexts, the shims never reach PATH, and every tool breaks.
+# Guarded so nested shells do not accumulate duplicate PATH entries.
+"~/.zshenv/mise-local-bin" = { line = 'case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac', position = "prepend" }
+
+# --- mise manages its own config -------------------------------------------
+# Self-managing config: these rewrite what mise reads on its NEXT invocation,
+# so make sure the sources are valid before applying.
+"~/.config/mise/config.toml" = "~/dotfiles/mise/config.toml"
+"~/.config/mise/miserc.toml" = "~/dotfiles/.miserc.toml"
+
+# ---------------------------------------------------------------------------
+# Shell activation.
+#
+# Only `zprofile = "shims"` is declared, deliberately:
+#
+#   - ~/.zprofile is a real file, so mise can safely manage a block in it, and
+#     shims are what non-interactive contexts (IDEs, cron, scripts) need.
+#   - `zshrc = "activate"` is NOT declared. ~/.zshrc is a symlink into this
+#     repo, so a mise-managed block there would be written into tracked source.
+#     Interactive activation is already handled by zsh/plugins/mise, which runs
+#     `mise activate zsh`. Verified: `mise bootstrap mise-shell-activate status`
+#     silently ignores the zshrc key anyway.
+# ---------------------------------------------------------------------------
+[bootstrap.mise_shell_activate]
+zprofile = "shims"
+
+[bootstrap.user]
+login_shell = "/bin/zsh"
+
+# ---------------------------------------------------------------------------
+# The imperative tail. Hooks, not [tasks.bootstrap]: hooks merge across the
+# config hierarchy and tasks do not, and the OS split depends on merging.
+#
+# Hooks run on EVERY `mise bootstrap`, so every line must be idempotent.
+#
+# They also run TWICE when bootstrap is invoked from inside this repo, because
+# this file is then loaded both as the project config (~/dotfiles/mise/config.toml)
+# and as the global config (~/.config/mise/config.toml, a symlink to it), and
+# hook arrays merge from both. That is inherent to a self-managing config, not
+# something to fix. Every command below is idempotent, so the second pass is a
+# no-op -- but do NOT add a non-idempotent line here.
+#
+# Run `mise bootstrap` FROM this repo anyway: mise/config.macos.toml is a
+# project-scoped path, so the macOS dotfiles and the macOS hooks do not load at
+# all from elsewhere. Tools from [tools] work everywhere via the global link.
+# ---------------------------------------------------------------------------
+[bootstrap.hooks.post-dotfiles]
+run = [
+  # harper-ls user dictionary. `touch` does not truncate, so this is safe to
+  # repeat. Deliberately NOT a `content = ""` dotfile entry: harper_ls writes
+  # learned words here, and content entries overwrite without --force.
+  "mkdir -p ~/.config/harper-ls && touch ~/.config/harper-ls/dictionary.txt",
+  "mkdir -p ~/projects",
+  # Append-if-missing. An improvement on install.sh's create-if-absent: a
+  # hand-added project path no longer suppresses the dotfiles line forever.
+  # zsh/functions/project cats this straight into fzf, so entries must be
+  # absolute and unadorned.
+  'grep -qxF "$HOME/dotfiles" ~/.projects 2>/dev/null || echo "$HOME/dotfiles" >> ~/.projects',
+]

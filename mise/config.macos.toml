@@ -1,0 +1,222 @@
+# macOS-only bootstrap config.
+#
+# Loaded only when MISE_ENV includes "macos", which .miserc.toml sets from os().
+# On Linux this file is never discovered, so nothing here exists there. That is
+# a stronger guarantee than per-entry gating, and it replaces the
+# `case "$(uname -s)"` block that install.sh used.
+
+# ---------------------------------------------------------------------------
+# macOS-only dotfiles. [dotfiles] merges with the base config's table.
+# ---------------------------------------------------------------------------
+[dotfiles]
+
+# --- Homebrew prefix on PATH ----------------------------------------------
+# mise installs brew formulae into /opt/homebrew without needing brew itself,
+# but per the docs "linked commands need <prefix>/bin on PATH". Today that
+# happens via a hand-written `brew shellenv` line in ~/.zprofile which (a) is
+# not managed by this repo, so a fresh machine never gets it, and (b) requires
+# the brew binary to exist. This entry removes both dependencies.
+#
+# macOS-only: the Linux prefix is /home/linuxbrew/.linuxbrew.
+"~/.zshenv/homebrew-prefix" = { line = 'case ":$PATH:" in *":/opt/homebrew/bin:"*) ;; *) export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH" ;; esac', position = "prepend" }
+
+# --- window manager and hotkey daemon --------------------------------------
+"~/.config/yabai/yabairc"           = "~/dotfiles/yabai/yabairc"
+"~/.config/yabai/intellij_yabai.sh" = "~/dotfiles/yabai/intellij_yabai.sh"
+"~/.config/skhd/skhdrc"             = "~/dotfiles/skhd/skhdrc"
+
+# --- global justfiles ------------------------------------------------------
+# ~/.user.justfile is NOT here: it is hand-authored, has diverged from the
+# template, and user.justfile.tmpl contains `{{ justfile() }}`, which Tera
+# would try to call as a nonexistent function. It is seeded in the hook below.
+"~/.window.justfile" = "~/dotfiles/window.justfile"
+"~/.k8s.justfile"    = "~/dotfiles/k8s.justfile"
+
+# --- backup excludes -------------------------------------------------------
+# ~/.kopiaignore.local is seeded in the hook below, not managed here: it is
+# 2.5x the size of its template and is deliberately machine-private.
+"~/.kopiaignore" = "~/dotfiles/kopia/kopiaignore"
+
+# --- Cocoa key bindings ----------------------------------------------------
+# Only apps using the standard Cocoa text system (NSTextView) honor this.
+# kitty, terminal nvim, JetBrains (Swing) and Electron apps all ignore it, so
+# it may be doing nothing in practice -- test in TextEdit before investing.
+# Stays a dotfile entry: it is a plist at a fixed path, not a `defaults` domain.
+"~/Library/KeyBindings/DefaultKeyBinding.dict" = "~/dotfiles/mac/DefaultKeyBinding.dict"
+
+# ---------------------------------------------------------------------------
+# Homebrew formulae and casks, installed by mise into the canonical Homebrew
+# prefix (/opt/homebrew). mise does the same relocation, code-signing and
+# linking work brew does, and maintains brew's own
+# <prefix>/var/homebrew/linked/<name> records, so brew-installed and
+# mise-installed formulae coexist in one prefix.
+# ---------------------------------------------------------------------------
+[bootstrap.brew]
+# Take ownership of already-installed casks instead of replacing the bundle.
+# Replacing a bundle can make macOS revoke its Privacy & Security grants.
+adopt = true
+
+[bootstrap.brew.taps]
+# mise reads tap metadata directly from GitHub; it does not tap real Homebrew.
+"asmvik/formulae"     = "https://github.com/asmvik/homebrew-formulae.git"
+"felixkratz/formulae" = "https://github.com/felixkratz/homebrew-formulae.git"
+"jannis-baum/tap"     = "https://github.com/jannis-baum/homebrew-tap.git"
+"quarylabs/quary"     = "https://github.com/quarylabs/homebrew-quary.git"
+
+[bootstrap.packages]
+# A curated list. Do not regenerate with `mise bootstrap packages import` --
+# it snapshots every installed top-level formula and emits zero casks.
+
+"brew:age"                         = "latest"
+"brew:antidote"                    = "latest"
+"brew:asmvik/formulae/skhd"        = "latest"
+"brew:asmvik/formulae/yabai"       = "latest"
+"brew:atuin"                       = "latest"
+"brew:cmake"                       = "latest"
+"brew:colima"                      = "latest"
+"brew:coreutils"                   = "latest"
+"brew:csvkit"                      = "latest"
+"brew:difftastic"                  = "latest"
+"brew:docker"                      = "latest"
+"brew:docker-buildx"               = "latest"
+"brew:docker-compose"              = "latest"
+"brew:duckdb"                      = "latest"
+"brew:fd"                          = "latest"
+"brew:felixkratz/formulae/borders" = "latest"
+"brew:figlet"                      = "latest"
+"brew:fzf"                         = "latest"
+"brew:gh"                          = "latest"
+"brew:glow"                        = "latest"
+"brew:gnu-sed"                     = "latest"
+"brew:go"                          = "latest"
+"brew:htop"                        = "latest"
+"brew:httpie"                      = "latest"
+"brew:hurl"                        = "latest"
+"brew:hyperfine"                   = "latest"
+"brew:imagemagick"                 = "latest"
+"brew:jannis-baum/tap/vivify"      = "latest"
+"brew:jnv"                         = "latest"
+"brew:jq"                          = "latest"
+"brew:just"                        = "latest"
+"brew:k9s"                         = "latest"
+"brew:kopia"                       = "latest"
+"brew:kubecm"                      = "latest"
+"brew:kubectx"                     = "latest"
+"brew:lazydocker"                  = "latest"
+"brew:lazygit"                     = "latest"
+"brew:luarocks"                    = "latest"
+"brew:mas"                         = "latest"
+"brew:neovim"                      = "latest"
+"brew:pandoc"                      = "latest"
+"brew:parallel"                    = "latest"
+"brew:pgformatter"                 = "latest"
+"brew:poppler"                     = "latest"
+"brew:portal"                      = "latest"
+"brew:pre-commit"                  = "latest"
+"brew:quarylabs/quary/sqruff"      = "latest"
+"brew:resvg"                       = "latest"
+"brew:ripgrep"                     = "latest"
+"brew:sqlfluff"                    = "latest"
+"brew:stylua"                      = "latest"
+"brew:task"                        = "latest"
+"brew:thefuck"                     = "latest"
+"brew:tlrc"                        = "latest"
+"brew:typst"                       = "latest"
+"brew:uv"                          = "latest"
+"brew:vhs"                         = "latest"
+"brew:visidata"                    = "latest"
+"brew:watchexec"                   = "latest"
+"brew:yazi"                        = "latest"
+"brew:youplot"                     = "latest"
+"brew:yq"                          = "latest"
+
+"brew-cask:badgeify"                     = "latest"
+"brew-cask:font-meslo-for-powerlevel10k" = "latest"
+"brew-cask:joplin"                       = "latest"
+"brew-cask:kitty"                        = "latest"
+"brew-cask:kopiaui"                      = "latest"
+"brew-cask:betterdisplay"                = "latest"
+"brew-cask:1password-cli"                = "latest"
+"brew-cask:opensuperwhisper"             = "latest"
+
+"mas:1056643111" = "latest" # clocker
+"mas:1452453066" = "latest" # hidden bar
+"mas:1507246666" = "latest" # presentify
+
+# ---------------------------------------------------------------------------
+# macOS imperative tail.
+#
+# The `final` phase, not post-dotfiles, so it cannot collide with the base
+# config's post-dotfiles hook regardless of how same-phase hooks merge.
+#
+# Runs on EVERY `mise bootstrap`, so every line must be idempotent.
+# ---------------------------------------------------------------------------
+[bootstrap.hooks.final]
+run = [
+  # Seed hand-authored per-machine files. `cp -n` declines when the target
+  # exists, so these never clobber local edits.
+  'cp -n ~/dotfiles/user.justfile.tmpl ~/.user.justfile 2>/dev/null || true',
+  'cp -n ~/dotfiles/kopia/kopiaignore.local.tmpl ~/.kopiaignore.local 2>/dev/null || true',
+
+  # kitty app icon.
+  'test -f ~/.config/kitty/kitty.app.icns || curl -fsSL -o ~/.config/kitty/kitty.app.icns https://github.com/k0nserv/kitty-icon/raw/refs/heads/main/build/outrun.icns',
+
+  # yabai and skhd install and manage their own launchd agents, so we call
+  # their own service commands rather than declaring competing plists under
+  # [bootstrap.macos.launchd.agents].
+  'yabai --install-service 2>/dev/null || true',
+  'skhd --install-service 2>/dev/null || true',
+  'yabai --start-service 2>/dev/null || true',
+  'skhd --start-service 2>/dev/null || true',
+]
+
+# ---------------------------------------------------------------------------
+# macOS system preferences.
+#
+# These capture the values already set on this machine, read with
+# `defaults read` before being written here -- applying them is a no-op on this
+# machine and reproduces it on a new one. mise uses friendly names; the raw
+# domain/key each one maps to is in the comment.
+#
+# Inspect with `mise bootstrap macos defaults status`, apply with `... apply`.
+# Some changes need an app restart before they show up.
+# ---------------------------------------------------------------------------
+[bootstrap.macos.dock]
+autohide    = true   # com.apple.dock.autohide
+orientation = "left" # com.apple.dock.orientation
+
+# Required for yabai: with this on, macOS reorders Spaces by most-recent-use
+# and yabai's space indices move under you.
+mru_spaces = false # com.apple.dock.mru-spaces
+
+[bootstrap.macos.finder]
+preferred_view_style = "list" # com.apple.finder.FXPreferredViewStyle (Nlsv)
+
+[bootstrap.macos.keyboard]
+press_and_hold           = false # NSGlobalDomain.ApplePressAndHoldEnabled
+automatic_capitalization = true  # NSGlobalDomain.NSAutomaticCapitalizationEnabled
+
+[bootstrap.macos.trackpad]
+three_finger_drag = false # ...TrackpadThreeFingerDrag
+
+# ---------------------------------------------------------------------------
+# Raw defaults, for keys where the friendly sections cannot converge.
+#
+# These five were originally set by System Settings sliders/toggles, so cfprefsd
+# stores them as plist `real` and `integer`. The friendly sections declare them
+# as integer and boolean, so mise rewrites them on every apply and `status`
+# reports `differs` forever. Declaring the raw types macOS actually keeps makes
+# the config converge. Verified with `mise bootstrap macos defaults status`.
+# ---------------------------------------------------------------------------
+[bootstrap.macos.defaults."com.apple.dock"]
+tilesize = 16.0
+
+[bootstrap.macos.defaults."NSGlobalDomain"]
+KeyRepeat        = 2.0
+InitialKeyRepeat = 15.0
+
+[bootstrap.macos.defaults."com.apple.AppleMultitouchTrackpad"]
+Clicking = 0
+
+[bootstrap.macos.defaults."com.apple.driver.AppleBluetoothMultitouch.trackpad"]
+Clicking = 0

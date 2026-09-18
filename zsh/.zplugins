@@ -6,6 +6,7 @@ $ZSH_CUSTOM/plugins/environment
 ## Completions
 mattmc3/ez-compinit
 zsh-users/zsh-completions kind:fpath path:src
+$ZSH_CUSTOM/plugins/just
 
 ## Prompt
 romkatv/powerlevel10k

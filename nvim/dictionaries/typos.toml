@@ -1,0 +1,5 @@
+# Global typos config, passed to typos_lsp via init_options.config.
+# `word = "word"` marks a word as always valid.
+# Keep [default.extend-words] the LAST table: `zg` appends lines to the end.
+[default.extend-words]
+cancelled = "cancelled"

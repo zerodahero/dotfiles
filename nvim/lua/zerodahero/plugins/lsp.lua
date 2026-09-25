@@ -330,6 +330,8 @@ return {
                 typos_lsp = {
                     init_options = {
                         diagnosticSeverity = "Hint",
+                        -- Global word list, merged with any workspace typos.toml
+                        config = require("zerodahero.dictionary").typos_path,
                     },
                 },
 
@@ -342,7 +344,7 @@ return {
                     filetypes = { "markdown", "text", "tex", "gitcommit" },
                     settings = {
                         ["harper-ls"] = {
-                            userDictPath = vim.fn.expand("~/.config/harper-ls/dictionary.txt"),
+                            userDictPath = require("zerodahero.dictionary").harper_path,
                             dialect = "American",
                             diagnosticSeverity = "hint",
                             linters = {

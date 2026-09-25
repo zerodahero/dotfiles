@@ -79,6 +79,7 @@ MISE_NODE_COREPACK = true
 "~/.config/kitty/kitty.conf"           = "~/dotfiles/kitty/kitty.conf"
 "~/.config/kitty/current-theme.conf"   = "~/dotfiles/kitty/current-theme.conf"
 "~/.config/kitty/project_tab_title.py" = "~/dotfiles/kitty/project_tab_title.py"
+"~/.config/kitty/themes"               = "~/dotfiles/kitty/themes"
 
 # --- PATH for the curl-installed mise --------------------------------------
 # An edit entry, not a whole file: ~/.zshenv is not ours to own.
@@ -137,10 +138,6 @@ login_shell = "/bin/zsh"
 # ---------------------------------------------------------------------------
 [bootstrap.hooks.post-dotfiles]
 run = [
-  # harper-ls user dictionary. `touch` does not truncate, so this is safe to
-  # repeat. Deliberately NOT a `content = ""` dotfile entry: harper_ls writes
-  # learned words here, and content entries overwrite without --force.
-  "mkdir -p ~/.config/harper-ls && touch ~/.config/harper-ls/dictionary.txt",
   "mkdir -p ~/projects",
   # Append-if-missing. An improvement on install.sh's create-if-absent: a
   # hand-added project path no longer suppresses the dotfiles line forever.

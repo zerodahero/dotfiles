@@ -9,16 +9,12 @@ return {
     {
         "gregorias/coerce.nvim",
         tag = "v5.0.0",
-        event = "VeryLazy",
-        opts = {
-            default_mode_keymap_prefixes = {
-                -- normal_mode keeps the default `cr`
-                visual_mode = "<leader>cr",
-            },
-            default_mode_mask = {
-                motion_mode = false,
-            },
-        },
+        config = function()
+            -- v5 no longer sets keymaps; we must map the <Plug> targets ourselves
+            require("coerce").setup({})
+            vim.keymap.set("n", "cr", "<Plug>(coerce-normal)", { desc = "Coerce word" })
+            vim.keymap.set("x", "<leader>cr", "<Plug>(coerce-visual)", { desc = "Coerce selection" })
+        end,
     },
 
     -- nvim lua config
@@ -169,6 +165,9 @@ return {
         "atiladefreitas/dooing",
         config = function()
             require("dooing").setup({
+                ui = {
+                    style = "modern"
+                },
                 window = {
                     width = 100,
                     height = 100,

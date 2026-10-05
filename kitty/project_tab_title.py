@@ -51,7 +51,7 @@ def worktree_short(worktree: str) -> str:
 
 
 def main(args) -> str | None:
-    cwd = os.getcwd()
+    cwd = os.path.abspath(args[1]) if len(args) > 1 else os.getcwd()
     projects_dir = os.environ.get("PROJECTS", os.path.expanduser("~/projects"))
     dotfiles_dir = os.path.expanduser("~/dotfiles")
 
@@ -85,7 +85,10 @@ def main(args) -> str | None:
 
 
 def handle_result(args: list[str], answer: str, target_window_id: int, boss: Boss):
-    tab = boss.active_tab
+    window = boss.window_id_map.get(target_window_id)
+    tab = boss.tab_for_id(window.tab_id) if window else None
+    if tab is None:
+        tab = boss.active_tab
 
     if tab is None:
         return

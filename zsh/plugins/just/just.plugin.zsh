@@ -39,11 +39,16 @@ function _just_modules() {
 
   # Pass the whole command line through, so `--justfile` and
   # `--working-directory` in the `.j` / `.w` / `.k` aliases are honoured.
-  local -a raw
+  # Blank the word under the cursor: upstream filters by it as a prefix, so
+  # `just env de<TAB>` would drop every `env::*` path. `_describe` filters the
+  # segments against $PREFIX below instead.
+  local -a raw qwords
+  qwords=( "${words[@]}" )
+  qwords[CURRENT]=''
   raw=( ${(f)"$( _CLAP_IFS=$'\n' \
                  _CLAP_COMPLETE_INDEX=$(( CURRENT - 1 )) \
                  JUST_COMPLETE=zsh \
-                 command just -- "${words[@]}" 2>/dev/null )"} )
+                 command just -- "${qwords[@]}" 2>/dev/null )"} )
 
   if (( ! $#raw )); then
     _clap_dynamic_completer_just "$@"

@@ -32,9 +32,9 @@ fi
 $git fetch origin "$default_branch" || return 1
 
 local new_branch="zat/$worktree_name"
-local path="$HOME/projects/worktrees/$project_name/$worktree_name"
+local worktree_path="$HOME/projects/worktrees/$project_name/$worktree_name"
 
-$git worktree add -b "$new_branch" "$path" "origin/$default_branch" || return 1
+$git worktree add -b "$new_branch" "$worktree_path" "origin/$default_branch" || return 1
 
 # Set upstream tracking so `git push` works without -u
 $git config "branch.$new_branch.remote" origin
@@ -45,10 +45,21 @@ if mise trust --show &>/dev/null; then
   trusted=true
 fi
 
-cd "$path"
+cd "$worktree_path"
 
 if $trusted; then
   mise trust
+fi
+
+# Rename the kitty tab for the new worktree
+if [[ -n "$KITTY_WINDOW_ID" ]] && (( $+commands[kitten] )); then
+  kitten @ kitten --match "id:$KITTY_WINDOW_ID" project_tab_title.py "$worktree_path" \
+    || echo "Warning: could not set kitty tab title" >&2
+fi
+
+# Run the project's init recipe, if it has one
+if (( $+commands[just] )) && just --show init &>/dev/null; then
+  just init || { echo "Warning: just init failed" >&2; return 1; }
 fi
 
 # vi: set ft=zsh:

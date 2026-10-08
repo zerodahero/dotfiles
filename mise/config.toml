@@ -10,6 +10,7 @@
 [tools]
 node   = '24'
 python = '3.13'
+nim    = '2.2'
 
 [settings]
 # tools can read the versions files used by other version managers
@@ -80,6 +81,17 @@ MISE_NODE_COREPACK = true
 "~/.config/kitty/current-theme.conf"   = "~/dotfiles/kitty/current-theme.conf"
 "~/.config/kitty/project_tab_title.py" = "~/dotfiles/kitty/project_tab_title.py"
 "~/.config/kitty/themes"               = "~/dotfiles/kitty/themes"
+
+# --- tuicr -----------------------------------------------------------------
+# ONE link for the whole directory: config.toml plus themes/. tuicr keeps
+# review sessions in its data dir, not here, so nothing writes back into it.
+"~/.config/tuicr" = "~/dotfiles/tuicr"
+
+# --- scripts ---------------------------------------------------------------
+# One link per script into ~/.local/bin, which ~/.zshenv puts on PATH (below).
+# ssh runs ProxyCommand as `$SHELL -c "exec <cmd>"`: non-interactive, so no
+# .zshrc and no autoloaded functions, and `exec` needs a real executable.
+"~/.local/bin/ec2-ssm-proxy" = "~/dotfiles/bin/ec2-ssm-proxy"
 
 # --- PATH for the curl-installed mise --------------------------------------
 # An edit entry, not a whole file: ~/.zshenv is not ours to own.

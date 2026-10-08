@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# ssh ProxyCommand: reach an EC2 instance over SSM, with a one-time key push
+# through EC2 Instance Connect. The pushed key stays valid for 60 seconds.
+#
+# Usage: ec2-ssm-proxy <instance-id> <port> <user> [public-key-file]
+#
+# The AWS CLI reads the profile and region from the environment, so set them
+# in the ProxyCommand. ssh runs it as `exec <cmd>`, and exec does not accept
+# VAR=value prefixes, so use env:
+#   ProxyCommand env AWS_PROFILE=work AWS_REGION=us-east-1 ec2-ssm-proxy %h %p %r ~/.ssh/ec2.pub
+#
+# Without a key file, the script skips the push. Use that for instances that
+# already hold your key in authorized_keys.
+set -euo pipefail
+
+instance=$1 port=$2 user=$3 pubkey=${4:-}
+
+# stdout carries the ssh stream, so keep it clean. stderr stays visible.
+if [[ -n $pubkey ]]; then
+  aws ec2-instance-connect send-ssh-public-key \
+    --instance-id "$instance" \
+    --instance-os-user "$user" \
+    --ssh-public-key "file://$pubkey" >/dev/null
+fi
+
+exec aws ssm start-session \
+  --target "$instance" \
+  --document-name AWS-StartSSHSession \
+  --parameters "portNumber=$port"

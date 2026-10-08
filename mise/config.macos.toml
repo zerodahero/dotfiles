@@ -121,6 +121,7 @@ adopt = true
 "brew:task"                        = "latest"
 "brew:thefuck"                     = "latest"
 "brew:tlrc"                        = "latest"
+"brew:tuicr"                       = "latest"
 "brew:typst"                       = "latest"
 "brew:uv"                          = "latest"
 "brew:vhs"                         = "latest"

@@ -1,0 +1,12 @@
+#
+# Opens tuicr on the commits this branch has not pushed yet
+#
+# Extra arguments go to tuicr, e.g. `tdiff -w` adds uncommitted changes.
+#
+
+local base
+base=$(git-current-base) || return 1
+
+tuicr -r "$base..HEAD" "$@"
+
+# vi: set ft=zsh:

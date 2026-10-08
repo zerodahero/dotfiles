@@ -1,0 +1,67 @@
+# Carbonfox for tuicr, to match nvim (nvim/lua/zerodahero/plugins/colorscheme.lua).
+#
+# Values come from nightfox.nvim's carbonfox palette and spec, computed with
+# headless nvim. Each tuicr key takes the nvim role that does the same job:
+# git signs for file states, diagnostics for messages, bg0 for the status line,
+# bg3 for the cursor line. The names in the comments are nightfox's.
+#
+# Carbonfox has no warm yellow: its "yellow" is teal. So git.changed is teal and
+# warnings use magenta (diag.warn), the same as in nvim.
+
+# --- backgrounds and text --------------------------------------------------
+panel_bg            = "#161616" # bg1
+status_bar_bg       = "#0c0c0c" # bg0, status line
+cursor_line_bg      = "#353535" # bg3, cursor line
+bg_highlight        = "#4d4d4d" # sel0, the local override in colorscheme.lua
+fg_primary          = "#f2f4f8" # fg1
+fg_secondary        = "#b6b8bb" # fg2
+fg_dim              = "#7b7c7e" # fg3
+help_indicator      = "#7b7c7e" # fg3
+cursor_color        = "#8cb6ff" # blue.bright
+
+# --- diff ------------------------------------------------------------------
+# Line backgrounds blend the BASE green/red into bg1 at 0.25. nvim blends the
+# DIM colors at 0.15 (#172b20 / #311d26), which is too faint for a tool that
+# shows only diffs. To match nvim exactly, use those two values instead.
+diff_add            = "#25be6a" # git.add
+diff_add_bg         = "#1a402b"
+diff_del            = "#ee5396" # git.removed
+diff_del_bg         = "#4c2536"
+diff_context        = "#f2f4f8" # fg1
+diff_hunk_header    = "#78a9ff" # blue
+expanded_context_fg = "#6e6f70" # comment
+
+syntax_add_bg       = "#1a402b"
+syntax_del_bg       = "#4c2536"
+# Vendored from nightfox, so code colors match nvim. Resolved relative to this file.
+syntax_theme        = "carbonfox.tmTheme"
+
+# --- file list and review state --------------------------------------------
+file_added          = "#25be6a" # git.add
+file_modified       = "#08bdba" # git.changed
+file_deleted        = "#ee5396" # git.removed
+file_renamed        = "#ff7eb6" # pink
+reviewed            = "#25be6a" # green
+pending             = "#be95ff" # diag.warn
+branch_name         = "#be95ff" # magenta
+
+# --- comments --------------------------------------------------------------
+comment_note        = "#78a9ff" # diag.info
+comment_suggestion  = "#33b1ff" # cyan
+comment_issue       = "#ee5396" # diag.error
+comment_praise      = "#25be6a" # diag.ok
+
+# --- borders and badges ----------------------------------------------------
+border_focused      = "#78a9ff" # blue, like kitty's active border
+border_unfocused    = "#535353" # bg4, same as kitty's inactive border
+
+mode_fg             = "#0c0c0c" # bg0
+mode_bg             = "#78a9ff" # blue, like kitty's active tab
+message_info_fg     = "#0c0c0c"
+message_info_bg     = "#78a9ff" # diag.info
+message_warning_fg  = "#0c0c0c"
+message_warning_bg  = "#be95ff" # diag.warn
+message_error_fg    = "#0c0c0c"
+message_error_bg    = "#ee5396" # diag.error
+update_badge_fg     = "#0c0c0c"
+update_badge_bg     = "#3ddbd9" # diag.hint

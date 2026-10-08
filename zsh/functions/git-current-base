@@ -1,0 +1,25 @@
+#
+# Prints the ref the current branch compares against, e.g. origin/main
+#
+# Uses the upstream when it exists on the remote. Before the first push it does
+# not: git-worktree-add sets branch.<name>.merge up front, so @{u} names a
+# remote branch that is not there yet. Every commit on the branch is unpushed
+# then, so fall back to the remote's default branch.
+#
+
+local git=${commands[git]}
+local base
+
+base=$($git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)
+if [[ -z "$base" ]] || ! $git rev-parse --verify --quiet "$base" >/dev/null; then
+  base=$($git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
+fi
+
+if [[ -z "$base" ]]; then
+  echo "Error: no upstream, and origin/HEAD is not set (fix: git remote set-head origin --auto)" >&2
+  return 1
+fi
+
+echo $base
+
+# vi: set ft=zsh:

@@ -277,6 +277,17 @@ return {
                     -- cmd = { "nim-langserver" }, -- This is the default, so you can remove this line
                     -- filetypes = { "nim", "nimble" }, -- This is the default, so you can remove this line
                     -- capabilities = capabilities,
+                    -- The mise shim is a symlink to mise. nimlangserver's findExe follows
+                    -- it and runs mise itself. It also starts nimsuggest before it reads
+                    -- nim.nimsuggestPath. `mise exec` puts the real install dirs first on
+                    -- PATH, so findExe finds the real nimsuggest for this project.
+                    cmd = function(dispatchers, config)
+                        return vim.lsp.rpc.start(
+                            { "mise", "exec", "--", "nimlangserver" },
+                            dispatchers,
+                            { cwd = config.root_dir }
+                        )
+                    end,
                     settings = {
                         nim = {
                             logNimsuggest = false,

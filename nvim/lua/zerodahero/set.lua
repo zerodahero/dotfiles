@@ -26,6 +26,8 @@ vim.opt.termguicolors = true
 
 vim.opt.scrolloff = 8
 vim.opt.sidescrolloff = 8
+-- Scrollbound windows (diff panes) also scroll sideways together.
+vim.opt.scrollopt:append("hor")
 vim.opt.signcolumn = "yes"
 vim.opt.isfname:append("@-@")
 

@@ -49,8 +49,8 @@ return {
         },
     },
     {
-        "selimacerbas/markdown-preview.nvim",
-        dependencies = { "selimacerbas/live-server.nvim" },
+        "selimacerbas/mdkite.nvim",
+        dependencies = { "selimacerbas/kitehost.nvim" },
         ft = { "markdown" },
         opts = {
             instance_mode = "takeover",
@@ -60,7 +60,7 @@ return {
             mermaid_renderer = "rust",
         },
         keys = {
-            { "<leader>mp", "<cmd>MarkdownPreview<cr>", desc = "Markdown Preview" },
+            { "<leader>mp", "<cmd>MdKite start<cr>", desc = "Markdown Preview" },
         },
     },
 }

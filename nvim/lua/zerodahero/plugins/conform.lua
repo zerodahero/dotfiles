@@ -36,7 +36,7 @@ return {
             latex = { "tex-fmt" },
             lua = { "stylua" },
             markdown = { "mdformat", "injected" },
-            nim = { "nimpretty" },
+            nim = { "nph" },
             php = { "php_cs_fixer" },
             pkl = { "pkl" },
             python = { "ruff", "ruff_format", "ruff_organize_imports" },

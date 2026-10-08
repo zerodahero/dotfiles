@@ -131,6 +131,42 @@ return {
                 end,
                 desc = "Disable focus autoresize for FileType",
             })
+
+            -- codediff's diff panes are ordinary file buffers, so the filetype
+            -- list above can't catch them. Flag the whole codediff tab instead,
+            -- and mark windows it creates later (layout toggle, file switches).
+            local codediff_group = vim.api.nvim_create_augroup("focus-disable-codediff", { clear = true })
+            local function set_codediff_tab(tab, disabled)
+                vim.t[tab].focus_disable_codediff = disabled or nil
+                for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tab)) do
+                    vim.w[win].focus_disable = disabled
+                end
+            end
+            vim.api.nvim_create_autocmd("User", {
+                group = codediff_group,
+                pattern = "CodeDiffOpen",
+                callback = function(ev) set_codediff_tab(ev.data.tabpage, true) end,
+                desc = "Disable focus autoresize in codediff tabs",
+            })
+            vim.api.nvim_create_autocmd("User", {
+                group = codediff_group,
+                pattern = "CodeDiffClose",
+                callback = function(ev)
+                    if vim.api.nvim_tabpage_is_valid(ev.data.tabpage) then
+                        set_codediff_tab(ev.data.tabpage, false)
+                    end
+                end,
+                desc = "Re-enable focus autoresize when codediff closes",
+            })
+            vim.api.nvim_create_autocmd("WinNew", {
+                group = codediff_group,
+                callback = function()
+                    if vim.t.focus_disable_codediff then
+                        vim.w.focus_disable = true
+                    end
+                end,
+                desc = "Disable focus autoresize for new windows in codediff tabs",
+            })
         end,
     },
 

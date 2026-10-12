@@ -1,8 +1,11 @@
 theme             = "carbonfox"    # local theme, see themes/carbonfox.toml
+appearance        = "system"       # or "dark" / "light"
 diff_view         = "side-by-side" # or "unified"
 ignore_whitespace = "auto"         # ignore all whitespace in local VCS diffs
-appearance        = "system"       # or "dark" / "light"
 leader            = ","            # configurable prefix for leader shortcuts
 editor            = "nvim"         # editor for `e` / `:edit`; overrides $EDITOR
-comment_vim       = false          # vim modal editing in the review comment box
+comment_vim       = true           # vim modal editing in the review comment box
 wrap              = false
+show_reviewed     = false          # hide reviewed files, so `r` moves on to the next one
+show_commits      = false
+scroll_offset     = 10

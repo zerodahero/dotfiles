@@ -11,6 +11,8 @@ export MANPAGER='nvim +Man!'
 
 ## Projects
 export PROJECTS=$HOME/projects
+# Named dir: the prompt shows ~p/... and `cd ~p/...` works
+hash -d p=$PROJECTS
 
 # atuin (history search widget)
 export ATUIN_NOBIND="true"

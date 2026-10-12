@@ -13,6 +13,9 @@ fi
 if [[ $p =~ ^[~/] ]]
 then
 	cd $p
+elif [[ -d $PROJECTS/$p/repo ]]
+then
+	cd $PROJECTS/$p/repo
 else
 	cd $PROJECTS/$p
 fi

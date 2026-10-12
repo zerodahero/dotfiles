@@ -12,13 +12,19 @@ fi
 
 local cwd="$PWD"
 
-if [[ "$cwd" != "$HOME/projects/"* ]]; then
-  echo "Error: must be in a ~/projects/* directory" >&2
+if [[ "$cwd" != "$PROJECTS/"* ]]; then
+  echo "Error: must be in a $PROJECTS/* directory" >&2
   return 1
 fi
 
-# Extract project_name: first directory component after ~/projects/
-local project_name="${${cwd#$HOME/projects/}%%/*}"
+# Extract project_name: first directory component after $PROJECTS/,
+# or the second one inside the legacy $PROJECTS/worktrees/<project>/
+local rel="${cwd#$PROJECTS/}"
+local project_name="${rel%%/*}"
+if [[ "$project_name" == worktrees ]]; then
+  rel="${rel#worktrees/}"
+  project_name="${rel%%/*}"
+fi
 
 # Determine the upstream default branch
 local default_branch
@@ -32,7 +38,13 @@ fi
 $git fetch origin "$default_branch" || return 1
 
 local new_branch="zat/$worktree_name"
-local worktree_path="$HOME/projects/worktrees/$project_name/$worktree_name"
+# Per-project layout keeps worktrees beside repo/; legacy uses $PROJECTS/worktrees/
+local worktree_path
+if [[ -d "$PROJECTS/$project_name/repo" ]]; then
+  worktree_path="$PROJECTS/$project_name/worktrees/$worktree_name"
+else
+  worktree_path="$PROJECTS/worktrees/$project_name/$worktree_name"
+fi
 
 $git worktree add -b "$new_branch" "$worktree_path" "origin/$default_branch" || return 1
 

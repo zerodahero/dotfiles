@@ -58,28 +58,24 @@ def main(args) -> str | None:
     if cwd.startswith(dotfiles_dir):
         return "dotfiles"
 
-    worktrees_dir = os.path.join(projects_dir, "worktrees")
-    if cwd.startswith(worktrees_dir + os.sep):
-        parts = os.path.relpath(cwd, worktrees_dir).split(os.sep)
-        if len(parts) >= 2:
-            return f"[{project_abbr(parts[0])}]{worktree_short(parts[1])}"
-
-    sandbox_dir = os.path.join(projects_dir, "sandbox")
-    if cwd.startswith(sandbox_dir + os.sep):
-        parts = os.path.relpath(cwd, sandbox_dir).split(os.sep)
-        if parts and parts[0]:
-            return f"🏖️{to_camel_case(parts[0])}"
-
     if cwd.startswith(projects_dir + os.sep):
-        try:
-            relative_path = os.path.relpath(cwd, projects_dir)
-        except ValueError:
-            return None
+        parts = os.path.relpath(cwd, projects_dir).split(os.sep)
 
-        if relative_path and relative_path != ".":
-            project_name = relative_path.split(os.sep)[0]
-            if project_name:
-                return to_camel_case(project_name)
+        # Legacy layout: ~/projects/worktrees/<project>/<worktree>
+        if parts[0] == "worktrees" and len(parts) >= 3:
+            return f"[{project_abbr(parts[1])}]{worktree_short(parts[2])}"
+
+        if parts[0] == "sandbox" and len(parts) >= 2:
+            return f"🏖️{to_camel_case(parts[1])}"
+
+        # Per-project layout: ~/projects/<project>/{repo,worktrees,docs}
+        if len(parts) >= 3 and parts[1] == "worktrees":
+            return f"[{project_abbr(parts[0])}]{worktree_short(parts[2])}"
+        if len(parts) >= 2 and parts[1] == "docs":
+            return f"📚{to_camel_case(parts[0])}"
+
+        if parts[0]:
+            return to_camel_case(parts[0])
 
     return input("Enter a title for the tab: ").strip() or None
 

@@ -1,12 +1,26 @@
 #
-# Opens tuicr on the commits this branch has not pushed yet
+# Opens tuicr on the commits this branch adds over the branch it forked from
+#
+# The diff starts at the merge-base, so it matches what a merge would show:
+# commits that landed on the base since the branch forked do not appear.
+#
+# `tdiff -3` reviews only the last 3 commits instead. (Not `~3`: zsh expands
+# that to a directory stack entry before tdiff sees it.)
 #
 # Extra arguments go to tuicr, e.g. `tdiff -w` adds uncommitted changes.
 #
 
-local base
-base=$(git-current-base) || return 1
+local range
+if [[ $1 == -<-> ]]; then
+  range="HEAD~${1#?}..HEAD"
+  shift
+else
+  local base
+  base=$(git-current-base) || return 1
+  base=$(git merge-base "$base" HEAD) || return 1
+  range="$base..HEAD"
+fi
 
-tuicr -r "$base..HEAD" "$@"
+tuicr -r "$range" "$@"
 
 # vi: set ft=zsh:

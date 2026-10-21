@@ -1,17 +1,19 @@
 #
-# Prints the ref the current branch compares against, e.g. origin/main
+# Prints the ref the current branch forked from, e.g. origin/main
 #
-# Uses the upstream when it exists on the remote. Before the first push it does
-# not: git-worktree-add sets branch.<name>.merge up front, so @{u} names a
-# remote branch that is not there yet. Every commit on the branch is unpushed
-# then, so fall back to the remote's default branch.
+# The upstream counts only when it names a different branch, as with
+# `git checkout -b feature origin/dev`. git-worktree-add points the upstream at
+# the branch's own name on the remote, so after a push it equals HEAD and says
+# nothing about the base. Those branches fork from the remote's default branch.
 #
 
 local git=${commands[git]}
-local base
+local branch base
 
+branch=$($git branch --show-current)
 base=$($git rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)
-if [[ -z "$base" ]] || ! $git rev-parse --verify --quiet "$base" >/dev/null; then
+if [[ -z "$base" || "${base#*/}" == "$branch" ]] \
+  || ! $git rev-parse --verify --quiet "$base" >/dev/null; then
   base=$($git symbolic-ref --quiet --short refs/remotes/origin/HEAD 2>/dev/null)
 fi
 

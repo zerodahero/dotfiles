@@ -71,7 +71,6 @@ return {
 
     -- Soft-wrap + visual-line nav for prose filetypes is configured directly
     -- in nvim/after/plugin/prose.lua (no plugin required).
-    "rudism/telescope-dict.nvim",
 
     {
         "nvim-tree/nvim-tree.lua",

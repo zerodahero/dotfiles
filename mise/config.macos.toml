@@ -119,6 +119,7 @@ adopt = true
 "brew:sqlfluff"                    = "latest"
 "brew:stylua"                      = "latest"
 "brew:task"                        = "latest"
+"brew:tdf"                         = "latest"
 "brew:thefuck"                     = "latest"
 "brew:tlrc"                        = "latest"
 "brew:tuicr"                       = "latest"

@@ -16,6 +16,21 @@ require("nvim-tree").setup({
     renderer = {
         group_empty = true,
     },
+    on_attach = function(bufnr)
+        local api = require("nvim-tree.api")
+        api.config.mappings.default_on_attach(bufnr) -- keep the stock mappings
+
+        vim.keymap.set("n", "V", function()
+            local node = api.tree.get_node_under_cursor()
+            if node and node.type == "file" then require("zerodahero/viewer").open(node.absolute_path) end
+        end, {
+            buffer = bufnr,
+            noremap = true,
+            silent = true,
+            nowait = true,
+            desc = "nvim-tree: Open in viewer (glow/VisiData)",
+        })
+    end,
 })
 
 -- Keys
@@ -34,17 +49,13 @@ vim.keymap.set("n", "<C-Bslash>", function()
 end)
 
 local api = require("nvim-tree.api")
-api.events.subscribe(api.events.Event.FileCreated, function(file)
-    vim.cmd("edit " .. file.fname)
-end)
+api.events.subscribe(api.events.Event.FileCreated, function(file) vim.cmd("edit " .. file.fname) end)
 
 local function open_nvim_tree(data)
     -- buffer is a directory
     local directory = vim.fn.isdirectory(data.file) == 1
 
-    if not directory then
-        return
-    end
+    if not directory then return end
 
     -- change to the directory
     vim.cmd.cd(data.file)

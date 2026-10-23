@@ -14,6 +14,9 @@ return {
             },
             completions = { blink = { enabled = true } },
         },
+        keys = {
+            { "<leader>mt", "<cmd>RenderMarkdown toggle<cr>", desc = "Markdown Render Toggle" },
+        },
     },
     {
         "jmbuhr/otter.nvim",

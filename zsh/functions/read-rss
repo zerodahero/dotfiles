@@ -1,0 +1,48 @@
+#
+# Reads a rss feed into a human-friendly(er) format
+#
+# Usage: read-rss <url> [max entries]
+#
+
+emulate -L zsh
+setopt err_return no_unset pipe_fail
+
+if [[ $# -lt 1 ]]; then
+    echo "Usage: read-rss <url> [max entries]"
+    return 1
+fi
+
+local rssurl=$1
+local limit=${2:-20}
+
+# feedparser handles RSS/Atom quirks and sanitizes the HTML bodies.
+# Build one HTML page, convert it to markdown, then render it.
+uv run --quiet --no-project --with feedparser python - "$rssurl" "$limit" <<'EOF' \
+    | pandoc --from html --to gfm --wrap none \
+    | glow --pager -
+import html, sys
+import feedparser
+
+url, limit = sys.argv[1], int(sys.argv[2])
+d = feedparser.parse(url)
+if d.bozo and not d.entries:
+    sys.exit(f"read-rss: could not parse feed: {d.bozo_exception}")
+
+esc = html.escape
+print(f"<h1>{esc(d.feed.get('title', url))}</h1>")
+if d.feed.get("subtitle"):
+    print(f"<p><em>{esc(d.feed.subtitle)}</em></p>")
+
+for e in d.entries[:limit]:
+    title = esc(e.get("title", "(untitled)"))
+    link = e.get("link")
+    print(f'<h2><a href="{esc(link)}">{title}</a></h2>' if link else f"<h2>{title}</h2>")
+    meta = [e.get(k) for k in ("author", "published", "updated") if e.get(k)]
+    if meta:
+        print(f"<p><em>{esc(' · '.join(meta[:2]))}</em></p>")
+    body = e.content[0].value if e.get("content") else e.get("summary", "")
+    print(body)
+    print("<hr>")
+EOF
+
+# vi: set ft=zsh:

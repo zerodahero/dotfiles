@@ -160,21 +160,21 @@ return {
 
     { "kevinhwang91/nvim-bqf", ft = "qf" },
 
-    {
-        "atiladefreitas/dooing",
-        config = function()
-            require("dooing").setup({
-                ui = {
-                    style = "modern"
-                },
-                window = {
-                    width = 100,
-                    height = 100,
-                },
-                quick_keys = false,
-            })
-        end,
-    },
+    -- {
+    --     "atiladefreitas/dooing",
+    --     config = function()
+    --         require("dooing").setup({
+    --             ui = {
+    --                 style = "modern"
+    --             },
+    --             window = {
+    --                 width = 100,
+    --                 height = 100,
+    --             },
+    --             quick_keys = false,
+    --         })
+    --     end,
+    -- },
 
     {
         "karb94/neoscroll.nvim",

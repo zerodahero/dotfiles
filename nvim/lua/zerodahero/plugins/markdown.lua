@@ -6,12 +6,26 @@ return {
         ---@type render.md.UserConfig
         ft = { "markdown", "codecompanion" },
         opts = {
-            code = {
-                border = "thick",
-            },
-            checkbox = {
-                -- bullet = true,
-            },
+            -- Only render tables; everything else stays raw markdown.
+            pipe_table = { enabled = true },
+            bullet = { enabled = false },
+            checkbox = { enabled = false },
+            code = { enabled = false },
+            dash = { enabled = false },
+            document = { enabled = false },
+            heading = { enabled = false },
+            html = { enabled = false },
+            indent = { enabled = false },
+            inline_highlight = { enabled = false },
+            latex = { enabled = false },
+            link = { enabled = false },
+            paragraph = { enabled = false },
+            quote = { enabled = false },
+            sign = { enabled = false },
+            yaml = { enabled = false },
+            -- Keep treesitter from hiding **, `, and link URLs.
+            -- Tables still pad and draw borders, but center/right alignment needs conceal.
+            win_options = { conceallevel = { rendered = 0 } },
             completions = { blink = { enabled = true } },
         },
         keys = {

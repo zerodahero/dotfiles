@@ -49,8 +49,7 @@ fi
 $git worktree add -b "$new_branch" "$worktree_path" "origin/$default_branch" || return 1
 
 # Set upstream tracking so `git push` works without -u
-$git config "branch.$new_branch.remote" origin
-$git config "branch.$new_branch.merge" "refs/heads/$new_branch"
+git-set-upstream "$new_branch" >/dev/null || return 1
 
 local trusted=false
 if mise trust --show &>/dev/null; then

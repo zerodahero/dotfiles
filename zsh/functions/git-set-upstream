@@ -1,0 +1,26 @@
+#
+# Points a branch's upstream at its own name on origin, as git-worktree-add does
+#
+# Defaults to the current branch. The remote branch does not need to exist
+# yet, so a plain `git push` creates it.
+#
+
+local git=${commands[git]}
+local branch="${1:-$($git branch --show-current)}"
+
+if [[ -z "$branch" ]]; then
+  echo "Usage: git-set-upstream [branch] (no branch given and HEAD is detached)" >&2
+  return 1
+fi
+
+if ! $git show-ref --verify --quiet "refs/heads/$branch"; then
+  echo "Error: no local branch named $branch" >&2
+  return 1
+fi
+
+$git config "branch.$branch.remote" origin
+$git config "branch.$branch.merge" "refs/heads/$branch"
+
+echo "$branch -> origin/$branch"
+
+# vi: set ft=zsh:

@@ -1,0 +1,12 @@
+if [[ -z $AWS_PROFILE ]]; then
+    echo "No AWS_PROFILE set. Run awsctx first."
+    return 1
+fi
+
+if aws sts get-caller-identity &>/dev/null; then
+    echo "Session for $AWS_PROFILE is still valid."
+else
+    aws sso login
+fi
+
+# vi: set ft=zsh:

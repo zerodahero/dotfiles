@@ -116,6 +116,7 @@ adopt = true
 "brew:quarylabs/quary/sqruff"      = "latest"
 "brew:resvg"                       = "latest"
 "brew:ripgrep"                     = "latest"
+"brew:rumdl"                       = "latest"
 "brew:sqlfluff"                    = "latest"
 "brew:stylua"                      = "latest"
 "brew:task"                        = "latest"

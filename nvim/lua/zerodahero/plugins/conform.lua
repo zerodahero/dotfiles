@@ -35,7 +35,7 @@ return {
             just = { "just" },
             latex = { "tex-fmt" },
             lua = { "stylua" },
-            markdown = { "mdformat", "injected" },
+            markdown = { "rumdl", "injected" },
             nim = { "nph" },
             php = { "php_cs_fixer" },
             pkl = { "pkl" },

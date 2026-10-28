@@ -1,0 +1,6 @@
+[global]
+editorconfig = true
+
+[MD060]
+enabled = true
+style = "aligned"

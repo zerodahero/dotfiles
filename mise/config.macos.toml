@@ -1,6 +1,6 @@
 # macOS-only bootstrap config.
 #
-# Loaded only when MISE_ENV includes "macos", which .miserc.toml sets from os().
+# Loaded only when MISE_ENV includes "macos", which miserc.toml sets from os().
 # On Linux this file is never discovered, so nothing here exists there. That is
 # a stronger guarantee than per-entry gating, and it replaces the
 # `case "$(uname -s)"` block that install.sh used.
@@ -26,16 +26,17 @@
 "~/.config/skhd/skhdrc"             = "~/dotfiles/skhd/skhdrc"
 
 # --- global justfiles ------------------------------------------------------
-# ~/.user.justfile is NOT here: it is hand-authored, has diverged from the
-# template, and user.justfile.tmpl contains `{{ justfile() }}`, which Tera
-# would try to call as a nonexistent function. It is seeded in the hook below.
 "~/.window.justfile" = "~/dotfiles/window.justfile"
 "~/.k8s.justfile"    = "~/dotfiles/k8s.justfile"
+# Seeded once, then hand-authored: create_if_missing never touches an existing
+# file and does not report local edits as drift. `copy`, not `template`:
+# user.justfile.tmpl contains `{{ justfile() }}`, which Tera would try to call.
+"~/.user.justfile" = { source = "~/dotfiles/user.justfile.tmpl", mode = "copy", create_if_missing = true }
 
 # --- backup excludes -------------------------------------------------------
-# ~/.kopiaignore.local is seeded in the hook below, not managed here: it is
-# 2.5x the size of its template and is deliberately machine-private.
 "~/.kopiaignore" = "~/dotfiles/kopia/kopiaignore"
+# Seeded once, then deliberately machine-private (see create_if_missing above).
+"~/.kopiaignore.local" = { source = "~/dotfiles/kopia/kopiaignore.local.tmpl", mode = "copy", create_if_missing = true }
 
 # --- Cocoa key bindings ----------------------------------------------------
 # Only apps using the standard Cocoa text system (NSTextView) honor this.
@@ -60,6 +61,7 @@ adopt = true
 # mise reads tap metadata directly from GitHub; it does not tap real Homebrew.
 "asmvik/formulae"     = "https://github.com/asmvik/homebrew-formulae.git"
 "felixkratz/formulae" = "https://github.com/felixkratz/homebrew-formulae.git"
+"jackielii/tap"       = "https://github.com/jackielii/homebrew-tap.git"
 "jannis-baum/tap"     = "https://github.com/jannis-baum/homebrew-tap.git"
 "quarylabs/quary"     = "https://github.com/quarylabs/homebrew-quary.git"
 
@@ -69,7 +71,6 @@ adopt = true
 
 "brew:age"                         = "latest"
 "brew:antidote"                    = "latest"
-"brew:asmvik/formulae/skhd"        = "latest"
 "brew:asmvik/formulae/yabai"       = "latest"
 "brew:atuin"                       = "latest"
 "brew:cmake"                       = "latest"
@@ -139,6 +140,10 @@ adopt = true
 "brew-cask:kitty"                        = "latest"
 "brew-cask:kopiaui"                      = "latest"
 "brew-cask:betterdisplay"                = "latest"
+# skhd.zig, not the original skhd, which was unstable. Same CLI and skhdrc.
+# Its LaunchAgent is bundled in skhd.app and registered via SMAppService as
+# com.jackielii.skhd, so it needs one approval under Login Items & Extensions.
+"brew-cask:jackielii/tap/skhd-zig"       = "latest"
 "brew-cask:1password-cli"                = "latest"
 "brew-cask:opensuperwhisper"             = "latest"
 
@@ -150,27 +155,38 @@ adopt = true
 # macOS imperative tail.
 #
 # The `final` phase, not post-dotfiles, so it cannot collide with the base
-# config's post-dotfiles hook regardless of how same-phase hooks merge.
+# config's post-dotfiles hooks regardless of how same-phase hooks merge.
 #
-# Runs on EVERY `mise bootstrap`, so every line must be idempotent.
+# Runs on EVERY `mise bootstrap`, so every command must be idempotent.
 # ---------------------------------------------------------------------------
 [bootstrap.hooks.final]
+description = "Fetch the kitty icon; install and start the yabai and skhd services"
 run = [
-  # Seed hand-authored per-machine files. `cp -n` declines when the target
-  # exists, so these never clobber local edits.
-  'cp -n ~/dotfiles/user.justfile.tmpl ~/.user.justfile 2>/dev/null || true',
-  'cp -n ~/dotfiles/kopia/kopiaignore.local.tmpl ~/.kopiaignore.local 2>/dev/null || true',
-
   # kitty app icon.
   'test -f ~/.config/kitty/kitty.app.icns || curl -fsSL -o ~/.config/kitty/kitty.app.icns https://github.com/k0nserv/kitty-icon/raw/refs/heads/main/build/outrun.icns',
 
   # yabai and skhd install and manage their own launchd agents, so we call
   # their own service commands rather than declaring competing plists under
   # [bootstrap.macos.launchd.agents].
+  #
+  # skhd.zig is self-signed, and its cask strips the quarantine attribute in a
+  # postflight step so launchd can run it. Repeat that here in case mise's
+  # cask installer skips the step. A no-op once the attribute is gone.
+  'xattr -dr com.apple.quarantine /Applications/skhd.app 2>/dev/null || true',
   'yabai --install-service 2>/dev/null || true',
-  'skhd --install-service 2>/dev/null || true',
   'yabai --start-service 2>/dev/null || true',
+  # skhd.zig: --install-service is the same as --start-service.
   'skhd --start-service 2>/dev/null || true',
+]
+
+# ---------------------------------------------------------------------------
+# Apps under System Settings > General > Login Items > "Open at Login".
+# Additive: apps that register themselves are left alone.
+# ---------------------------------------------------------------------------
+[bootstrap.macos.login_items]
+apps = [
+  "/Applications/Clocker.app",
+  "/Applications/Presentify.app",
 ]
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,9 @@
+# Loaded before any config.toml, so it can decide which config files apply.
+# Only OS-level context is available here: env, cwd, os(), arch(), os_family().
+#
+# This is the global miserc: ~/.config/mise links to this directory.
+#
+# Sets MISE_ENV from the OS so config.macos.toml loads on macOS and
+# config.linux.toml loads on Linux. The absence of config.linux.toml is the
+# Linux stub -- adding that file is the whole change.
+env = ["{{ os() }}"]

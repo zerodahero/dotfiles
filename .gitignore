@@ -13,3 +13,7 @@ nvim/spell/en.utf-8.*
 .DS_Store
 mise.local.toml
 mise.*.local.toml
+# ~/.config/mise links here, so its machine-local files land in this directory.
+mise/config.local.toml
+mise/config.*.local.toml
+mise/miserc.local.toml

@@ -4,13 +4,12 @@ Machine setup is driven by [mise](https://mise.jdx.dev). One command provisions
 a machine:
 
 ```sh
-./install.sh          # = cd to this repo, mise bootstrap
+./install.sh          # = link ~/.config/mise -> mise/, then mise bootstrap
 ```
 
-**Run bootstrap from this repo.** `mise/config.macos.toml` is a project-scoped
-config path, so from anywhere else mise silently skips the OS-specific dotfiles
-and hooks — 27 entries instead of 34. `install.sh` exists only to guarantee the
-`cd`. Tools from `[tools]` work everywhere, via the global config link.
+`~/.config/mise` is a symlink to this repo's `mise/` directory. Every file in
+it is global config, so `mise bootstrap` works from any directory. One
+consequence: `mise use -g` and `mise dot add` write into this repo.
 
 ## New machine
 
@@ -27,15 +26,19 @@ xcode-select --install
 curl https://mise.run | sh
 export PATH="$HOME/.local/bin:$PATH"
 
-# 4. Clone to ~/dotfiles. The path is NOT arbitrary -- see below.
-git clone git@github.com:zerodahero/dotfiles.git ~/dotfiles
+# 4. Clone to ~/dotfiles, link ~/.config/mise to its mise/, and bootstrap.
+#    The path is NOT arbitrary -- see below.
+mise bootstrap --from git@github.com:zerodahero/dotfiles.git --from-dir ~/dotfiles --config-dir mise
 
-# 5. Machine identity -- create by hand, see "Machine identity" below
-"$EDITOR" ~/.config/mise/config.local.toml
-
-# 6. Everything else
-~/dotfiles/install.sh
+# 5. Machine identity -- create by hand, see "Machine identity" below,
+#    then re-run to render ~/.gitconfig.local
+"$EDITOR" ~/dotfiles/mise/config.local.toml
+mise bootstrap
 ```
+
+If you cloned by hand instead, `~/dotfiles/install.sh` creates the same link
+and runs bootstrap. It also migrates the old layout (file links inside a real
+`~/.config/mise`).
 
 Then open a new shell so activation takes effect.
 
@@ -43,24 +46,14 @@ Then open a new shell so activation takes effect.
 
 Every `[dotfiles]` source is an absolute `~/dotfiles/...` path, because this
 repo is topic-per-directory and its config is reachable by two paths, which
-makes relative sources ambiguous.
-
-So **`mise bootstrap --from <url>` does not work here.** It clones to
-`$MISE_DATA_DIR/bootstrap-repo`, and every source then fails:
-
-```
-mise ERROR files: sources do not exist:
-  [dotfiles]."~/.gitconfig": ~/dotfiles/git/config
-  ... (all 39)
-```
-
-Use the `git clone` above, or `mise bootstrap --from <url> --from-dir ~/dotfiles` if you want the one-liner.
+makes relative sources ambiguous. So always pass `--from-dir ~/dotfiles`.
 
 ## Machine identity
 
 `~/.gitconfig.local` is rendered from `git/config.local.tmpl` by mise. Do not
 edit it — `mise bootstrap` overwrites it. Set the values in
-`~/.config/mise/config.local.toml`, which lives outside this repo:
+`mise/config.local.toml` (reached as `~/.config/mise/config.local.toml`).
+It is gitignored, so it never enters this public repo:
 
 ```toml
 [vars]
@@ -79,7 +72,7 @@ than quietly writing an empty name.
 |---|---|
 | `mise/config.toml` | Global mise config **and** the bootstrap definition: `[tools]`, `[dotfiles]`, `[bootstrap.*]` |
 | `mise/config.macos.toml` | macOS-only dotfiles and setup steps |
-| `.miserc.toml` | Sets `MISE_ENV` from `os()`, which selects the file above |
+| `mise/miserc.toml` | Sets `MISE_ENV` from `os()`, which selects the file above |
 | everything else | Topic directories (`zsh/`, `nvim/`, `git/`, …) linked into place by `[dotfiles]` |
 
 TODO: Add Linux support (add `mise/config.linux.toml`)
@@ -91,13 +84,12 @@ mise dotfiles status              # per-path: applied / missing / differs
 mise dotfiles diff                # what an apply would change
 mise bootstrap --dry-run          # the whole plan, executing nothing
 mise bootstrap --only dotfiles    # run one phase
+mise bootstrap --upgrade          # also upgrade installed packages and tools
+mise bootstrap --prune-dotfiles   # also remove dotfiles no entry deploys now
 mise trust                        # required after cloning or editing config
 ```
 
-Hooks in `mise/config.toml` run twice when bootstrap is invoked from this repo,
-because the file is loaded as both the project and the global config and hook
-arrays merge from both. Everything there is idempotent, so the second pass is a
-no-op — but do not add a non-idempotent hook to that file.
+Hooks run on every `mise bootstrap`, so every hook command must be idempotent.
 
 `mise bootstrap` converges: anything already in its desired state is skipped,
 so re-running is safe. It is **not** transactional — if a later phase fails,
@@ -175,14 +167,23 @@ grep -rl '/opt/homebrew/bin' ~/.cache/zsh/cached-eval/
 
 ## Window manager
 
-yabai and skhd come from `asmvik/formulae` (koekeishiya's are archived) and
-install their own LaunchAgents via `--install-service`, run from the bootstrap
-hook. The labels differ, which is confusing but correct:
+yabai comes from `asmvik/formulae` (koekeishiya's is archived). skhd is
+[skhd.zig](https://github.com/jackielii/skhd.zig), the `jackielii/tap/skhd-zig`
+cask, because the original skhd was unstable. It reads the same `skhdrc`.
+
+yabai installs a plist LaunchAgent via `--install-service`. skhd.zig instead
+registers the LaunchAgent bundled in `skhd.app` through SMAppService. Both run
+from the bootstrap hook. skhd.zig needs a one-time approval in System Settings >
+General > Login Items & Extensions; until then `skhd --status` reports
+"requires user approval" and no daemon runs.
 
 | Tool | LaunchAgent label |
 |---|---|
 | yabai | `com.asmvik.yabai` |
-| skhd | `com.koekeishiya.skhd` |
+| skhd | `com.jackielii.skhd` |
+
+A leftover `~/Library/LaunchAgents/com.koekeishiya.skhd.plist` is from the
+original skhd. Remove it, or both daemons run and every hotkey fires twice.
 
 `mru_spaces = false` is set in `mise/config.macos.toml` and is required — with
 it on, macOS reorders Spaces by most-recent-use and yabai's space indices move.

@@ -16,6 +16,7 @@ return {
                 "html",
                 "hurl",
                 "javascript",
+                "korin",
                 "lua",
                 "luadoc",
                 "markdown",
@@ -34,6 +35,20 @@ return {
                 pattern = filetypes,
                 callback = function() vim.treesitter.start() end,
             })
+
+            vim.filetype.add({ extension = { korin = "korin" } })
+
+            vim.api.nvim_create_autocmd("User", {
+                pattern = "TSUpdate",
+                callback = function()
+                    require("nvim-treesitter.parsers").korin = {
+                        install_info = {
+                            url = "https://github.com/zerodahero/tree-sitter-korin",
+                            queries = "queries",
+                        },
+                    }
+                end,
+            })
         end,
     },
     {
@@ -48,7 +63,6 @@ return {
 
             vim.keymap.set({ "x", "o" }, "ib", function() select.select_textobject("@block.inner") end)
             vim.keymap.set({ "x", "o" }, "ab", function() select.select_textobject("@block.outer") end)
-
         end,
     },
     {

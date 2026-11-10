@@ -11,6 +11,8 @@
 node   = '24'
 python = '3.13'
 nim    = '2.2'
+rust = "1.99.1"
+"cargo:ssh://git@github.com/zerodahero/velocipede" = "branch:main"
 
 [settings]
 # tools can read the versions files used by other version managers

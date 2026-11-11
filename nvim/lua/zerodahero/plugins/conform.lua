@@ -34,6 +34,8 @@ return {
             json = { "fixjson" },
             just = { "just" },
             latex = { "tex-fmt" },
+            korin = { "korin_fmt" },
+            kdl = { "kdlfmt" },
             lua = { "stylua" },
             markdown = { "rumdl", "injected" },
             nim = { "nph" },
@@ -106,6 +108,11 @@ return {
             },
             sqlfluff = {
                 condition = function() return vim.loop.fs_realpath(".sqlfluff") ~= nil end,
+            },
+            korin_fmt = {
+                command = "korin",
+                args = { "fmt", "$FILENAME" },
+                stdin = false,
             },
         },
     },

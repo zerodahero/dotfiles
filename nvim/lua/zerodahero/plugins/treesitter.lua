@@ -16,6 +16,7 @@ return {
                 "html",
                 "hurl",
                 "javascript",
+                "kdl",
                 "korin",
                 "lua",
                 "luadoc",
@@ -25,11 +26,28 @@ return {
                 "python",
                 "query",
                 "svelte",
+                "toml",
                 "typescript",
                 "vim",
                 "vimdoc",
                 "zsh",
             }
+
+            -- Used by after/queries/toml/injections.scm to limit `run` script
+            -- highlighting to mise config files.
+            -- See https://mise.jdx.dev/mise-cookbook/neovim.html
+            vim.treesitter.query.add_predicate("is-mise?", function(_, _, bufnr, _)
+                local filepath = vim.fs.normalize(vim.api.nvim_buf_get_name(tonumber(bufnr) or 0))
+                local filename = vim.fn.fnamemodify(filepath, ":t")
+                return filename:match("^%.?mise.*%.toml$") ~= nil
+                    or filepath:match("/%.?mise/config%.toml$") ~= nil
+                    or filepath:match("/%.?mise/config%.local%.toml$") ~= nil
+                    or filepath:match("/%.?mise/config%.[^/]+%.toml$") ~= nil
+                    or filepath:match("/%.config/mise/mise%.toml$") ~= nil
+                    or filepath:match("/%.config/mise/mise%.local%.toml$") ~= nil
+                    or filepath:match("/%.?mise/conf%.d/[^/]+%.toml$") ~= nil
+            end, { force = true, all = false })
+
             require("nvim-treesitter").install(filetypes)
             vim.api.nvim_create_autocmd("FileType", {
                 pattern = filetypes,

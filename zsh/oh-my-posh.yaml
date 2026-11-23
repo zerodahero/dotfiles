@@ -1,0 +1,190 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+#
+# Oh My Posh theme. Mirrors the rainbow p10k layout in .p10k.zsh.
+# Switch engines with `zstyle ':prompt' engine` in .zstyles.
+
+version: 3
+final_space: true
+# Render through one background `oh-my-posh serve` per shell; slow
+# segments show a placeholder after 100ms and repaint when ready.
+streaming: 100
+
+blocks:
+  # Line 1, left: directory and git, shaped /dir/git>.
+  # Each separator is drawn by the segment after it, so every segment uses
+  # the slant, and the empty last segment draws the closing arrow.
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: path
+        style: powerline
+        leading_powerline_symbol: ""
+        powerline_symbol: ""
+        foreground: lightWhite
+        background: blue
+        template: " {{ .Path }} "
+        properties:
+          style: unique
+
+      - type: git
+        style: powerline
+        powerline_symbol: ""
+        foreground: black
+        background: green
+        background_templates:
+          - "{{ if or .Working.Changed .Staging.Changed }}yellow{{ end }}"
+        template: >-
+          {{ " " }}{{ .HEAD }}
+          {{- if gt .Behind 0 }} ⇣{{ .Behind }}{{ end }}
+          {{- if gt .Ahead 0 }} ⇡{{ .Ahead }}{{ end }}
+          {{- if .Staging.Changed }} {{ .Staging.String }}{{ end }}
+          {{- if .Working.Changed }} {{ .Working.String }}{{ end }}{{ " " }}
+
+      # Always rendered and empty: its separator is the closing arrow,
+      # in the color of whichever segment came before it.
+      - type: text
+        style: powerline
+        powerline_symbol: ""
+        background: transparent
+        force: true
+        template: "{{ if false }}{{ end }}"
+
+  # Line 1, right, shaped <status/duration/time/. Every segment hides itself
+  # when it has nothing to say. The first segment that renders opens with
+  # the arrow (diamond style); the rest use the slant (powerline style).
+  # Each style template lists the segments above it.
+  - type: prompt
+    alignment: right
+    filler: "<darkGray,transparent>─</>"
+    segments:
+      # Exit code, only after a failed command.
+      - type: status
+        style: diamond
+        leading_diamond: ""
+        foreground: yellow
+        background: red
+        template: " ✘ {{ .Code }} "
+
+      # Duration, only for commands that took 3s or more.
+      - type: executiontime
+        style: '{{ if .Segments.Contains "Status" }}powerline{{ else }}diamond{{ end }}'
+        leading_diamond: ""
+        powerline_symbol: ""
+        invert_powerline: true
+        foreground: black
+        background: yellow
+        template: " {{ .FormattedMs }} "
+        properties:
+          threshold: 3000
+          style: roundrock
+
+      # Python virtualenv, only while one is active.
+      - type: python
+        style: '{{ if or (.Segments.Contains "Status") (.Segments.Contains "Executiontime") }}powerline{{ else }}diamond{{ end }}'
+        leading_diamond: ""
+        powerline_symbol: ""
+        invert_powerline: true
+        foreground: black
+        background: cyan
+        template: " {{ .Venv }} "
+        properties:
+          display_mode: environment
+
+      # user@host, only over SSH or as root.
+      - type: session
+        style: '{{ if or (.Segments.Contains "Status") (.Segments.Contains "Executiontime") (.Segments.Contains "Python") }}powerline{{ else }}diamond{{ end }}'
+        leading_diamond: ""
+        powerline_symbol: ""
+        invert_powerline: true
+        foreground: yellow
+        background: black
+        template: "{{ if or .SSHSession .Root }} {{ .UserName }}@{{ .HostName }} {{ end }}"
+
+      # Always last. trailing_diamond closes the line when time is the
+      # only segment; powerline style closes it otherwise.
+      - type: time
+        style: '{{ if or (.Segments.Contains "Status") (.Segments.Contains "Executiontime") (.Segments.Contains "Python") (.Segments.Contains "Session") }}powerline{{ else }}diamond{{ end }}'
+        leading_diamond: ""
+        trailing_diamond: ""
+        powerline_symbol: ""
+        invert_powerline: true
+        foreground: black
+        background: white
+        template: " {{ .CurrentDate | date .Format }} "
+        properties:
+          time_format: "15:04:05"
+
+  # Line 2: prompt character. ❯ in insert mode, ❮ in normal mode;
+  # red after a failed command.
+  - type: prompt
+    alignment: left
+    newline: true
+    segments:
+      - type: vimode
+        style: plain
+        foreground: green
+        foreground_templates:
+          - "{{ if gt .Code 0 }}red{{ end }}"
+        template: "{{ if eq .Mode \"normal\" }}❮{{ else }}❯{{ end }}"
+
+# Shown on the right of the input line only while typing one of the `tips`
+# commands, like p10k's SHOW_ON_COMMAND.
+tooltips_action: replace
+tooltips:
+  - type: kubectl
+    tips: [kubectl, k, helm, kubens, kubectx, oc, istioctl, k9s, helmfile, flux, stern, kubeseal, skaffold, kubecolor]
+    style: powerline
+    powerline_symbol: ""
+    invert_powerline: true
+    foreground: lightWhite
+    background: magenta
+    template: " \U000f10fe {{ .Context }}{{ if .Namespace }}:{{ .Namespace }}{{ end }} "
+    properties:
+      parse_kubeconfig: true
+
+  - type: aws
+    tips: [aws, cdk, terraform, tf, pulumi, terragrunt]
+    style: powerline
+    powerline_symbol: ""
+    invert_powerline: true
+    foreground: black
+    background: lightYellow
+    template: "  {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} "
+
+  - type: az
+    tips: [az, terraform, tf, pulumi, terragrunt]
+    style: powerline
+    powerline_symbol: ""
+    invert_powerline: true
+    foreground: lightWhite
+    background: blue
+    template: " \U000f0805 {{ .Name }} "
+
+  - type: gcp
+    tips: [gcloud, gcs, gsutil]
+    style: powerline
+    powerline_symbol: ""
+    invert_powerline: true
+    foreground: lightWhite
+    background: blue
+    template: " \U000f11f6 {{ .Project }} "
+
+  - type: terraform
+    tips: [terraform, tf]
+    style: powerline
+    powerline_symbol: ""
+    invert_powerline: true
+    foreground: lightWhite
+    background: magenta
+    template: " \U000f1062 {{ .WorkspaceName }} "
+
+# Past prompts collapse to the prompt character and the time the
+# command started.
+transient_prompt:
+  foreground: green
+  foreground_templates:
+    - "{{ if gt .Code 0 }}red{{ end }}"
+  background: transparent
+  template: "❯ "
+  right_template: "<darkGray>{{ now | date \"15:04:05\" }}</>"

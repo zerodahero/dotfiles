@@ -4,3 +4,7 @@ zstyle ':antidote:bundle' use-friendly-names 'yes'
 zstyle ':antidote:plugin:*' defer-options '-p'
 zstyle ':antidote:*' zcompile 'yes'
 zstyle ':plugin:ez-compinit' 'compstyle' 'zshzoo'
+
+# Prompt engine: 'omp' (Oh My Posh) or 'p10k' (Powerlevel10k).
+# Set PROMPT_ENGINE in the environment to override for one shell.
+zstyle ':prompt' engine 'omp'

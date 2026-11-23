@@ -10,9 +10,10 @@
 [tools]
 node   = '24'
 python = '3.13'
-nim    = '2.2'
-rust = "1.99.1"
-"cargo:ssh://git@github.com/zerodahero/velocipede" = "branch:main"
+nim    = { version = "2.4", platforms = { linux-arm64 = { checksum_url = "https://nim-lang.org/download/nim-{{ version }}-linux_arm64.tar.xz.sha256", url = "https://nim-lang.org/download/nim-{{ version }}-linux_arm64.tar.xz" }, linux-x64 = { checksum_url = "https://nim-lang.org/download/nim-{{ version }}-linux_x64.tar.xz.sha256", url = "https://nim-lang.org/download/nim-{{ version }}-linux_x64.tar.xz" }, macos-arm64 = { checksum_url = "https://nim-lang.org/download/nim-{{ version }}-macosx_arm64.tar.xz.sha256", url = "https://nim-lang.org/download/nim-{{ version }}-macosx_arm64.tar.xz" }, macos-x64 = { checksum_url = "https://nim-lang.org/download/nim-{{ version }}-macosx_x64.tar.xz.sha256", url = "https://nim-lang.org/download/nim-{{ version }}-macosx_x64.tar.xz" }, windows-arm64 = { checksum_url = "https://nim-lang.org/download/nim-{{ version }}_x64.zip.sha256", url = "https://nim-lang.org/download/nim-{{ version }}_x64.zip" }, windows-x64 = { checksum_url = "https://nim-lang.org/download/nim-{{ version }}_x64.zip.sha256", url = "https://nim-lang.org/download/nim-{{ version }}_x64.zip" } }, strip_components = 1, version_date_expr = 'map(filter(split(body, "nightlies/releases/download/"), { # contains "/nim-" && # contains "-linux_x64.tar.xz" }), { [split(split(#, "/nim-")[1], "-linux_x64")[0], #[:10]] })', version_list_url = "https://nim-lang.org/install.html", version_regex = 'nim-(\d+\.\d+\.\d+)-linux_x64\.tar\.xz' }
+rust   = "1.99.1"
+# Using local vel while in development
+# "cargo:ssh://git@github.com/zerodahero/velocipede" = "branch:main"
 # Using local korin while in development
 # "github:zerodahero/korin" = "0.1.0"
 # "cargo:ssh://git@github.com/zerodahero/korin" = "branch:main"

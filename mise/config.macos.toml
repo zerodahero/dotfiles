@@ -136,19 +136,16 @@ adopt = true
 
 "brew-cask:badgeify"                     = "latest"
 "brew-cask:font-meslo-for-powerlevel10k" = "latest"
+"brew-cask:hiddenbar"                    = "latest"
 "brew-cask:joplin"                       = "latest"
 "brew-cask:kitty"                        = "latest"
 "brew-cask:kopiaui"                      = "latest"
 "brew-cask:betterdisplay"                = "latest"
-# skhd.zig, not the original skhd, which was unstable. Same CLI and skhdrc.
-# Its LaunchAgent is bundled in skhd.app and registered via SMAppService as
-# com.jackielii.skhd, so it needs one approval under Login Items & Extensions.
 "brew-cask:jackielii/tap/skhd-zig"       = "latest"
 "brew-cask:1password-cli"                = "latest"
 "brew-cask:opensuperwhisper"             = "latest"
 
 "mas:1056643111" = "latest" # clocker
-"mas:1452453066" = "latest" # hidden bar
 "mas:1507246666" = "latest" # presentify
 
 # ---------------------------------------------------------------------------
@@ -184,10 +181,7 @@ run = [
 # Additive: apps that register themselves are left alone.
 # ---------------------------------------------------------------------------
 [bootstrap.macos.login_items]
-apps = [
-  "/Applications/Clocker.app",
-  "/Applications/Presentify.app",
-]
+apps = ["/Applications/Clocker.app", "/Applications/Presentify.app"]
 
 # ---------------------------------------------------------------------------
 # macOS system preferences.

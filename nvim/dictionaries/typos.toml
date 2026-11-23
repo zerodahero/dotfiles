@@ -3,3 +3,4 @@
 # Keep [default.extend-words] the LAST table: `zg` appends lines to the end.
 [default.extend-words]
 cancelled = "cancelled"
+enrichments = "enrichments"

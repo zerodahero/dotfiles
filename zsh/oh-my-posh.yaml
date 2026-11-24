@@ -54,9 +54,12 @@ blocks:
   # when it has nothing to say. The first segment that renders opens with
   # the arrow (diamond style); the rest use the slant (powerline style).
   # Each style template lists the segments above it.
+  # In a narrow window the block hides instead of wrapping, like p10k.
+  # The filler is blank then, so no line is drawn.
   - type: prompt
     alignment: right
-    filler: "<darkGray,transparent>─</>"
+    overflow: hide
+    filler: "{{ if .Overflow }} {{ else }}<darkGray,transparent>─</>{{ end }}"
     segments:
       # Exit code, only after a failed command.
       - type: status

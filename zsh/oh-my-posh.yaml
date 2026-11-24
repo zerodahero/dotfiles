@@ -24,8 +24,16 @@ blocks:
         foreground: lightWhite
         background: blue
         template: " {{ .Path }} "
+        # Like p10k truncate_to_unique with DIR_MAX_LENGTH=80: the full
+        # path until it passes 80 columns, then folders shorten to unique
+        # prefixes from the left. Git roots are bold, like p10k anchors.
         properties:
-          style: unique
+          style: powerlevel
+          max_width: 80
+          gitdir_format: "<b>%s</b>"
+          # Short names for common prefixes.
+          mapped_locations:
+            "~/projects": "~p"
 
       - type: git
         style: powerline

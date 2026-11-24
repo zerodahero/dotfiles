@@ -7,6 +7,9 @@ ZLE_REMOVE_SUFFIX_CHARS=""
 [ -f $HOME/.env ] && {set -a; source $HOME/.env; set +a}
 
 export EDITOR='nvim'
+export PAGER='less'
+# -R colors, -F quit if one screen, -i smart-case search, -X keep output on screen after quit
+export LESS='-RFiX --mouse'
 export MANPAGER='nvim +Man!'
 
 ## Projects
